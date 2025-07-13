@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tra cứu giao dịch BTC</title>
+
+    <%- include("../admin/layout/head.ejs") %>
+    <!-- <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/> -->
+    <!-- <link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.css"> -->
+    <style type="text/css">
+      body {
+        font: 14px Helvetica, Arial;
+      }
+      #list-infomation {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      #list-infomation li {
+        padding: 5px 10px;
+        height: auto;
+      }
+      ul li {
+        word-wrap: break-word;
+      }
+      .li-inputs {
+        color: rgb(242, 124, 124);
+        padding: 5px;
+        margin-bottom: 5px;
+        border-color:brown;
+        border-radius: 3px;
+        border: 2px;
+        border-style:groove;
+        box-shadow:  1px 1px;
+        background-color: rgb(255, 255, 255);
+      }
+      .li-inputs:hover {
+        color: rgb(62, 249, 65);
+        padding: 5px;
+        margin-bottom: 5px;
+        border-color:rgb(95, 16, 16);
+        border-radius: 3px;
+        border: 2px;
+        border-style:double;
+        box-shadow: 1px 1px;
+        box-shadow: 0 2px 8px 0px rgba(128, 12, 0, 0.5), 
+              0 2px 1px -1px rgba(128, 12, 0, 0.2), 
+              0 0px 3px 0 rgba(128, 12, 0, 0.12);
+      }
+      .li-outputs {
+        color: rgb(54, 157, 235);
+        padding: 5px;
+        margin-bottom: 5px;
+        border-color:rgb(42, 104, 165);
+        border-radius: 3px;
+        border: 2px;
+        border-style:groove;
+        box-shadow: 1px 1px 1px 1px;
+        background-color: rgb(230, 240, 246);
+      }
+      .li-outputs:hover {
+        color: rgb(177, 62, 249);
+        padding: 5px;
+        margin-bottom: 5px;
+        border-color:rgb(74, 13, 105);
+        border-radius: 3px;
+        border: 2px;
+        border-style:double;
+        box-shadow: 1px 1px;
+        box-shadow: 0 2px 8px 0px rgba(0, 128, 0, 0.5), 
+              0 2px 1px -1px rgba(0, 128, 0, 0.2), 
+              0 0px 3px 0 rgba(0, 128, 0, 0.12);
+      }
+      .li-infomation {
+        color: rgb(10, 79, 189);
+        padding: 5px;
+        margin-bottom: 5px;
+        text-shadow: 2px;
+      }
+    </style>
+    <!-- <script src="//js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> -->
+  </head>
+<body>
+  <div class="container" style="display: block">
+      <%- include("../admin/layout/nav.ejs") %>
+    <div class="container" style="width: 100%; text-align: center">
+        <div class="row">
+          <!-- Hộp Tìm kiếm thông tin -->
+          <div
+            id="divlogin"
+            style=" margin-bottom:10px"
+            class="col-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              id="loginbox"
+              style="width: 100%;
+                      margin-bottom: 10px;
+                      min-height: 470px;
+                      border-style:groove;
+                      border-width: 3px;
+                      border-radius: 5px;
+                      border-color: aqua;"
+              class="mainbox panel">
+              <div
+                class="panel panel-info"
+                style="margin-bottom: 5px;">
+                <div class="panel-heading text-center">
+                  <div class="panel-title"><b>Thông tin</b></div>
+                  <!-- <div style="clear: both;"></div>
+                        <div>(Nhập FB là riêng tư)</div> -->
+                </div>
+              </div>
+                <div class="text-center" style="padding-bottom: 10px;"></div>
+                                    <!-- hộp nhập dữ lệu và nút bấm -->
+                                    <div style="margin-bottom: 5px; padding: 0 5px 0 5px;" class="input-group">
+                                      <span class="input-group-addon" style="background-color: rgba(208, 201, 1, 0.892); padding-top: 2px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px;">
+                                        <svg width="20px" height="20px" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                                          <path fill-rule="evenodd" d="M9 15a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm3.8-1.9c.3-.5.7-1 1.2-1.2a1 1 0 0 1 2 0c.5.1.8.4 1.1.7a1 1 0 1 1-1.4 1.4l-.4-.2h-.1a.4.4 0 0 0-.4 0l.4.3a3 3 0 0 1 1.5.9 2 2 0 0 1 .5 1.9c-.3.5-.7 1-1.2 1.2a1 1 0 0 1-2 0c-.4 0-.8-.3-1.2-.7a1 1 0 1 1 1.6-1.3l.3.2h.1a.4.4 0 0 0 .4 0 1 1 0 0 0-.4-.3 3 3 0 0 1-1.5-.9 2 2 0 0 1-.5-2Zm2 .6Zm.5 2.6ZM4 14c.6 0 1 .4 1 1v4a1 1 0 1 1-2 0v-4c0-.6.4-1 1-1Zm3-2c.6 0 1 .4 1 1v6a1 1 0 1 1-2 0v-6c0-.6.4-1 1-1Zm6.5-8c0-.6.4-1 1-1H18c.6 0 1 .4 1 1v3a1 1 0 1 1-2 0v-.8l-2.3 2a1 1 0 0 1-1.3.1l-2.9-2-3.9 3a1 1 0 1 1-1.2-1.6l4.5-3.5a1 1 0 0 1 1.2 0l2.8 2L15.3 5h-.8a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                                        </svg>                                      
+                                      </span>
+                                      <input
+                                        id="textname"
+                                        type="text"
+                                        class="form-control"
+                                        name="namedata"
+                                        placeholder="BTC Transaction"
+                                        maxlength="255"
+                                      />
+                                    </div>
+                                    <div style="margin-top: 5px" class="form-group">
+                                      <div class="controls" style="text-align: center">
+                                        <button id="btn-login" class="btn btn-info">Tra cứu</button>
+                                        <!-- <a id="btn-fblogin" href="#" class="btn btn-primary">Đăng nhập bằng Facebook</a> -->
+                                      </div>
+                                    </div>
+                <div style="padding-top: 15px" class="panel-body">
+                  <form
+                    id="loginform"
+                    class="form-horizontal"
+                    role="form"
+                    method=""
+                    action="">
+                    <div style="clear: both"></div>
+                    <ul
+                      id="list-infomation"
+                      class="mainbox"
+                      style="
+                        text-align: left;
+                        width: 100%;
+                        height: 280px;
+                        overflow: auto;
+                        border-style: double;
+                        margin-bottom: 5px;
+                        border-width: 3px;
+                        border-radius: 5px;
+                        border-color: rgb(135, 219, 252);
+                        padding: 5px;">
+                     </ul>
+                  </form>
+                </div>
+              <!-- </div> -->
+            </div>
+          </div>
+          <!-- Hộp trung tâm -->
+          <div
+            id="divmain"
+            class="col-8 col-sm-8 col-md-8 col-lg-8"
+            style="min-height: 450px">
+            <div
+              id="content-box"
+              style="
+                display: block;
+                min-height: 470px;
+                height: 100%;
+                text-align: center;
+                border-style: double;
+                border-width: 3px;
+                border-radius: 5px;
+                border-color: rgb(135, 219, 252);
+                padding: 5px;">
+              <div
+                class="mainbox col-6 col-sm-6 col-md-6 col-lg-6"
+                id="divmain1">
+                <!-- <div style="clear: both;"></div> -->
+                <div
+                  style="
+                    margin-bottom: 10px;
+                    height: 450px;
+                    border-style:groove;
+                    border-width: 3px;
+                    border-radius: 5px;
+                    border-color: rgb(179, 246, 255);">
+                  <div class="panel panel-danger" style="margin-bottom: 2px">
+                    <div class="panel-heading text-center">
+                      <div class="panel-title">
+                        <b id="main-jobcn">Nguồn giao dịch</b>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="clear: both"></div>
+                  <ul
+                    id="list-inputs"
+                    change-id="list-inputs"
+                    class="mainbox"
+                    style="text-align: left;
+                      width: 100%;
+                      height: 88%;
+                      overflow: auto;
+                      padding: 5px;">
+                  </ul>
+                </div>
+                <!-- <div style="clear: both; margin-top: 5px;"></div> -->
+              </div>
+              <div
+              class="mainbox col-6 col-sm-6 col-md-6 col-lg-6"
+              id="divmain1">
+              <!-- <div style="clear: both;"></div> -->
+              <div style="
+                  margin-bottom: 10px;
+                  height: 450px;
+                  border-style: groove;
+                  border-width: 3px;
+                  border-radius: 5px;
+                  border-color: rgb(179, 246, 255);">
+                <div class="panel panel-info" style="margin-bottom: 2px">
+                  <div class="panel-heading text-center">
+                    <div class="panel-title">
+                      <b id="main-jobcn">Đã dùng</b>
+                    </div>
+                  </div>
+                </div>
+                <div style="clear: both"></div>
+                <ul
+                  id="list-outputs"
+                  change-id="list-outputs"
+                  class="mainbox"
+                  style="text-align: left;
+                    width: 100%;
+                    height: 88%;
+                    overflow: auto;
+                    padding: 5px;">
+                  <!-- <a class="a-job-fb badge badge-warning" id="job-1" job-id="job-1" style="margin-top:3px; border-radius: 3px; background-color: rgba(13, 202, 171, 0.856);"><b style="color:brown;">(1) </b>data</a> -->
+                </ul>
+              </div>
+              <!-- <div style="clear: both; margin-top: 5px;"></div> -->
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="/static/js/addressbtc/jsfind.js"></script>
+  </div>
+</body>
+</html>

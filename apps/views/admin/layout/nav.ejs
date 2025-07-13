@@ -1,0 +1,98 @@
+
+
+<div class="container-fluid">
+  <nav class="navbar navbar-default">
+      <!-- Brand/logo -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+
+        </button>
+        <b><a id="texttitle" class="navbar-brand menunavi" href="#">Danh mục</a></b>
+      </div>
+      <!-- Collapsible Navbar -->
+      <div class="collapse navbar-collapse" id="example-1">
+          <ul class="nav navbar-nav">
+
+            <li>
+              <a href="/blog"><b>Trang chủ</b></a>
+            </li>
+
+            <% if (data && data.trackper <= 2) { %>
+            <li><a href="/todos/dashboard"><b>Công việc</b></a></li>
+            <% } %> 
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <b>Chức năng</b>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <% if (data && data.trackper <= 1) { %>
+                  <li class="dropdown-item"><a class="menunavi_a2" href="/admin">Đăng bài</a></li>
+                  <li class="dropdown-item"><a href="/scandomain">Quét tên miền</a></li>
+                <% } %>
+                <% if (data && data.trackper <= 2) {%>
+                  <li class="dropdown-item"><a href="/track">Track URL</a></li>
+                  <% } %> 
+                <% if (data && data.trackper <= 3) {%>
+                  <li class="dropdown-item"><a href="/fasterurl">Faster URL</a></li>
+                  <li class="dropdown-item"><a href="/admin/qrcode">Tạo QRCode</a></li>
+                  <li class="dropdown-item"><a href="/admin/hashsha256">Băm tập tin (SHA-256)</a></li>
+                  <li class="dropdown-item"><a href="/admin/addressBTC">Tra cứu giao dịch BTC</a></li>
+                <% } %> 
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <b>Tài khoản</b>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <% if (data && data.trackper <= 1) { %>
+                  <li class="dropdown-item"><a href="/admin/user">Quản lý người dùng</a></li>
+                <% } %>
+                <li class="dropdown-item"><a href="/admin/updateuser/<%= data.user.id %>">Đổi mật khẩu</a></li>
+                <li class="dropdown-item">
+                  <a href="/admin/signin"><% if (data && data.requser) {%><b>Đăng xuất</b> (Tài khoản: <%=data.requser%>)<% }else{ %> <b>Đăng nhập</b><% } %></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+  </nav>    
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var titleText = document.title;
+    var navbarBrand = document.getElementById('texttitle');
+    if (navbarBrand) navbarBrand.innerHTML= titleText;
+  });
+</script>
+<style>
+  .navbar-brand {
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  .navbar {
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .dropdown-menu {
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .dropdown-menu .dropdown-item {
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  .dropdown-menu .dropdown-item:hover {
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .navbar-nav .nav-link:hover,
+  ul.nav.navbar-nav > li:hover {
+      text-shadow: 2px 2px 4px rgba(4, 163, 226, 0.3);
+      box-shadow: 0 1px 3px 0px rgba(0, 128, 255, 0.6),
+        0 1px 3px -2px rgba(0, 128, 255, 0.2),
+        0 1px 1px 0 rgba(0, 128, 255, 0.12);
+  }
+</style>

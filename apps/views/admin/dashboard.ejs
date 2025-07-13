@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeeBlog</title>
+    <%- include("layout/head.ejs") %>
+    <link rel="stylesheet" href="/static/css/responsive-table.css">
+    <!-- {
+        x_authorization: ... accessToken ...
+    } -->
+    <link>
+</head>
+<body>
+    <!-- {
+        refreshToken: ... refreshToken ...
+    } -->
+    <div class="container">
+    <%- include("layout/nav.ejs") %>
+
+        <div class="row" style="margin-bottom:10px; ">
+            <div class="col-md-12">
+                <a href="/admin/post/new" class="btn btn-success pull-right">Thêm mới bài viết</a>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Bài đăng
+            </div>
+            
+            <div class="panel-body" style="overflow: auto;">
+                <% if (data && data.error){ %>
+                    <div id="login-alert" class="alert alert-danger col-sm-12" style="text-align:center">
+                        <%= data.error %>
+                    </div>
+                <%}%>
+                    <div>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Nội dung</th>
+                                    <th>Tác giả</th>
+                                    <th>Thời gian</th>
+                                    <th>Tương tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (data && data.posts){%>
+                                    <% for (var i= data.posts.length-1; i > -1; i--) { %>
+                                    <tr>
+                                        <td data-label="STT"><%= data.posts.length-i %> </td> 
+                                        <td data-label="Tiêu đề" style ="overflow: auto; max-height: 200px;"><%= data.posts[i].title %> </td> 
+                                        <td data-label="Nội dung"  style ="text-align: left; overflow: auto; max-height: 300px;"><%- data.posts[i].content %> </td> 
+                                        <td data-label="Tác giả"><%= data.posts[i].author %> </td> 
+                                        <td data-label="Thời gian">
+                                            <p><b>Khởi tạo: </b><%= data.posts[i].created_at %></p>
+                                            <p><b>Cập nhật: </b><%= data.posts[i].updated_at %></p>
+                                        </td> 
+                                        <td data-label="Tương tác">
+                                            <a href="/admin/post/edit/<%= data.posts[i].id %>" class="btn btn-primary">Sửa</a>
+                                            <button href="/admin/post/delete" class="btn btn-danger post_delete" post_id="<%= data.posts[i].id %>">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                <% } %>  
+
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div> 
+    <script type="text/javascript" src="/static/js/post.js"></script>
+</body>
+</html>

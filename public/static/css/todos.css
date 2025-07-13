@@ -1,0 +1,208 @@
+html {
+    overflow-y: scroll;
+}
+
+/* Thêm một lớp CSS khi body có thuộc tính 'disabled' */
+.panel-body.disabled {
+    pointer-events: none;
+    /* Tắt sự kiện bấm chuột và cảm ứng */
+    opacity: 0.7;
+    /* Điều chỉnh độ trong suốt */
+}
+
+#todo-list {
+    margin-bottom: 30px;
+}
+
+#todo-form {
+    margin-bottom: 50px;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+.editable-wrap {
+    /* word-wrap: break-word; Hoặc sử dụng overflow-wrap: break-word; */
+    white-space: unset;
+}
+
+.editable-input {
+    height: 34px;
+    margin-top: 4px;
+}
+
+.editable-buttons button {
+    height: 34px;
+    margin-top: 4px;
+}
+
+#loading-btn {
+    border: 2px;
+    box-shadow: 1px 1px 1px 1px;
+    background-image: url('/static/theme/img/img-todo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-bottom: 15px;
+}
+
+.strikead {
+    background-color: rgb(191, 190, 241);
+    animation-name: example1;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
+
+@keyframes example1 {
+    25% {
+        background-color: rgb(255, 255, 255);
+    }
+
+    75% {
+        background-color: green;
+    }
+}
+
+.unstrike {
+    background-color: rgb(191, 190, 241);
+}
+
+.nomartime {
+    color: rgb(0, 216, 36);
+}
+
+.alerttime {
+    color: rgb(216, 0, 0);
+    animation-name: example2;
+    animation-iteration-count: infinite;
+    animation-duration: 1s;
+}
+
+@keyframes example2 {
+    25% {
+        color: rgb(255, 255, 255);
+    }
+
+    75% {
+        color: rgb(230, 176, 0);
+        text-shadow: rgb(216, 0, 0);
+        font-family: bold;
+    }
+}
+
+.update {
+    background-color: rgb(247, 255, 200);
+    border-radius: 25px;
+}
+
+.deathline {
+    color: rgb(82, 3, 119);
+    animation-name: example3;
+    animation-iteration-count: infinite;
+    animation-duration: 0.75s;
+}
+
+@keyframes example3 {
+    25% {
+        color: rgb(241, 7, 7);
+    }
+
+    75% {
+        color: rgb(36, 0, 94);
+        text-shadow: rgb(119, 0, 255);
+        font-family: bold;
+    }
+}
+
+input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 100%;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 100%;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+        max-height: 0;
+    }
+}
+
+#todo-form {
+    /* opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    overflow: hidden; */
+    transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease;
+    /* display: none; */
+}
+
+#todo-form.showform {
+    animation: fadeIn 0.5s ease;
+    -webkit-animation: fadeIn 0.5s ease;
+    /* Cho Safari và Chrome trên iOS */
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 100%;
+    overflow: visible;
+}
+
+#todo-form.hideform {
+    animation: fadeOut 0.5s ease;
+    -webkit-animation: fadeOut 0.5s ease;
+    /* Cho Safari và Chrome trên iOS */
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    overflow: hidden;
+}
+
+.showtodos {
+    transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease;
+    animation: fadeIn 0.5s ease;
+    -webkit-animation: fadeIn 0.5s ease;
+    /* Cho Safari và Chrome trên iOS */
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 100%;
+    overflow: visible;
+}
+
+.hidetodos {
+    transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.5s ease;
+    animation: fadeOut 0.5s ease;
+    -webkit-animation: fadeOut 0.5s ease;
+    /* Cho Safari và Chrome trên iOS */
+    opacity: 0;
+    transform: translateY(-20px);
+    max-height: 0;
+    overflow: hidden;
+}
+
+
+.chat-box {
+    resize: horizontal;
+    max-width: 100vw; /* Tối đa chiều rộng */
+    overflow: hidden;
+}

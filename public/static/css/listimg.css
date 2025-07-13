@@ -1,0 +1,74 @@
+img:hover {
+    border-style: groove;
+    /* border-width: 3px; */
+    border-color: lawngreen;
+    margin: 5px;
+    box-shadow: 0 3px 16px 0px rgba(0, 0, 255, 0.6),
+        0 3px 1px -2px rgba(0, 0, 255, 0.2),
+        0 1px 5px 0 rgba(0, 0, 255, 0.12);
+}
+
+img {
+    border-style: groove;
+    /* border-width: 3px; */
+    border-color: aliceblue;
+    margin: 5px;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.overlay-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    /* để các nút nằm cạnh nhau */
+}
+
+.overlay-buttons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    display: none;
+    /* ẩn ban đầu */
+}
+
+.overlay-button:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.overlay-button {
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 5px;
+    /* Khoảng cách giữa hai nút */
+}
+
+.overlay-button:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.return-url {
+    /* Thêm thuộc tính CSS tùy chỉnh cho nút "Thêm" */
+    color: #4CAF50;
+    /* Màu xanh lá cây */
+}
+
+.delete-image {
+    /* Thêm thuộc tính CSS tùy chỉnh cho nút "Xóa" */
+    color: #f44336;
+    /* Màu đỏ */
+}

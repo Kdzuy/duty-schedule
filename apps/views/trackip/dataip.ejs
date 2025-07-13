@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dữ liệu TrackURL</title>
+    <%- include("../admin/layout/head.ejs") %>
+    <link rel="stylesheet" href="/static/css/responsive-table.css">
+    
+</head>
+<body>
+    <div class="container">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="word-wrap: break-word;">Kết quả Path: <b><%= data.title %></b></div>
+            
+            <div class="panel-body" style="overflow: auto;">
+                <% if (data && data.error){ %>
+                    <div id="login-alert" class="alert alert-danger col-sm-12" style="text-align:center">
+                        <%= data.error %>
+                    </div>
+                <%}%>
+                    <div >
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Địa chỉ IP</th>
+                                    <th>Thông tin thiết bị</th>
+                                    <th>Khác</th>
+                                    <th>Tương tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (data && data.dataip){%>
+                                    <% for (let i=data.dataip.length-1; i >=0; i--) { %>
+                                    <tr>
+                                        <td data-label="Địa chỉ IP" style ='white-space:pre-line;' ><%= data.dataip[i].getip %> </td>
+                                        <td data-label="Thông tin thiết bị"><%- data.dataip[i].useragent %> </td> 
+                                        <td data-label="Khác"><% if (data && data.dataip&&data.dataip[i].data_geol&&data.dataip[i].data_geol.length>0){%><%- data.dataip[i].data_geol %> <% } else { %>Không<% } %></td>
+                                        <td data-label="Tương tác">
+                                            <p><b>Thời gian: </b><%= data.dataip[i].created_at %></p>
+                                            <br>
+                                            <button href="/data/delete" class="btn btn-danger post_delete" post_id="<%= data.dataip[i].id %>">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                <% } %>  
+
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div> 
+    <script type="text/javascript" src="/static/js/dataip.js"></script>
+</body>
+</html>

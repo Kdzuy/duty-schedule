@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include("../admin/layout/head.ejs") %>
+    <!-- <link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.css"> -->
+    <script src="/static/js/track/render-url-target.js" ></script>
+    <title>Thêm URL</title>
+      
+
+</head>
+<body>
+    <div class="container" id="container">
+         <div class="panel panel-default">
+             <div class="panel-heading"><h4>Thêm mới</h4></div>
+            <div class="panel-body">
+                <div class="row">
+                            <% if (data && data.error){ %>
+                            <div id="login-alert" class="alert alert-danger col-sm-12" style="text-align:center">
+                                <%= data.error %>
+                            </div>
+                            <%}%>
+                    <form role="form" id="formtrack" method="post" action="/track/new">
+                                <div class="form-group align-items-center">
+                                    <label for="link">URL chuyển đến</label>
+                                    <div style="position: relative;">
+                                        <input type="url" class="form-control " style="padding-right: 50px;" name="link" id="link" placeholder="https://www.facebook.com/UID, https://www.youtube.com/watch?v=value,..." maxlength="1000" required>
+                                        <button type="button" class="btn btn-link" id="searchBtn" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding-top: 10px;">
+                                            <svg height="25px" width="25px" class="w-[40px] h-[40px] text-gray-800 dark:text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div id="textareaContainer" style=" margin-top: 5px; margin-bottom: 5px; display: none;">
+                                        <a id="myurl" style="display: none; align-items: center; justify-content: center; margin: 0px 10px 0px 5px;">Link view-source <i class="fa fa-link"></i></a>
+                                        <textarea disabled id="myTextarea" class="form-control" placeholder="Hãy paste mã HTML từ view-source:... (không paste link vào đây)."></textarea>
+                                        <button id="getDataBtn" class="btn btn-primary" style="margin-left: 3px;"><i class="fa fa-book"></i> Đọc HTML</button>
+                                    </div>
+                                </div>
+                            
+                            <div class="form-group">
+                                <label for="title">Phần sau Tên miền</label>
+                                <input class="form-control" id="title" name="title" placeholder="UID Facebook, username...viết liền không dấu" maxlength="1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="titleval">Tiêu đề bài viết</label>
+                                <input class="form-control" id="titleval" name="titleval" placeholder="Họ tên, tên bài viết, trích dẫn video..." maxlength="500">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="content">Ảnh trên URL</label>
+                                <textarea class="form-control" name="content" id="content" placeholder="Nội dung" maxlength="5000" required></textarea>
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-lg-6" style="margin-bottom: 15px; display: inline-flex; align-items: center; justify-content: center;text-align: center;">
+                                <label for="check_geo" class="col-form-label-lg control-label" style="width: 75px;">Tọa độ:</label>
+                                <input type="checkbox" style="width: 36px;" class="form-control input-group-lg" name="check_geo" id="check_geo" value="1">
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-lg-6" style="margin-bottom: 15px; display: inline-flex; align-items: center; justify-content: center;text-align: center;">
+                                <label for="check_img" class="col-form-label-lg control-label" style="width: 75px;">Máy ảnh:</label>
+                                <input type="checkbox" style="width: 36px;" class="form-control input-group-lg" name="check_img" id="check_img" value="1">
+                            </div>
+                            <div class="form-group">
+                                <!-- <label>Tác giả</label> -->
+                                <!-- <input class="form-control" name="id_user" id="id_user" type="hidden" value="< %= data.user.id %>">
+                                <input class="form-control" name="name_user" id="name_user" type="hidden" value="< %= data.user.last_name %>"> -->
+                            </div>
+                            <div style="clear: both;"></div>
+                        <div class="form-group" style="text-align: center; margin-top: 25px;">
+                            <input  type="submit" value="Thêm mới" style="width: 100%;" id="submitbtn" class="btn btn-success">
+                        </div>
+                    </form>
+                    <!-- </div> -->
+                    
+                </div>
+                
+            </div>
+         </div>
+         
+    </div>
+</body>
+</html>
+<!-- <script src="/static/ckeditor/ckeditor.js"></script> -->
+<script src="/static/theme/js/ckeditor-4.19.1/ckeditor/ckeditor.js"></script>
+<script>
+     CKEDITOR.replace('content',{
+        extraPlugins:'filebrowser',
+        filebrowserBrowseUrl:'/listimg',//upload location
+        filebrowserUploadMethod:'form',
+        filebrowserUploadUrl:'/upload'});//route  
+</script>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Cập nhật mật khẩu</title>
+
+    <%- include("layout/head.ejs") %>
+    <!-- {
+        x_authorization: ... accessToken ...
+    } -->
+</head>
+<body>
+    <!-- {
+        refreshToken: ... refreshToken ...
+    } -->
+    <div class="container">
+
+
+
+        <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Cập nhật mật khẩu</div>
+                </div>
+                <div class="panel-body" >
+
+                    <% if (data && data.error){ %>
+                        <div id="signupalert" class="alert alert-danger" style="text-align:center">
+                            <%= data.error %>
+                        </div>
+                    <%}%>
+
+                    <form id="signupform" class="form-horizontal" role="form" method="" action="">
+                        <input class="id" type="hidden" name="id" value ="<% if (data && data.user){ %><%= data.user.id %><%}%>">
+                        <div class="form-group">
+                            <label for="password" class="col-md-3 control-label">Mật khẩu mới</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control password" name="password" id="password" placeholder="Mật khẩu mới" required maxlength="255">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="repassword" class="col-md-3 control-label">Nhập lại mật khẩu</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control repassword" name="repassword" id="repassword" placeholder="Nhập lại đúng mật khẩu" required maxlength="255">
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="display: none;">
+                            <label for="lastname" class="col-md-3 control-label" required>Tên hiển thị</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control lastname" name="lastname" id="lastname" placeholder="Name" value="<% if (data && data.user){%><%= data.user.last_name %><%}%>" maxlength="255" />
+                            </div>
+                        </div>
+                         
+                        <div class="form-group">
+                            <!-- Button -->
+                           <div class="col-md-12" style="text-align: center;">
+                                <input type="button" class="update_user btn btn-info " style="width: 100%;" value="Cập nhật"/>
+                            </div>
+                        </div>
+
+                    </form>
+                 </div>
+            </div>
+
+         </div>
+    </div>
+    <script type="text/javascript" src="/static/js/user.js"></script>
+</body>
+</html>

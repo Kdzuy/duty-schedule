@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Hình ảnh</title>
+    <!-- < %- include("admin/layout/head.ejs") %> -->
+    <script src="/static/js/jquery.min.js" ></script>
+    <link rel="stylesheet" href="/static/css/listimg.css">
+</head>
+<body>
+    <!-- <div> -->
+        <% if (data && data.listID && data.listID.length>0 && data.listID[0].id){%>
+            <% for (var i= data.listID.length-1; i > -1; i--) { %>
+                <div class="image-container">
+                    <img onclick="toggleOverlay(this)" src="/photo/<%= data.listID[i].id %>" alt="<%= data.listID[i].id %>" id="image-<%= data.listID[i].id %>" style="width: auto; height: 120px;">
+                    <div class="overlay-buttons" id="overlay-<%= data.listID[i].id %>">
+                        <button class="overlay-button return-url" onclick="returnFileUrl(document.getElementById('image-<%= data.listID[i].id %>').src)"><b>Lấy</b></button>
+                        <% if (data && data.trackper==1){%>
+                        <button class="overlay-button delete-image" onclick="delimg('<%= data.listID[i].id %>')"><b>Xóa</b></button>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
+    <!-- </div> -->
+</body>
+<script src="/static/js/listimg.js" ></script>
+</html>

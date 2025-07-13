@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code</title>
+
+    <%- include("../admin/layout/head.ejs") %>
+    <style>
+      .custom-file-upload {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color:deepskyblue;
+        color: #fff;
+        border-radius: 5px;
+        border: none;
+        white-space: nowrap;
+        width: 100%;
+        text-align: center;
+      }
+    </style>
+  </head>
+<body>
+  <div class="container" style="display: block">
+      <%- include("../admin/layout/nav.ejs") %>
+      <div>
+            <div class="col-md-6 col-sm-12">
+              <h2 class="text-center mb-4" style="font-size: 24px; color: #333; font-weight: bold;">QR Code Generate</h2>
+                <form id="qr-form">
+                <div class="form-group" id="textInput">
+                    <label for="inputText">Text/URL:</label>
+                    <input type="text" class="form-control" id="inputText" placeholder="Nhập Văn bản hoặc URL (max 1000)" maxlength="1000">
+                </div>
+                    <div class="form-group">
+                        <label for="inputWidth">Chiều rộng:</label>
+                        <input type="number" class="form-control" id="inputWidth" value="200" min="50" max="2000">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputHeight">Chiều cao:</label>
+                        <input type="number" class="form-control" id="inputHeight" value="200" min="50" max="2000">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputColorDark">Màu tối:</label>
+                        <input type="color" class="form-control" id="inputColorDark" value="#000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputColorLight">Nền sáng:</label>
+                        <input type="color" class="form-control" id="inputColorLight" value="#ffffff">
+                    </div>
+                    <button id="submitbtn" type="submit" class="btn btn-primary" style="width: 100%;">Tạo QR Code</button>
+                </form>
+            </div>
+            <div class="col-md-6 col-sm-12" id="div-qrcode" style="display: none;">
+              <h2 class="text-center mb-4" style="font-size: 24px; color: #333; font-weight: bold;">QR Code</h2>
+              <div id="qr-code" class="text-center" style="display: flex; justify-content: center; align-items: center; max-width: 100%;">
+              </div>
+              <div class="row">
+                <div class="text-center">
+                    <button id="downloadBtn" class="btn btn-success" style="margin-top: 10px;">Tải ảnh QR Code</button>
+                </div>
+              </div>
+            </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/static/js/qrcode/qrcode.min.js"></script>
+  <script type="text/javascript" src="/static/js/qrcode/generate-url.js"></script>
+</body>
+</html>

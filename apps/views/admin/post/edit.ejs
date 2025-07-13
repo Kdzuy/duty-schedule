@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa bài viết</title>
+    <%- include("../layout/head.ejs") %>
+</head>
+<body>
+    <div class="container">
+        <!-- < %- include("../layout/nav.ejs") %> -->
+         <div class="panel panel-default">
+             <div class="panel-heading"> Chỉnh sửa nội dung bài viết </div>
+            <div class="panel-body">
+                <div class="row">
+                            <% if (data && data.error){ %>
+                            <div id="login-alert" class="alert alert-danger col-sm-12" style="text-align:center">
+                                <%= data.error %>
+                            </div>
+                            <%}%>
+                        <form role="form" method="" action="">
+                            <input class="id" type="hidden" name="id" value ="<% if (data && data.post){%><%= data.post.id%><%}%>">
+                            <div class="form-group">
+                                <label for="title">Tiêu đề</label>
+                                <input id="title" class="form-control title" name="title" placeholder="title" value ="<% if (data && data.post){%><%= data.post.title %><%}%>" required  maxlength="1000" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="content">Nội dung</label>
+                                <textarea class="form-control content" name="content" placeholder="content" id="content">
+                                <% if (data && data.post){%><%= data.post.content %><%}%></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="author">Tác giả</label>
+                                <input id="author" class="form-control author" name="author" placeholder="author" type="text" value ="<% if (data && data.post){%><%= data.post.author %><%}%>" maxlength="50" required>
+                            </div>
+                            <input type="button" value="Cập nhật" style="width: 100%;" class="post_edit btn btn-success">
+                        </form>
+   
+                </div>
+            </div>
+         </div>
+    </div>
+    <script type="text/javascript" src="/static/js/post.js"></script>
+    <script src="/static/theme/js/ckeditor-4.19.1/ckeditor/ckeditor.js"></script>
+<script>
+     CKEDITOR.replace('content',{
+        extraPlugins:'filebrowser',
+        filebrowserBrowseUrl:'/listimg',//upload location
+        filebrowserUploadMethod:'form',
+        filebrowserUploadUrl:'/upload'});//route  
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: auto;
+  overflow: auto;
+  background: #fefefe;
+  box-shadow: 0 3px 16px 0px rgba(0, 0, 255, 0.6), 
+              0 3px 1px -2px rgba(0, 0, 255, 0.2), 
+              0 1px 5px 0 rgba(0, 0, 255, 0.12);
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+  color: #f6f6f6;
+}
+
+table thead {
+  background:dodgerblue;
+  border-bottom: none;
+  color: #fff;
+}
+
+
+table tr {
+  padding: .35em;
+}
+
+table tr:nth-child(even) {
+  background: #f0f0f0;
+}
+table tbody tr {
+  transition: background-color 0.5s ease, box-shadow 0.5s ease;
+}
+table tbody tr:hover {
+  background: #d9e3e8;
+  box-shadow: 0 2px 8px 0px rgba(0, 128, 0, 0.5), 
+              0 2px 1px -1px rgba(0, 128, 0, 0.2), 
+              0 0px 3px 0 rgba(0, 128, 0, 0.12);
+}
+
+table th,
+table td {
+  padding: 0.625em;
+  text-align: center;
+  position: relative;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 800px; /* Đặt kích thước tối đa cho các cột là 200px */
+  overflow: hidden; /* Để tránh làm rối bố cục */
+  text-overflow: ellipsis; /* Hiển thị dấu elipsis nếu nội dung quá dài */
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 800px) {
+  table {
+    border: 0;
+    table-layout: fixed;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+
+  table thead th {
+    display: none;
+  }
+
+  table tr {
+    display: block;
+  }
+  table td {
+    /* border-bottom: 1px solid #ddd; */
+    display: block;
+    text-align: left;
+    position: relative;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: light;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    margin-bottom: 0.6em;
+    white-space: normal;
+    color: #3290ee;
+    position: relative;
+    word-wrap: break-word;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+

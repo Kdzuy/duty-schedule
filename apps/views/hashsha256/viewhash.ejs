@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Băm tập tin (SHA-256)</title>
+
+    <%- include("../admin/layout/head.ejs") %>
+    <script src="/static/theme/vendor/crypto-js/crypto-js.4.1.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/scrpthash/jshash.js"></script>
+    <style type="text/css">
+      body {
+        font: 14px Helvetica, Arial;
+      }
+      #list-infomation {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      #list-infomation li {
+        padding: 5px 10px;
+        height: auto;
+      }
+      ul li {
+        word-wrap: break-word;
+        /* font-size: large; */
+        color: rgb(10, 79, 189);
+        text-shadow: 2px;
+      }
+      .custom-file-upload {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color:deepskyblue;
+        color: #fff;
+        border-radius: 5px;
+        border: none;
+        white-space: nowrap;
+        width: 100%;
+      }
+      .custom-file-upload:hover {
+        background-color: #2980b9;
+      }
+      input[type="file"] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="display: block">
+      <%- include("../admin/layout/nav.ejs") %>
+      <div class="container" style="width: 100%; text-align: center">
+        <div class="row">
+          <!-- Hộp Tìm kiếm thông tin -->
+          <div
+            id="divlogin"
+            
+            class="col-12 col-sm-12 col-md-12 col-lg-12">
+            <div
+              id="loginbox"
+              style="width: 100%; height: 100%"
+              class="mainbox">
+              <div
+                class="panel panel-info"
+                style="margin-bottom: 5px; height: 100%">
+                <div class="panel-heading text-center">
+                  <div class="panel-title"><b>Thuật toán băm SHA-256</b></div>
+                </div>
+                <div class="text-center" style="padding-bottom: 10px;"></div>
+                                    <div style="margin-bottom: 5px; padding: 0 5px 0 5px; width: 100%;" class="input-group">
+                                      <label for="file-input" class="custom-file-upload">
+                                          <span>Thêm tập tin</span>
+                                      </label>
+                                      <input type="file" id="file-input" onchange="handleFileSelect()" placeholder="Link file hash (local file)">
+                                    </div>
+                <div style="padding-top: 15px;border-style: double; margin: 10px 5px 5px 5px;border-width: 3px; border-radius: 5px;
+                     border-color: rgb(135, 219, 252);" class="panel-body">
+                  <form
+                    id="loginform"
+                    class="form-horizontal"
+                    role="form"
+                    method=""
+                    action="">
+                    <div style="clear: both"></div>
+                    <ul
+                      id="list-infomation"
+                      class="mainbox"
+                      style="
+                        text-align: left;
+                        width: 100%;
+                        overflow: auto;
+                        padding: 5px;">
+                        <li class='re-hash'><h5>Chuỗi băm đại diện cho tập tin hiển thị ở đây.</h5></li>
+                     </ul>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>
+    </div>
+  </body>
+</html>

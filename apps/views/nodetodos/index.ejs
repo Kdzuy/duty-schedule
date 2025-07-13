@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi" ng-app="app.todos">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <%- include("../admin/layout/head.ejs") %>
+    <link rel="stylesheet" href="/static/css/font-awesome-4.7.0/css/font-awesome.css">
+    <!-- <link rel="stylesheet" href="/static/css/googleapisicon/main.css"> -->
+    <link rel="stylesheet" href="/static/css/angular-xeditable-0.10.2/css/xeditable.min.css">
+    <link rel="stylesheet" href="/static/css/todos.css">
+    <link rel="stylesheet" href="/static/css/stylechats.css">
+    <!-- <link rel="stylesheet" href="/static/emojidata/emojionearea.css"/> -->
+    <script src="/static/theme/js/angularjs-1.8.2/angular.min.js"></script>
+    <script src="/static/theme/js/angularjs-1.8.2/angular-sanitize.min.js"></script>
+    <script src="/static/js/appangular.js"></script>
+    <script src="/static/js/services/svTodos.js"></script>
+    <script src="/static/theme/js/socket.io-3.1.0/socket.io.js"></script>
+    <script src="/static/theme/js/axios-0.21.1/axios.min.js"></script>
+    <script src="//js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+    <!-- <script src="/static/emojidata/emojionearea.js"></script> -->
+    <script src="/static/css/angular-xeditable-0.10.2/js/xeditable.min.js"></script>
+    <script src="/static/js/services/jquerychats.js"></script>
+</head>
+<body ng-controller="todoController">
+<div class="container">
+         <%- include("../admin/layout/nav.ejs") %>
+        <marquee style="color:red"><h5>Nghiêm cấm đăng tải nội dung MẬT!</h5></marquee>
+        <% if (data && data.user && data.trackper){%>
+        <input type="hidden" id="user_id" value= "<%= data.user.id %>" >
+        <input type="hidden" id="user_name" value= "<%= data.user.last_name %>" >
+        <input type="hidden" id="user_track" value= "<%= data.trackper %>" >
+        <%}%>
+    <div class="panel panel-body"  ng-class="{ 'disabled': loading }">
+        <div id="loading-btn" class="jumbotron text-center form-inline">
+            <h1>{{ appName }}<span class="label label-info">{{ countcurrent }}</span>
+                <button ng-click="toggleForm()" class="btn" class="btn" style="background-color: transparent; border: none; color: #1170ff;">
+                    <i ng-class="{ 'fa fa-minus fa-3x': showForm, 'fa fa-plus fa-3x': !showForm }"></i>
+                </button>
+            </h1>
+            <h3><b>{{ appNamelate }}</b><span class="label label-danger">{{ countlate }}</span></h3>
+
+            <% if (data && data.trackper==1){%>
+                <div class="form-inline" style="margin-top: 30px;">
+                    <label for="idusers" class="input-lg mr-sm-2">Người dùng:</label>
+                        <select class="form-control input-lg text-center" ng-model="formData.id_user" ng-change="filterTodo()" id="idusers">
+                            <option value="" selected>Tất cả</option>
+                            <% for (var i=0; i< data.data_users.length;i++) { %>
+                                <option value="<%= data.data_users[i].id %>"><%= data.data_users[i].last_name %></option>
+                            <% } %> 
+                        </select>
+                </div>
+                <% } %> 
+        </div>
+        
+        <div id="todo-form" class="row" ng-class="{ 'showform': showForm, 'hideform': !showForm }" style="margin-bottom: 5px;">
+            <div class="text-center">
+                <form>
+                    <div class="col-sm-7 col-md-7 col-lg-7 col-xl-12 col-xs-12" style="margin-top: 20px; position: relative;">
+                        <label for="text_job" style=" position: absolute; top: -1.3rem; left: 3rem; z-index: 1; background-color: white; font-size: large; color: #5bc0de;">Nội dung:</label>
+                        <input id="text_job" type="text" ng-model="formData.text_job" class="form-control input input-lg text-center" placeholder="Nhập nội dung công việc..." maxlength="1000"/>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-12 col-xs-12" style="margin-top: 20px; position: relative;">
+                        <label for="end_at" style=" position: absolute; top: -1.3rem; left: 3rem; z-index: 1; background-color: white; font-size: large; color: #5bc0de;">Thời gian:</label>
+                        <input id="end_at" type="date" ng-model="formData.end_at" format="dd/MM/yyyy" class="form-control input input-lg text-center"/>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-12 col-xs-12" style="margin-top: 20px;">
+                       <button type="submit" ng-disabled="!formData.text_job || !formData.end_at || !formData.user_name || formData.id_user=='51296' || formData.id_user==''" ng-click="createTodo()" class="btn btn-primary btn-lg" style="width: 100%;">Thêm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+                <hr>
+        <div class="text-center">
+            <a href ng-click="notifica()" ng-disabled="valnotifi==''" style="text-decoration: none;"><h3><span class="label label-info text-center">DANH SÁCH{{ valnotifi }}</span></h3></a>
+            <div style="clear: both;"></div> 
+            <p class="text-center" ng-show="loading"><span class="fa fa-spinner fa-spin fa-3x"></span></p>
+        </div>
+        
+        <div style="clear: both;"></div> 
+        <div id="todo-list" class="row">
+            
+            <div class="checkbox showtodos" ng-repeat="todo in todos" style="display:inline;">
+                <hr style="margin-top: 5px; margin-bottom: 5px;">
+                <div class="col-md-offset-2 col-lg-offset-2">
+                    <div style="margin: 10px 10px 0px 25px;" class="form-inline">
+                            <input type="checkbox" class="form-control input-group-lg"  style="width: 36px; float: left;" ng-change="updateTodoFN(todo)" ng-model="todo.isDone" />
+                        <div style="margin-left: 20px; max-width: 100%;">
+                            <% if (data && data.trackper==1){%>
+                            <a href ng-click="deleteTodo(todo)" style=" float: left;margin-right: 5px; "><i class="fa fa-remove fa-3x" style="color: red;"></i></a>
+                            <% } %> 
+                            <a href ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible" style=" float: left;margin-top: 2px; margin-right: 10px;"><i class="fa fa-edit fa-3x" style="color:royalblue;"></i></a>
+                            <span ng-class="{'strike': todo.isDone, 'update': todo.updatetext}" editable-text= "todo.text_jobdemo" e-form="textBtnForm" onaftersave="updateTodo(todo)" style="background-color: #ffeeba;  max-width:100%; word-wrap: break-word; border: 2px; box-shadow: 1px 1px 1px 1px; height: fit-content; width: auto; border-color: blue; font-family: Cambria;" class="form-control input-lg" >{{ todo.text_job }}</span>
+                            <span ng-class="{'strike': todo.isDone, 'nomartime': todo.timeline===1 && todo.isDone==false, 'alerttime': todo.timeline===2 && todo.isDone==false,'deathline': todo.timeline===3 && todo.isDone==false,'update': todo.updatetime}" editable-date="todo.end_atdemo" e-form="textBtnForm"  style="width: auto; border: 2px; box-shadow: 1px 1px 1px 1px; font-family: Times;" class="form-control input-lg text-center">Đến ngày: {{ todo.end_at | date:"dd/MM/yyyy" || "Không" }}</span>
+
+                            <% if (data && data.trackper==1){%>
+                            <span ng-class="todo.isDone!=todo.isDonedemo && formData.trackper==1 && todo.isDone==false ?'strikead':'unstrike'" style="background-color: #d4af37;font-weight: bold; width: auto; border: 1px; box-shadow: 3px 3px;  border-radius:0px 0px 15px 15px; font-family: Optima;" class="form-control input-lg text-center ">{{ todo.user_name }}</span>
+                            <% } %> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="body"> 
+            <div id="chat-circle" class="btn btn-raised">
+                <div id="chat-overlay" style="z-index: 1;"></div>
+                    <svg width="30px" height="30px" class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true" fill="currentColor" viewBox="2 2 24 24">
+                        <path fill-rule="evenodd" d="M4 3a1 1 0 0 0-1 1v8c0 .6.4 1 1 1h1v2a1 1 0 0 0 1.7.7L9.4 13H15c.6 0 1-.4 1-1V4c0-.6-.4-1-1-1H4Z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M8 17.2h.1l2.1-2.2H15a3 3 0 0 0 3-3V8h2c.6 0 1 .4 1 1v8c0 .6-.4 1-1 1h-1v2a1 1 0 0 1-1.7.7L14.6 18H9a1 1 0 0 1-1-.8Z" clip-rule="evenodd"/>
+                    </svg>                
+                </div>
+            <div class="chat-box">
+                <div class="chat-box-header">
+            <% if (data && data.trackper==1){%>
+                <span class="msg-avatar avatar-chats-header"> <img src="/static/imgs/search-client.png" width="30px" height="30px"></span>
+                <div style="float: left; padding-top: 5px; padding-left: 5px;">
+                    {{ formData.user_name }}
+                    </div> 
+            <% } %> 
+            <% if (data && data.trackper==2){%>
+                <span class="msg-avatar avatar-chats-header"> <img src="/static/imgs/admin-settings-male.png" width="30px" height="30px"></span>
+                <div style="float: left; padding-top: 5px; padding-left: 5px;">Quản trị viên</div>
+            <% } %> 
+                <span class="chat-box-toggle">
+                    <svg height="30px" width="30px" class="w-[40px] h-[40px] text-gray-800 dark:text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
+                    </svg>
+                </span>
+                </div>
+                <div class="chat-box-body">
+                <div class="chat-box-overlay">   
+                </div>
+                <div class="chat-logs">
+                <div ng-repeat="mess in messform"  id="chat-messe">
+                    <div class="chat-msg" ng-class="(mess.id_user == idIndex_user || mess.trackper==formData.trackper) ?'self':'user'">
+                        <span class="msg-avatar"><img ng-class=" mess.trackper==1 || (formData.trackper == 1 && mess.id_user == idIndex_user) || ((mess.re_user==0 || mess.re_user==51296 || mess.re_user==idIndex_user) && mess.id_user != idIndex_user && formData.trackper != 1) ?'contad':'contus'"></span>
+                        <div class="div-mess">
+                            <span class ="cm-msg-name" ng-hide="mess.trackper == formData.trackper && mess.id_user == idIndex_user" ng-class="{'self': mess.trackper == formData.trackper || mess.trackper == 1, 'user': mess.trackper != formData.trackper && mess.trackper != 1, 'name-self-right': formData.trackper==1, 'name-self-left': formData.trackper!=1}">{{mess.user_name}}</span>
+                                <div ng-hide="mess.trackper == formData.trackper&& mess.id_user == idIndex_user" style="clear:both"></div>
+                            <div class="cm-msg-text" style="word-wrap: break-word" ng-bind-html="mess.msg"></div>
+                                <div style="clear:both"></div>
+                            <span class="span-times">{{mess.created_at | date: "hh:mm:ss, dd/MM/yyyy"}}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+            <!--chat-log -->
+                </div>
+                <div class="chat-input">
+                <form>
+                    <input type="text" id="chat-input" ng-model="messdata.msg" placeholder="Nội dung tin nhắn..." autocomplete="off" maxlength="2000" />
+                    <button type="submit" class="chat-submit" id="chat-submit" ng-click="message_todos()" style="margin-right: 10px;">
+                        <svg width="30px" height="30px" style="transform: rotate(90deg);" class="w-[30px] h-[30px] text-gray-800 dark:text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 2c.4 0 .8.3 1 .6l7 18a1 1 0 0 1-1.4 1.3L13 19.5V13a1 1 0 1 0-2 0v6.5L5.4 22A1 1 0 0 1 4 20.6l7-18a1 1 0 0 1 1-.6Z" clip-rule="evenodd"/>
+                        </svg>                        
+                    </button>
+                </form>      
+                </div>
+            </div>
+
+        </div>
+        <% if (data && data.trackper==1){%>
+        <!-- phone box -->
+        <div class="hotline-phone-ring-wrap">
+            <div class="hotline-phone-ring">
+                <div class="hotline-phone-ring-circle"></div>
+                <div class="hotline-phone-ring-circle-fill"></div>
+                <div class="hotline-phone-ring-img-circle">
+                <a href="tel:0328949298" class="pps-btn-img">
+                    <img src="/static/theme/img/icon-call-nh.png" alt="Gọi điện thoại" width="50">
+                </a>
+                </div>
+            </div>
+            <div class="hotline-bar">
+                <a href="tel:0328949298">
+                    <span class="text-hotline">founder</span>
+                </a>
+            </div>
+        </div>
+        <% } %>
+    </div>  
+</div>
+
+</body>
+
+</html>
