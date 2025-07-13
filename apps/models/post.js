@@ -277,14 +277,14 @@ async function addDataChat(params) {
                 var option = "Tin nhắn: " + params.msg.substring(0, 50) + (params.msg && params.msg.length > 50 ? "..." : "");
                 var user;
                 const FullDomain = process.argv[2] ? process.argv[2] + "/todos/dashboard" : "";
-                if (params.trackper == 2) {
+                if (params.trackper == 3) {
                     user = 51296;
                     // titleUser="User";
-                } else if (params.trackper == 1 && params.re_user != 51296) {
+                } else if (params.trackper <= 2 && params.re_user != 51296) {
                     user = params.re_user;
                     titleUser = "Admin";
                 };
-                if (params.trackper == 1 && params.re_user == 0) {
+                if (params.trackper <= 2 && params.re_user == 0) {
                     const user_md = require('./user');
                     const helper = require("../helpers/helper");
                     var ListUser = await user_md.getAllUsers();
@@ -322,7 +322,7 @@ function getAllDataChat() {
 function getAllDataChatbyIdUser(id_user) {
     try {
         if (id_user) {
-            var querys = "SELECT * FROM datachat WHERE (trackper=2 AND id_user = ?) OR (trackper=1 AND (re_user = 0 OR re_user = ?))";
+            var querys = "SELECT * FROM datachat WHERE (trackper=3 AND id_user = ?) OR (trackper <=2 AND (re_user = 0 OR re_user = ?))";
             var quer = [id_user, id_user];
             return DBLocal.sqlite3_all(querys, quer);
         };

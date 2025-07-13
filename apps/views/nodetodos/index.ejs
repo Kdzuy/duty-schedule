@@ -132,10 +132,10 @@
                 </div>
                 <div class="chat-logs">
                 <div ng-repeat="mess in messform"  id="chat-messe">
-                    <div class="chat-msg" ng-class="(mess.id_user == idIndex_user || mess.trackper==formData.trackper) ?'self':'user'">
+                    <div class="chat-msg" ng-class="(mess.id_user == idIndex_user || (mess.trackper==formData.trackper && formData.trackper == 3) || ((mess.trackper== 1 || mess.trackper== 2) && (formData.trackper == 2 || formData.trackper == 1))) ?'self':'user'" data="{{mess.trackper}}-{{formData.trackper}}">
                         <span class="msg-avatar"><img ng-class=" mess.trackper <= 2 || (formData.trackper <= 2 && mess.id_user == idIndex_user) || ((mess.re_user==0 || mess.re_user==51296 || mess.re_user==idIndex_user) && mess.id_user != idIndex_user && formData.trackper == 3) ?'contad':'contus'"></span>
                         <div class="div-mess">
-                            <span class ="cm-msg-name" ng-hide="mess.trackper == formData.trackper && mess.id_user == idIndex_user" ng-class="{'self': mess.trackper == formData.trackper || mess.trackper <= 2, 'user': mess.trackper != formData.trackper && mess.trackper == 3, 'name-self-right': formData.trackper <= 2, 'name-self-left': formData.trackper==3}">{{mess.user_name}}</span>
+                            <span class ="cm-msg-name" ng-hide="mess.id_user == idIndex_user" ng-class="{'self': mess.trackper == formData.trackper || mess.trackper <= 2, 'user': mess.trackper != formData.trackper && mess.trackper == 3, 'name-self-right': formData.trackper <= 2, 'name-self-left': formData.trackper==3}">{{mess.user_name}}</span>
                                 <div ng-hide="mess.trackper == formData.trackper && mess.id_user == idIndex_user" style="clear:both"></div>
                             <div class="cm-msg-text" style="word-wrap: break-word" ng-bind-html="mess.msg"></div>
                                 <div style="clear:both"></div>

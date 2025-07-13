@@ -12,7 +12,7 @@ async function giaoviec(req, res) {
             var dataUser = [];
             if (users && users.length > 0) {
                 for (var i = 0; i < users.length; i++) {
-                    if (helper.compare_password("3", users[i].permission)) dataUser.push(users[i]);
+                    if (helper.compare_password("3", users[i].permission) || helper.compare_password("2", users[i].permission)) dataUser.push(users[i]);
                 }
             }
             if (dataUser && dataUser.length > 0) {

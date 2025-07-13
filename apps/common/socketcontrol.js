@@ -43,7 +43,7 @@ function socketIO(io) {
                 socket.trackper = trackper;
                 // idConect.push(id_user);
                 console.log("Username vừa kết nối SocketIO: " + user_name);
-                if (socket.trackper == 2) {
+                if (socket.trackper <= 2) {
                     socket.join("51296");
                     idConect["51296"] = id_user;//xác định onl, off
                     post_md.deleteDataChatReplay(10,50);
@@ -78,11 +78,12 @@ function socketIO(io) {
                                         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Thay thế **text** thành <strong>text</strong>
                                         .replace(/\n/g, '<br>');  // Thay thế \n thành <br>
                     //console.log("Chatbot: ", message.msg);
-                    if (message.trackper == 2) {
+                    if (message.trackper <= 2) {
                         message.trackper = 3;
-                    } else {
-                        message.trackper = 2;
-                    };
+                    } 
+                    // else {
+                    //     message.trackper = 2;
+                    // };
                     socket.emit("update_message", message);
                     // if (message.trackper == 1) {
                     //     message.re_user = "51296";
@@ -93,7 +94,7 @@ function socketIO(io) {
                     // };
                 } else {
                     if (message.re_user !== 0) {
-                        if (message.trackper == 2) {
+                        if (message.trackper <= 2) {
                             socket.to(message.re_user + "").emit("update_message", message);
                             //console.log('re_user1: ',message.re_user)
                         } else {
@@ -105,7 +106,7 @@ function socketIO(io) {
                         //console.log('re_user3: ',message.re_user)
                     };
 
-                    if (message.trackper == 2) {
+                    if (message.trackper <= 2) {
                         if (idConect[message.re_user + ""] && idConect[message.re_user + ""] == message.re_user) {
                             message.online = 1;
                         } else {
