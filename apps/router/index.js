@@ -4,7 +4,7 @@ const multer = require('multer');
 const uploadmid = multer().single('upload');
 //=======================================================================
 function routerIndex(req, res) {
-    return res.redirect("https://www.google.com/");
+    return res.redirect("/blog");
 };
 async function blog(req, res) {
     try {

@@ -41,9 +41,9 @@ router.delete("/data/delete", checkPermissionUsers.checkPermissionGuestUpRequest
 //router another
 router.use("/admin", require(__dirname + "/admin"));
 router.use("/blog", require(__dirname + "/blog"));
-router.use("/track", require(__dirname + "/track"));
-router.use("/fasterurl", require(__dirname + "/fasterurl"));
-router.use("/scandomain", require(__dirname + "/scandomain"));
+// router.use("/track", require(__dirname + "/track"));
+// router.use("/fasterurl", require(__dirname + "/fasterurl"));
+// router.use("/scandomain", require(__dirname + "/scandomain"));
 router.use("/todos", require(__dirname + "/todos"));
 router.use("/", require(__dirname + "/keyurl"));
 //====================================================================================== 

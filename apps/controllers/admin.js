@@ -18,7 +18,7 @@ router.get("/post", checkPermissionUsers.checkPermissionAdminUpRequest, routerAd
 router.get("/user", checkPermissionUsers.checkPermissionAdminUpRequest, routerAdmin.getuser);
 router.get("/updateuser/:id", checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.getupdateuser);
 router.put("/updateuser", checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.putupdateuser);
-router.get("/addressBTC", checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.addressbtc);
+// router.get("/addressBTC", checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.addressbtc);
 router.get("/qrcode", checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.qrcode);
 router.get("/hashsha256", checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.hashsha256);
 router.post("/subscribe", checkPermissionUsers.checkPermissionUserUpRequest, routerAdmin.subscribe);

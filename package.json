@@ -1,5 +1,5 @@
 {
-  "name": "beeblog",
+  "name": "duty-schedule",
   "version": "1.0.0",
   "engines": {
     "node": "20.8.0",
@@ -12,7 +12,7 @@
     "start-b4a": "node index.js https://faceblock-ticloxk3.b4a.run",
     "start-zeabur": "node index.js https://faceblock.zeabur.app",
     "start-vercel": "node index.js https://faceblocks.vercel.app",
-    "build": "node index.js http://localhost:3000",
+    "build": "node index.js http://localhost:8888",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "BeeTwo",
