@@ -110,7 +110,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
         };
 
         $scope.formData.trackper = data.data.user.trackper;
-        if ($scope.formData.trackper == 2) {
+        if ($scope.formData.trackper == 3) {
             //     $scope.formData.user_name=document.getElementById("idusers").innerText
             // } else {
             $scope.formData.user_name = data.data.user.user_name;
@@ -222,7 +222,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
         }
     };
     function conectNotify() {
-        if ($scope.formData.trackper == 1) {
+        if ($scope.formData.trackper <= 2) {
             var idNotif = 51296;
         } else {
             var idNotif = $scope.idIndex_user;
@@ -273,7 +273,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
     $scope.filterTodo = function () {
         $scope.loading = true;
         // alert($scope.formData.id_user);
-        if ($scope.formData.trackper == 1) {
+        if ($scope.formData.trackper <= 2) {
             // svTodos.get("/nodetodo").then(function(data){
             //     $scope.todos= data.data.data;
             // });
@@ -411,7 +411,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
                 data.data.text_jobdemo = data.data.text_job;
                 data.data.updatetime = false;
                 data.data.updatetext = false;
-                if ($scope.formData.trackper == 1) {
+                if ($scope.formData.trackper <= 2) {
                     filter.push(data.data);
                 }
                 $scope.todos.push(data.data);
@@ -455,7 +455,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
             alert("Độ dài cập nhật Todo không được hơn 1000 ký tự! (Length: " + todo.text_jobdemo.length + ")");
             return;
         }
-        if ($scope.formData.trackper == 2) {
+        if ($scope.formData.trackper == 3) {
             var nowdaya = todo.end_at;
             todo.end_at = $filter('date')(nowdaya, 'yyyy-MM-dd');
             var nowdaydemoa = todo.end_atdemo;
@@ -516,7 +516,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
                 console.log(err);
                 // res.json({status_code:400});
             });
-        } else if ($scope.formData.trackper == 1) {
+        } else if ($scope.formData.trackper <= 2) {
 
 
             var nowdaya = todo.end_atdemo;
@@ -580,15 +580,15 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
             id: todo.id,
             id_user: todo.id_user
         };
-        if ($scope.formData.trackper == 1 && todo.isDone == true) {
+        if ($scope.formData.trackper <= 2 && todo.isDone == true) {
             params.end_atreal = $filter('date')(now, 'yyyy-MM-dd');
         } else {
             params.end_atreal = null;
         };
-        if ($scope.formData.trackper == 1) {
+        if ($scope.formData.trackper <= 2) {
             params.job_num = 1;
             todo.isDonedemo = params.isDone;
-        } else if ($scope.formData.trackper == 2) {
+        } else if ($scope.formData.trackper == 3) {
             params.job_num = 2;
         };
         //  alert(params.id_user);
@@ -671,8 +671,8 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
             // re_name: messdatas.re_name
         };
 
-        if ($scope.formData.trackper == 1) {
-            if ($scope.formData.re_user_trackper != undefined && $scope.formData.re_user_trackper == 2) {
+        if ($scope.formData.trackper <= 2) {
+            if ($scope.formData.re_user_trackper != undefined && $scope.formData.re_user_trackper == 3) {
                 messdata.re_user = messdatas.re_user;
             } else {
                 messdata.re_user = 0;

@@ -5,12 +5,12 @@ const routerTodos = require("../router/todos");
 const checkPermissionUsers=require("../models/checkPermissionUsers");
 //===========================================================================================
 //node Todos module 
-router.get("/dashboard", checkPermissionUsers.checkPermissionUserUpRequest,routerTodos.dashboard);
-router.get("/nodetodo", checkPermissionUsers.checkPermissionUserUpRequest, routerTodos.getnodetodo);
-router.post("/nodetodo", checkPermissionUsers.checkPermissionUserUpRequest, routerTodos.postnodetodo);
-router.put("/nodetodo",  checkPermissionUsers.checkPermissionUserUpRequest, routerTodos.putnodetodo);
-router.put("/nodetodofn", checkPermissionUsers.checkPermissionUserUpRequest, routerTodos.putnodetodofn);
-router.put("/nodetododel", checkPermissionUsers.checkPermissionUserUpRequest, routerTodos.putnodetododel);
-router.post("/getchat", checkPermissionUsers.checkPermissionUserUpRequest, routerTodos.getchat);
+router.get("/dashboard", checkPermissionUsers.checkPermissionGuestUpRequest,routerTodos.dashboard);
+router.get("/nodetodo", checkPermissionUsers.checkPermissionGuestUpRequest, routerTodos.getnodetodo);
+router.post("/nodetodo", checkPermissionUsers.checkPermissionGuestUpRequest, routerTodos.postnodetodo);
+router.put("/nodetodo",  checkPermissionUsers.checkPermissionGuestUpRequest, routerTodos.putnodetodo);
+router.put("/nodetodofn", checkPermissionUsers.checkPermissionGuestUpRequest, routerTodos.putnodetodofn);
+router.put("/nodetododel", checkPermissionUsers.checkPermissionGuestUpRequest, routerTodos.putnodetododel);
+router.post("/getchat", checkPermissionUsers.checkPermissionGuestUpRequest, routerTodos.getchat);
 
 module.exports=router;

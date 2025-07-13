@@ -7,12 +7,12 @@ const Notifications = require("../models/Notifications");
 async function giaoviec(req, res) {
     try {
         // if (req.session.trackper < 3) {
-        if (req.session.trackper <= 1) {
+        if (req.session.trackper <= 2) {
             var users = await user_md.getIdNameUsers();
             var dataUser = [];
             if (users && users.length > 0) {
                 for (var i = 0; i < users.length; i++) {
-                    if (helper.compare_password("2", users[i].permission)) dataUser.push(users[i]);
+                    if (helper.compare_password("3", users[i].permission)) dataUser.push(users[i]);
                 }
             }
             if (dataUser && dataUser.length > 0) {
@@ -54,10 +54,10 @@ async function getnodetodo(req, res) {
     try {
         // if (req.session.trackper < 3) {
         let dataTodos, dataChats, datausers;
-        if (req.session.trackper == 2) {
+        if (req.session.trackper == 3) {
             dataTodos = await todos_md.getAllTodosbyUser(req.session.user.id);
             dataChats = await post_md.getAllDataChatbyIdUser(req.session.user.id);
-        } else if (req.session.trackper <= 1) {
+        } else if (req.session.trackper <= 2) {
             dataTodos = await todos_md.getAllTodos();
             dataChats = await post_md.getAllDataChat();
         }
@@ -124,7 +124,7 @@ async function postnodetodo(req, res) {
         var nowday = today.getSeconds() + "-" + today.getMinutes() + "-" + today.getHours() + "-" + today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear();
         todo.id = todo.id_user + "-" + nowday;
 
-        if (req.session.trackper == 1) {
+        if (req.session.trackper <= 2) {
             var optionData = "Vừa bổ sung công việc cho bạn!";
             var titleUser = "Admin";
             await Notifications.getNotificationDefault(
@@ -167,11 +167,11 @@ async function putnodetodo(req, res) {
             (params.text_jobdemo && (params.text_jobdemo.length > 1000 || params.text_jobdemo.length == 0))) {
             return res.status(400).send("Không có ID bài viết hoặc sai cấu trúc dữ liệu");
         } else {
-            if (req.session.trackper <= 1) {
+            if (req.session.trackper <= 2) {
                 var optionData = "Vừa cập nhật Công việc của bạn!";
                 UserId = params.id_user;
                 titleUser = "Admin";
-            } else if (req.session.trackper == 2) {
+            } else if (req.session.trackper == 3) {
                 var optionData = "Vừa gửi yêu cầu cập nhật Công việc!";
                 UserId = 51296;
                 titleUser = req.session.user.last_name;
@@ -214,7 +214,7 @@ async function putnodetodofn(req, res) {
             var UserId;
             var titleUser;
 
-            if (req.session.trackper <= 1) {
+            if (req.session.trackper <= 2) {
                 titleUser = "Admin";
 
                 if (params.isDone == 1) {
@@ -224,7 +224,7 @@ async function putnodetodofn(req, res) {
                 }
 
                 UserId = params.id_user;
-            } else if (req.session.trackper == 2) {
+            } else if (req.session.trackper == 3) {
                 titleUser = req.session.user.last_name;
 
                 if (params.isDone == 1) {
@@ -263,7 +263,7 @@ async function putnodetododel(req, res) {
             console.log("méo có ID để xóa");
             return res.status(400).send("ID không tồn tại");
         } else {
-            if (req.session.trackper <= 1) {
+            if (req.session.trackper <= 2) {
                 var result = await todos_md.deleteTodo(id);
                 if (!result) {
                     return res.json({ status_code: 400 });

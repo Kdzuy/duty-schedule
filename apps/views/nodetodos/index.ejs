@@ -40,7 +40,7 @@
             </h1>
             <h3><b>{{ appNamelate }}</b><span class="label label-danger">{{ countlate }}</span></h3>
 
-            <% if (data && data.trackper==1){%>
+            <% if (data && data.trackper <= 2){%>
                 <div class="form-inline" style="margin-top: 30px;">
                     <label for="idusers" class="input-lg mr-sm-2">Người dùng:</label>
                         <select class="form-control input-lg text-center" ng-model="formData.id_user" ng-change="filterTodo()" id="idusers">
@@ -86,15 +86,15 @@
                     <div style="margin: 10px 10px 0px 25px;" class="form-inline">
                             <input type="checkbox" class="form-control input-group-lg"  style="width: 36px; float: left;" ng-change="updateTodoFN(todo)" ng-model="todo.isDone" />
                         <div style="margin-left: 20px; max-width: 100%;">
-                            <% if (data && data.trackper==1){%>
+                            <% if (data && data.trackper<= 2){%>
                             <a href ng-click="deleteTodo(todo)" style=" float: left;margin-right: 5px; "><i class="fa fa-remove fa-3x" style="color: red;"></i></a>
                             <% } %> 
                             <a href ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible" style=" float: left;margin-top: 2px; margin-right: 10px;"><i class="fa fa-edit fa-3x" style="color:royalblue;"></i></a>
                             <span ng-class="{'strike': todo.isDone, 'update': todo.updatetext}" editable-text= "todo.text_jobdemo" e-form="textBtnForm" onaftersave="updateTodo(todo)" style="background-color: #ffeeba;  max-width:100%; word-wrap: break-word; border: 2px; box-shadow: 1px 1px 1px 1px; height: fit-content; width: auto; border-color: blue; font-family: Cambria;" class="form-control input-lg" >{{ todo.text_job }}</span>
                             <span ng-class="{'strike': todo.isDone, 'nomartime': todo.timeline===1 && todo.isDone==false, 'alerttime': todo.timeline===2 && todo.isDone==false,'deathline': todo.timeline===3 && todo.isDone==false,'update': todo.updatetime}" editable-date="todo.end_atdemo" e-form="textBtnForm"  style="width: auto; border: 2px; box-shadow: 1px 1px 1px 1px; font-family: Times;" class="form-control input-lg text-center">Đến ngày: {{ todo.end_at | date:"dd/MM/yyyy" || "Không" }}</span>
 
-                            <% if (data && data.trackper==1){%>
-                            <span ng-class="todo.isDone!=todo.isDonedemo && formData.trackper==1 && todo.isDone==false ?'strikead':'unstrike'" style="background-color: #d4af37;font-weight: bold; width: auto; border: 1px; box-shadow: 3px 3px;  border-radius:0px 0px 15px 15px; font-family: Optima;" class="form-control input-lg text-center ">{{ todo.user_name }}</span>
+                            <% if (data && data.trackper<= 2){%>
+                            <span ng-class="todo.isDone!=todo.isDonedemo && formData.trackper <= 2 && todo.isDone==false ?'strikead':'unstrike'" style="background-color: #d4af37;font-weight: bold; width: auto; border: 1px; box-shadow: 3px 3px;  border-radius:0px 0px 15px 15px; font-family: Optima;" class="form-control input-lg text-center ">{{ todo.user_name }}</span>
                             <% } %> 
                         </div>
                     </div>
@@ -111,13 +111,13 @@
                 </div>
             <div class="chat-box">
                 <div class="chat-box-header">
-            <% if (data && data.trackper==1){%>
+            <% if (data && data.trackper<= 2){%>
                 <span class="msg-avatar avatar-chats-header"> <img src="/static/imgs/search-client.png" width="30px" height="30px"></span>
                 <div style="float: left; padding-top: 5px; padding-left: 5px;">
                     {{ formData.user_name }}
                     </div> 
             <% } %> 
-            <% if (data && data.trackper==2){%>
+            <% if (data && data.trackper==3){%>
                 <span class="msg-avatar avatar-chats-header"> <img src="/static/imgs/admin-settings-male.png" width="30px" height="30px"></span>
                 <div style="float: left; padding-top: 5px; padding-left: 5px;">Quản trị viên</div>
             <% } %> 
@@ -133,10 +133,10 @@
                 <div class="chat-logs">
                 <div ng-repeat="mess in messform"  id="chat-messe">
                     <div class="chat-msg" ng-class="(mess.id_user == idIndex_user || mess.trackper==formData.trackper) ?'self':'user'">
-                        <span class="msg-avatar"><img ng-class=" mess.trackper==1 || (formData.trackper == 1 && mess.id_user == idIndex_user) || ((mess.re_user==0 || mess.re_user==51296 || mess.re_user==idIndex_user) && mess.id_user != idIndex_user && formData.trackper != 1) ?'contad':'contus'"></span>
+                        <span class="msg-avatar"><img ng-class=" mess.trackper <= 2 || (formData.trackper <= 2 && mess.id_user == idIndex_user) || ((mess.re_user==0 || mess.re_user==51296 || mess.re_user==idIndex_user) && mess.id_user != idIndex_user && formData.trackper == 3) ?'contad':'contus'"></span>
                         <div class="div-mess">
-                            <span class ="cm-msg-name" ng-hide="mess.trackper == formData.trackper && mess.id_user == idIndex_user" ng-class="{'self': mess.trackper == formData.trackper || mess.trackper == 1, 'user': mess.trackper != formData.trackper && mess.trackper != 1, 'name-self-right': formData.trackper==1, 'name-self-left': formData.trackper!=1}">{{mess.user_name}}</span>
-                                <div ng-hide="mess.trackper == formData.trackper&& mess.id_user == idIndex_user" style="clear:both"></div>
+                            <span class ="cm-msg-name" ng-hide="mess.trackper == formData.trackper && mess.id_user == idIndex_user" ng-class="{'self': mess.trackper == formData.trackper || mess.trackper <= 2, 'user': mess.trackper != formData.trackper && mess.trackper == 3, 'name-self-right': formData.trackper <= 2, 'name-self-left': formData.trackper==3}">{{mess.user_name}}</span>
+                                <div ng-hide="mess.trackper == formData.trackper && mess.id_user == idIndex_user" style="clear:both"></div>
                             <div class="cm-msg-text" style="word-wrap: break-word" ng-bind-html="mess.msg"></div>
                                 <div style="clear:both"></div>
                             <span class="span-times">{{mess.created_at | date: "hh:mm:ss, dd/MM/yyyy"}}</span>
@@ -160,7 +160,7 @@
             </div>
 
         </div>
-        <% if (data && data.trackper==1){%>
+        <% if (data && data.trackper <= 2){%>
         <!-- phone box -->
         <div class="hotline-phone-ring-wrap">
             <div class="hotline-phone-ring">

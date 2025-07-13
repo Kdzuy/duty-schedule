@@ -165,19 +165,19 @@ async function postsignin(req, res) {
                         req.session.trackper = 1;
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
-                        return res.redirect("/track");
+                        return res.redirect("/admin/hashsha256");
                     } else if (helper.compare_password("2", user.permission)) {
                         req.session.trackper = 2;
-                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/track")) : "");
+                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/admin/hashsha256")) : "");
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
-                        return res.redirect("/fasterurl");
+                        return res.redirect("/admin/hashsha256");
                     } else if (helper.compare_password("3", user.permission)) {
                         req.session.trackper = 3;
-                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/fasterurl")) : "");
+                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/admin/hashsha256")) : "");
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
-                        return res.redirect("/fasterurl");
+                        return res.redirect("/admin/hashsha256");
                     } else {
                         return res.redirect("/admin/signin");
                     };
@@ -388,15 +388,15 @@ async function getuser(req, res) {
         // if (data.users && data.users.length>0) {
         for (var i = 0; i < data.users.length; i++) {
             if (helper.compare_password("1", data.users[i].permission)) {
-                data.users[i].trackper = "Quản trị viên";
+                data.users[i].trackper = "Quản trị";
                 data.users[i].arrangetrackper = 1;
                 data.countpermiss.admin++
             } else if (helper.compare_password("2", data.users[i].permission)) {
-                data.users[i].trackper = "Thành viên";
+                data.users[i].trackper = "Quản lý";
                 data.users[i].arrangetrackper = 2;
                 data.countpermiss.user++
             } else if (helper.compare_password("3", data.users[i].permission)) {
-                data.users[i].trackper = "Tài khoản khách";
+                data.users[i].trackper = "Thành viên";
                 data.users[i].arrangetrackper = 3;
                 data.countpermiss.guest++
             } else {

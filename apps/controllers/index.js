@@ -34,7 +34,7 @@ router.post("/upload", checkPermissionUsers.checkPermissionGuestUpRequest, route
 router.post("/uploadimg", routerIndex.uploadtrack);
 router.get('/listimg', checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.listimg);
 router.get('/photo/:id', routerIndex.photo);
-router.delete('/deleteimg', checkPermissionUsers.checkPermissionAdminUpRequest, routerIndex.deleteimg);
+router.delete('/deleteimg', checkPermissionUsers.checkPermissionUserUpRequest, routerIndex.deleteimg);
 router.get("/data/:title", checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.dataTitle);
 router.delete("/data/delete", checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.dataDelete);
 //======================================================================================  
