@@ -263,7 +263,7 @@ async function putnodetododel(req, res) {
             console.log("méo có ID để xóa");
             return res.status(400).send("ID không tồn tại");
         } else {
-            if (req.session.trackper <= 2) {
+            if (req.session.trackper <= 1) {
                 var result = await todos_md.deleteTodo(id);
                 if (!result) {
                     return res.json({ status_code: 400 });

@@ -86,7 +86,7 @@
                     <div style="margin: 10px 10px 0px 25px;" class="form-inline">
                             <input type="checkbox" class="form-control input-group-lg"  style="width: 36px; float: left;" ng-change="updateTodoFN(todo)" ng-model="todo.isDone" />
                         <div style="margin-left: 20px; max-width: 100%;">
-                            <% if (data && data.trackper<= 2){%>
+                            <% if (data && data.trackper<= 1){%>
                             <a href ng-click="deleteTodo(todo)" style=" float: left;margin-right: 5px; "><i class="fa fa-remove fa-3x" style="color: red;"></i></a>
                             <% } %> 
                             <a href ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible" style=" float: left;margin-top: 2px; margin-right: 10px;"><i class="fa fa-edit fa-3x" style="color:royalblue;"></i></a>
