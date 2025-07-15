@@ -385,6 +385,7 @@ function deleteDataImg(id) {
 };
 function deleteDataChatReplay(id, ad) {
     try {
+        //id = 0; ad = 0;
         if (id != undefined && ad != undefined) {
             console.log('Admin xóa dataChat cũ để lại Chat gần nhất, users: ', id, ', admin: ', ad);
             var querys = `DELETE FROM datachat 

@@ -111,16 +111,14 @@
                 </div>
             <div class="chat-box">
                 <div class="chat-box-header">
-            <% if (data && data.trackper<= 2){%>
+            <% if (data && data.trackper == 3){%>
                 <span class="msg-avatar avatar-chats-header"> <img src="/static/imgs/search-client.png" width="30px" height="30px"></span>
-                <div style="float: left; padding-top: 5px; padding-left: 5px;">
-                    {{ formData.user_name }}
-                    </div> 
-            <% } %> 
-            <% if (data && data.trackper==3){%>
+            <% } else { %>
                 <span class="msg-avatar avatar-chats-header"> <img src="/static/imgs/admin-settings-male.png" width="30px" height="30px"></span>
-                <div style="float: left; padding-top: 5px; padding-left: 5px;">Quản trị viên</div>
-            <% } %> 
+            <% } %>
+                <div style="float: left; padding-top: 5px; padding-left: 5px;">
+                    Tin nhắn
+                </div> 
                 <span class="chat-box-toggle">
                     <svg height="30px" width="30px" class="w-[40px] h-[40px] text-gray-800 dark:text-white" aria-hidden="true" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6m0 12L6 6"/>
@@ -132,10 +130,10 @@
                 </div>
                 <div class="chat-logs">
                 <div ng-repeat="mess in messform"  id="chat-messe">
-                    <div class="chat-msg" ng-class="(mess.id_user == idIndex_user || (mess.trackper==formData.trackper && formData.trackper == 3) || ((mess.trackper== 1 || mess.trackper== 2) && (formData.trackper == 2 || formData.trackper == 1))) ?'self':'user'" data="{{mess.trackper}}-{{formData.trackper}}">
+                    <div class="chat-msg" ng-class="mess.id_user == idIndex_user ?'self':'user'" data="{{mess.trackper}}-{{formData.trackper}}">
                         <span class="msg-avatar"><img ng-class=" mess.trackper <= 2 || (formData.trackper <= 2 && mess.id_user == idIndex_user) || ((mess.re_user==0 || mess.re_user==51296 || mess.re_user==idIndex_user) && mess.id_user != idIndex_user && formData.trackper == 3) ?'contad':'contus'"></span>
                         <div class="div-mess">
-                            <span class ="cm-msg-name" ng-hide="mess.id_user == idIndex_user" ng-class="{'self': mess.trackper == formData.trackper || mess.trackper <= 2, 'user': mess.trackper != formData.trackper && mess.trackper == 3, 'name-self-right': formData.trackper <= 2, 'name-self-left': formData.trackper==3}">{{mess.user_name}}</span>
+                            <span class ="cm-msg-name" ng-hide="mess.id_user == idIndex_user" ng-class="{'self': mess.id_user == idIndex_user, 'user': mess.id_user != idIndex_user, 'name-self-right': formData.trackper <= 2 && mess.id_user == idIndex_user, 'name-self-left': formData.trackper==3}">{{mess.user_name}}</span>
                                 <div ng-hide="mess.trackper == formData.trackper && mess.id_user == idIndex_user" style="clear:both"></div>
                             <div class="cm-msg-text" style="word-wrap: break-word" ng-bind-html="mess.msg"></div>
                                 <div style="clear:both"></div>

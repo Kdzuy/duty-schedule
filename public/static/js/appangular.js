@@ -297,7 +297,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
             };
             $scope.countcurrent = 0;
             $scope.countlate = 0;
-            $scope.messform = [];
+            //$scope.messform = [];
             if (messdatas.re_user != 51296 && messdatas.re_user != 0) {
                 var arrfilter = filter;
                 $scope.todos = [];
@@ -314,44 +314,44 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
                     };
 
                 };
-                var idchat = messdatas.re_user;
-                svTodos.getchat([idchat]).then(function (data) {
-                    for (var i = 0; i < data.data.length; i++) {
-                        data.data[i].created_at = new Date(data.data[i].created_at);
-                        for (var j = 0; j < listusers.length; j++) {
-                            if (listusers[j].id == data.data[i].id_user) {
-                                data.data[i].user_name = listusers[j].last_name;
-                                break;
-                            };
-                        }
-                    };
-                    data.data.sort(function (a, b) {
-                        return a.created_at - b.created_at;
-                    });
-                    $scope.messform = data.data;
-                }).catch(function (err) {
-                    console.log(err);
-                });
+                // var idchat = messdatas.re_user;
+                // svTodos.getchat([idchat]).then(function (data) {
+                //     for (var i = 0; i < data.data.length; i++) {
+                //         data.data[i].created_at = new Date(data.data[i].created_at);
+                //         for (var j = 0; j < listusers.length; j++) {
+                //             if (listusers[j].id == data.data[i].id_user) {
+                //                 data.data[i].user_name = listusers[j].last_name;
+                //                 break;
+                //             };
+                //         }
+                //     };
+                //     data.data.sort(function (a, b) {
+                //         return a.created_at - b.created_at;
+                //     });
+                //     $scope.messform = data.data;
+                // }).catch(function (err) {
+                //     console.log(err);
+                // });
             } else {
                 $scope.todos = filter;
-                var idchat = messdatas.re_user;
-                svTodos.getchat([idchat]).then(function (data) {
-                    for (var i = 0; i < data.data.length; i++) {
-                        data.data[i].created_at = new Date(data.data[i].created_at);
-                        for (var j = 0; j < listusers.length; j++) {
-                            if (listusers[j].id == data.data[i].id_user) {
-                                data.data[i].user_name = listusers[j].last_name;
-                                break;
-                            };
-                        }
-                    };
-                    data.data.sort(function (a, b) {
-                        return a.created_at - b.created_at;
-                    });
-                    $scope.messform = data.data;
-                }).catch(function (err) {
-                    console.log(err);
-                });
+                // var idchat = messdatas.re_user;
+                // svTodos.getchat([idchat]).then(function (data) {
+                //     for (var i = 0; i < data.data.length; i++) {
+                //         data.data[i].created_at = new Date(data.data[i].created_at);
+                //         for (var j = 0; j < listusers.length; j++) {
+                //             if (listusers[j].id == data.data[i].id_user) {
+                //                 data.data[i].user_name = listusers[j].last_name;
+                //                 break;
+                //             };
+                //         }
+                //     };
+                //     data.data.sort(function (a, b) {
+                //         return a.created_at - b.created_at;
+                //     });
+                //     $scope.messform = data.data;
+                // }).catch(function (err) {
+                //     console.log(err);
+                // });
                 for (var i = 0; i < $scope.todos.length; i++) {
                     if ($scope.todos[i].isDone == 0) {
                         $scope.countcurrent++;
