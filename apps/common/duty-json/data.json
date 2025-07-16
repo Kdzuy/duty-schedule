@@ -1,0 +1,103 @@
+{
+  "members": [
+    {
+      "id": 1752661300886,
+      "name": "Duy",
+      "phone": "0328949298",
+      "positionId": 6,
+      "teamId": 7,
+      "locationId": 1752660312565
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "name": "Tổ TH"
+    },
+    {
+      "id": 2,
+      "name": "Tổ AN"
+    },
+    {
+      "id": 3,
+      "name": "Tổ CSPCTP"
+    },
+    {
+      "id": 4,
+      "name": "Tổ CSTT"
+    },
+    {
+      "id": 5,
+      "name": "Tổ CSKV"
+    },
+    {
+      "id": 6,
+      "name": "Trực Lãnh đạo"
+    },
+    {
+      "id": 7,
+      "name": "Trực ban"
+    }
+  ],
+  "positions": [
+    {
+      "id": 1,
+      "name": "Trưởng Công an"
+    },
+    {
+      "id": 2,
+      "name": "Phó Trưởng Công an"
+    },
+    {
+      "id": 3,
+      "name": "Tổ trưởng"
+    },
+    {
+      "id": 4,
+      "name": "Tổ phó"
+    },
+    {
+      "id": 6,
+      "name": "Trực ban"
+    },
+    {
+      "id": 1752658540553,
+      "name": "Cán bộ"
+    }
+  ],
+  "locations": [
+    {
+      "id": 1752660312565,
+      "name": "Trực ban"
+    },
+    {
+      "id": 1752660315048,
+      "name": "C1"
+    },
+    {
+      "id": 1752660317252,
+      "name": "C2"
+    },
+    {
+      "id": 1752660319751,
+      "name": "C3"
+    }
+  ],
+  "masterSchedule": {
+    "2025-07-16": {
+      "7": [
+        {
+          "memberId": 1752661300886
+        }
+      ]
+    },
+    "2025-07-14": {
+      "7": [
+        {
+          "memberId": 1752661300886
+        }
+      ]
+    }
+  },
+  "scheduleTemplates": {}
+}

@@ -1,0 +1,311 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // === LOGIC MỚI: TẠM THỜI TẮT RESPONSIVE KHI IN ===
+    const viewportMeta = document.querySelector('meta[name="viewport"]');
+    const originalViewportContent = viewportMeta.getAttribute('content');
+
+    window.addEventListener('beforeprint', () => {
+        console.log("ACTION: Chuẩn bị in, tạm thời tắt giao diện responsive.");
+        // Buộc trình duyệt hiển thị ở dạng máy tính để bàn để bản in đúng dạng bảng
+        viewportMeta.setAttribute('content', 'width=1200');
+    });
+
+    window.addEventListener('afterprint', () => {
+        console.log("ACTION: In xong, khôi phục lại giao diện responsive.");
+        // Trả lại cài đặt viewport ban đầu
+        viewportMeta.setAttribute('content', originalViewportContent);
+    });
+    // =======================================================
+    // === LƯU VÀ TẢI FILE JSON ===
+    fetch('/duty/duty-get-json')
+    .then(res => res.json())
+    .then(loadedData => {
+        members = loadedData.members || [];
+        teams = loadedData.teams || [];
+        positions = loadedData.positions || [];
+        locations = loadedData.locations || [];
+        masterSchedule = loadedData.masterSchedule || {};
+        scheduleTemplates = loadedData.scheduleTemplates || {};
+
+        fullRender();
+        handleDateChange();
+        console.log("Đã tải dữ liệu từ server thành công.");
+    })
+    .catch(err => {
+        console.error("Lỗi khi tải dữ liệu từ server:", err);
+    });
+
+    // 1. LƯU DỮ LIỆU RA FILE JSON
+    dom.saveToJsonBtn.addEventListener('click', () => {
+        console.log("ACTION: Chuẩn bị lưu toàn bộ dữ liệu ra file JSON.");
+        
+        // const appData = {
+        //     members,
+        //     teams,
+        //     positions,
+        //     locations,
+        //     masterSchedule,
+        //     scheduleTemplates
+        // };
+
+        // const jsonString = JSON.stringify(appData, null, 2);
+        // const blob = new Blob([jsonString], { type: 'application/json' });
+        
+        // const url = URL.createObjectURL(blob);
+        // const a = document.createElement('a');
+        // a.href = url;
+        // a.download = 'data.json';
+        // document.body.appendChild(a);
+        // a.click();
+        
+        // document.body.removeChild(a);
+        // URL.revokeObjectURL(url);
+        
+        // console.log("ACTION: Đã yêu cầu tải file data.json.");
+        const appData = {
+            members,
+            teams,
+            positions,
+            locations,
+            masterSchedule,
+            scheduleTemplates
+        };
+
+        fetch('/duty/duty-import-json', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(appData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Đã lưu Thay đổi thành công.");
+            }
+        })
+        .catch(err => {
+            console.error("Lỗi khi lưu dữ liệu.", err);
+        });
+    });
+
+    // 2. KÍCH HOẠT CHỨC NĂNG CHỌN FILE KHI NHẤN NÚT "TẢI"
+    // dom.loadFromJsonBtn.addEventListener('click', () => {
+    //     console.log("ACTION: Nhấn nút 'Tải từ JSON', mở cửa sổ chọn file.");
+    //     dom.loadJsonInput.click();
+    // });
+
+    // 3. XỬ LÝ KHI NGƯỜI DÙNG ĐÃ CHỌN XONG FILE JSON
+    dom.loadJsonInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            console.log("ACTION: Không có file nào được chọn.");
+            return;
+        }
+
+        console.log(`ACTION: Đang đọc file ${file.name}...`);
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            try {
+                const jsonContent = e.target.result;
+                const loadedData = JSON.parse(jsonContent);
+
+                members = loadedData.members || [];
+                teams = loadedData.teams || [];
+                positions = loadedData.positions || [];
+                locations = loadedData.locations || [];
+                masterSchedule = loadedData.masterSchedule || {};
+                scheduleTemplates = loadedData.scheduleTemplates || {};
+
+                console.log("ACTION: Đã tải và cập nhật dữ liệu thành công.", loadedData);
+                
+                fullRender();
+                handleDateChange();
+                
+                alert('Đã tải dữ liệu từ file JSON thành công!');
+
+            } catch (error) {
+                console.error("Lỗi khi đọc hoặc phân tích file JSON:", error);
+                alert("Lỗi: File JSON không hợp lệ hoặc đã bị hỏng.");
+            }
+        };
+
+        reader.readAsText(file);
+        event.target.value = '';
+    });
+
+
+    // === CÁC SỰ KIỆN KHÁC ===
+
+    dom.generateScheduleBtn.addEventListener('click', () => {
+        console.log("ACTION: Lấy dữ liệu lịch hiện tại");
+        const currentData = getCurrentScheduleData();
+        
+        console.log("--- DỮ LIỆU LỊCH TRỰC (JSON theo ID và chức vụ) ---");
+        console.log(JSON.stringify(currentData, null, 2)); 
+        
+        alert('Đã lấy dữ liệu và in ra Console (Nhấn F12 để xem).');
+    });
+
+    dom.startDateInput.addEventListener('change', () => {
+        console.log("ACTION: Người dùng thay đổi ngày bắt đầu, tự động tải lại lịch");
+        handleDateChange();
+    });
+
+    dom.exportBtn.addEventListener('click', () => {
+        console.log("ACTION: Người dùng nhấn nút 'In / Xuất file'");
+        window.print();
+    });
+
+    dom.managementToggle.addEventListener('click', () => {
+        console.log("ACTION: Người dùng mở/đóng khu vực quản lý");
+        dom.managementContent.classList.toggle('collapsed');
+        dom.managementToggle.classList.toggle('collapsed');
+    });
+
+    dom.addMemberBtn.addEventListener('click', () => {
+        const newMemberNameInput = document.getElementById('new-member-name');
+        const newMemberPhoneInput = document.getElementById('new-member-phone');
+        const newMemberPositionSelect = document.getElementById('new-member-position');
+        const newMemberTeamSelect = document.getElementById('new-member-team');
+        const newMemberLocationSelect = document.getElementById('new-member-location');
+        
+        const memberData = {
+            name: newMemberNameInput.value.trim(),
+            phone: newMemberPhoneInput.value.trim() || 'Chưa có',
+            positionId: newMemberPositionSelect.value,
+            teamId: newMemberTeamSelect.value,
+            locationId: newMemberLocationSelect.value
+        };
+
+        if (memberData.name && memberData.positionId && memberData.teamId && memberData.locationId) {
+            console.log('ACTION: Thêm thành viên', memberData);
+            addMember(memberData);
+            newMemberNameInput.value = '';
+            newMemberPhoneInput.value = '';
+        } else {
+            alert("Vui lòng điền đầy đủ thông tin cho thành viên.");
+        }
+    });
+    
+    dom.addTeamBtn.addEventListener('click', () => {
+        const teamName = document.getElementById('new-team-name').value.trim();
+        if(teamName) {
+            console.log('ACTION: Thêm tổ', teamName);
+            addTeam(teamName);
+            document.getElementById('new-team-name').value = '';
+        }
+    });
+
+    dom.addLocationBtn.addEventListener('click', () => {
+        const locationName = document.getElementById('new-location-name').value.trim();
+        if(locationName) {
+            console.log('ACTION: Thêm vị trí', locationName);
+            addLocation(locationName);
+            document.getElementById('new-location-name').value = '';
+        }
+    });
+    
+    dom.addPositionBtn.addEventListener('click', () => {
+        const positionName = document.getElementById('new-position-name').value.trim();
+        if(positionName) {
+            console.log('ACTION: Thêm chức vụ', positionName);
+            addPosition(positionName);
+            document.getElementById('new-position-name').value = '';
+        }
+    });
+
+    window.handleDeleteMember = (id) => {
+        console.log('ACTION: Xóa thành viên với ID:', id);
+        deleteMember(id);
+    };
+    window.handleDeleteTeam = (id) => {
+        console.log('ACTION: Xóa tổ với ID:', id);
+        deleteTeam(id);
+    };
+    window.handleDeleteLocation = (id) => {
+        console.log('ACTION: Xóa vị trí với ID:', id);
+        deleteLocation(id);
+    };
+    window.handleDeletePosition = (id) => {
+        console.log('ACTION: Xóa chức vụ với ID:', id);
+        deletePosition(id);
+    };
+
+    dom.scheduleBody.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.remove-tag');
+        const personnelTag = e.target.closest('.personnel-tag');
+        const dutyCell = e.target.closest('.duty-cell');
+
+        if (removeBtn) {
+            const row = removeBtn.closest('tr');
+            removeBtn.parentElement.remove();
+            updateLeaderHighlighting();
+            autoSaveDayState(row); 
+        } else if (personnelTag) {
+            const memberId = personnelTag.dataset.memberId;
+            console.log('ACTION: Xem thông tin thành viên ID:', memberId);
+            showMemberInfoModal(memberId);
+        } else if (dutyCell) {
+            console.log('ACTION: Mở modal để phân công cho tổ ID:', dutyCell.dataset.teamId);
+            showModal(dutyCell);
+        }
+    });
+
+    dom.personForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const selectedMemberId = dom.memberSelect.value;
+        if (selectedMemberId && selectedCell) {
+            if (!selectedCell.querySelector(`.personnel-tag[data-member-id="${selectedMemberId}"]`)) {
+                 console.log(`ACTION: Phân công thành viên ID ${selectedMemberId} vào tổ ID ${selectedCell.dataset.teamId}`);
+                 const tag = createPersonnelTag(selectedMemberId);
+                 if (tag) {
+                    selectedCell.appendChild(tag);
+                    updateLeaderHighlighting();
+                    autoSaveDayState(selectedCell.closest('tr'));
+                 }
+            } else {
+                alert("Thành viên này đã được phân công trong ô này.");
+            }
+        }
+        hideModal();
+    });
+
+    dom.closeModalBtn.addEventListener('click', hideModal);
+    dom.cancelModalBtn.addEventListener('click', hideModal);
+    dom.modal.addEventListener('click', (e) => { if (e.target === dom.modal) hideModal(); });
+    
+    dom.closeInfoModalBtn.addEventListener('click', hideInfoModal);
+    dom.okInfoModalBtn.addEventListener('click', hideInfoModal);
+    dom.infoModal.addEventListener('click', (e) => { if (e.target === dom.infoModal) hideInfoModal(); });
+
+    dom.savePlanBtn.addEventListener('click', () => {
+        const planName = document.getElementById('new-plan-name').value.trim();
+        if(!planName) {
+            alert('Vui lòng nhập tên cho phương án!');
+            return;
+        }
+        const planData = getCurrentScheduleData();
+        console.log(`ACTION: Lưu phương án '${planName}' với dữ liệu theo ID`, planData);
+        savePlan(planName, planData);
+        alert(`Đã lưu phương án "${planName}" thành công!`);
+        document.getElementById('new-plan-name').value = '';
+    });
+    
+    dom.applyTemplateBtn.addEventListener('click', () => {
+        const planKey = document.getElementById('template-select').value;
+        if(!planKey) return;
+        console.log('ACTION: Áp dụng phương án:', scheduleTemplates[planKey].name);
+        applyPlan(planKey);
+    });
+
+    dom.deletePlanBtn.addEventListener('click', () => {
+        const planKey = document.getElementById('template-select').value;
+        if(!planKey) {
+            alert("Vui lòng chọn một phương án để xóa.");
+            return;
+        }
+        if (confirm(`Bạn có chắc chắn muốn xóa phương án "${scheduleTemplates[planKey].name}"?`)) {
+            console.log('ACTION: Xóa phương án:', scheduleTemplates[planKey].name);
+            deletePlan(planKey);
+        }
+    });
+});

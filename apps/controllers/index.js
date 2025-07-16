@@ -46,5 +46,6 @@ router.use("/blog", require(__dirname + "/blog"));
 // router.use("/scandomain", require(__dirname + "/scandomain"));
 router.use("/todos", require(__dirname + "/todos"));
 router.use("/", require(__dirname + "/keyurl"));
+router.use("/duty", require(__dirname + "/duty-schedule"));
 //====================================================================================== 
 module.exports = router;

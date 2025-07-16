@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch trực tuần</title>
+    <%- include("../admin/layout/head.ejs") %>
+    <link rel="stylesheet" href="/static/css/duty/style.css">
+    <% if (data && data.trackper > 1){%>
+    <link rel="stylesheet" href="/static/css/duty/styleprint.css">
+    <% } %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&family=Times+New+Roman&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="page-container">
+        <%- include("../admin/layout/nav.ejs") %>
+        <header class="document-header">
+            <div class="header-left">
+                <span>CÔNG AN TỈNH ĐỒNG THÁP</span><br>
+                <strong><u>CÔNG AN XÃ MỸ AN HƯNG</u></strong><br>
+                <div class="header-line"></div>
+            </div>
+            <div class="header-right">
+                <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong><br>
+                <b><u>Độc lập - Tự do - Hạnh phúc</u></b>
+                <div class="header-line"></div>
+            </div>
+        </header>
+
+        <section class="document-body">
+            <div class="document-title">
+                <h2 id="schedule-title">LỊCH TRỰC TUẦN</h2>
+                <p id="schedule-subtitle"></p>
+            </div>
+            
+            <div class="schedule-controls">
+                <div class="control-group">
+                     <label for="start-date">Chọn tuần:</label>
+                     <input type="date" id="start-date" title="Chỉ có thể chọn ngày Thứ Hai">
+                </div>
+                
+                <div class="control-group">
+                    
+                    <button id="save-to-json-btn" class="btn btn-success" <% if (data && data.trackper > 2){%>style="display: none;"<% } %>>💾 Lưu Lịch trực</button>
+                    
+                    <!-- <button id="load-from-json-btn" class="btn btn-primary">📂 Tải từ JSON</button> -->
+                    <button id="export-btn" class="btn btn-export"<% if (data && data.trackper > 1){%>style="display: none;"<% } %>>🖨️ In</button>
+                    <input type="file" id="load-json-input" accept=".json" style="display: none;">
+                </div>
+                
+                 <div class="control-group" <% if (data && data.trackper > 1){%>style="display: none;"<% } %>>
+                    <label for="template-select">Phương án có sẵn:</label>
+                    <select id="template-select"></select>
+                    <button id="apply-template-btn" class="btn">Áp dụng</button>
+                    <button id="delete-plan-btn" class="btn btn-danger">Xóa</button>
+                </div>
+                <div class="control-group" <% if (data && data.trackper > 1){%>style="display: none;"<% } %>>
+                    <input type="text" id="new-plan-name" placeholder="Tên phương án mới...">
+                    <button id="save-plan-btn" class="btn btn-success">Lưu P.án</button>
+                </div>
+
+                 <div class="control-group">
+                    <button id="generate-schedule-btn" class="btn btn-info" style="display: none;">📋 Lấy dữ liệu</button>
+                    <!-- <button id="export-btn" class="btn btn-export">🖨️ In</button> -->
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Ngày tháng năm</th>
+                            <th id="main-header-cell" colspan="5">Trực chiến</th>
+                            <th rowspan="2">Trực Lãnh đạo</th>
+                            <th rowspan="2">Trực ban</th>
+                        </tr>
+                        <tr id="team-header-row"></tr>
+                    </thead>
+                    <tbody id="schedule-body"></tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="management-section" <% if (data && data.trackper > 1){%>style="display: none;"<% } %>>
+             <h3 id="management-toggle" class="section-toggle">⚙️ Quản lý danh sách</h3>
+             <div id="management-content" class="management-content collapsed">
+                <div class="list-manager-card">
+                     <h3>📋 Danh sách Thành viên</h3>
+                     <div class="add-item-form">
+                         <input type="text" id="new-member-name" placeholder="Tên thành viên">
+                         <input type="text" id="new-member-phone" placeholder="Số điện thoại">
+                         <select id="new-member-position" title="Chọn chức vụ"></select>
+                         <select id="new-member-team" title="Chọn tổ"></select>
+                         <select id="new-member-location" title="Chọn vị trí trực"></select>
+                         <button id="add-member-btn" class="btn btn-primary">Thêm</button>
+                     </div>
+                     <ul id="members-list" class="item-list"></ul>
+                </div>
+                 <div class="list-manager-card">
+                     <h3>📂 Danh sách Tổ</h3>
+                     <div class="add-item-form">
+                         <input type="text" id="new-team-name" placeholder="Tên tổ mới">
+                         <button id="add-team-btn" class="btn btn-primary">Thêm</button>
+                     </div>
+                     <ul id="teams-list" class="item-list"></ul>
+                 </div>
+                 <div class="list-manager-card">
+                    <h3>📍 Danh sách Vị trí trực</h3>
+                    <div class="add-item-form">
+                        <input type="text" id="new-location-name" placeholder="Tên vị trí mới">
+                        <button id="add-location-btn" class="btn btn-primary">Thêm</button>
+                    </div>
+                    <ul id="locations-list" class="item-list"></ul>
+                </div>
+                <div class="list-manager-card">
+                    <h3>👑 Danh sách Chức vụ</h3>
+                    <div class="add-item-form">
+                        <input type="text" id="new-position-name" placeholder="Tên chức vụ mới">
+                        <button id="add-position-btn" class="btn btn-primary">Thêm</button>
+                    </div>
+                    <ul id="positions-list" class="item-list"></ul>
+                </div>
+             </div>
+        </section>
+        
+    </div>
+
+    <div id="add-person-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Phân công cán bộ</h3>
+                <button id="close-modal-btn" class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="person-form">
+                    <label for="member-select">Chỉ hiển thị thành viên trong tổ này:</label>
+                    <select id="member-select" required></select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" id="cancel-modal-btn">Hủy</button>
+                <button type="submit" form="person-form" class="btn btn-success">Thêm</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="member-info-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="info-modal-title">Thông tin Cán bộ</h3>
+                <button id="close-info-modal-btn" class="close-button">&times;</button>
+            </div>
+            <div class="modal-body" id="info-modal-body">
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" id="ok-info-modal-btn">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/duty/main.js"></script>
+    <script src="/static/js/duty/actions.js"></script>
+</body>
+</html>
