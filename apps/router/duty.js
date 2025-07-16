@@ -2,7 +2,7 @@ const Notifications = require("../models/Notifications");
 const fs = require('fs');
 const path = require('path');
 // Đường dẫn file JSON cố định
-const JSON_FILE_PATH = path.join(__dirname, '..', 'Common', 'duty-json', 'data.json');
+const JSON_FILE_PATH = path.join(__dirname, '..', 'common', 'duty-json', 'data.json');
 
 async function getRenderHTML(req, res) {
 
