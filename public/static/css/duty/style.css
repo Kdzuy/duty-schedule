@@ -116,7 +116,7 @@ input:focus, select:focus {
 .duty-cell { 
     vertical-align: top; 
     cursor: default; 
-    height: 100px; 
+    height: 70px; 
     text-align: left;
     padding: 5px;
 }
@@ -265,8 +265,14 @@ input:focus, select:focus {
 
 @media print {
     @page {
-        size: A4 landscape;
-        margin: 0.5in;
+        size: A4 landscape; /* Giữ nguyên khổ giấy ngang */
+
+        /* THAY ĐỔI LỀ GIẤY TẠI ĐÂY 
+           Bạn có thể thay đổi giá trị này, ví dụ:
+           margin: 2cm; (cách đều 4 lề 2cm)
+           margin: 1cm 2cm; (lề trên/dưới 1cm, lề trái/phải 2cm)
+        */
+        margin: 0.1in; /* Mặc định là 0.7 inch */
     }
 
     body {
@@ -277,7 +283,8 @@ input:focus, select:focus {
         print-color-adjust: exact;
     }
 
-    .schedule-controls, .management-section, .modal-overlay, .remove-tag, .tooltip, .header-line, .btn, .delete-item-btn, .section-toggle {
+    /* Ẩn các phần tử không cần thiết */
+    .schedule-controls, .management-section, .modal-overlay, .remove-tag, .tooltip, .header-line, .btn, .delete-item-btn, .section-toggle, #scrollTopBtn {
         display: none !important;
     }
 
@@ -336,4 +343,43 @@ input:focus, select:focus {
 
 input[type="date"] {
     line-height: initial !important;
+}
+
+/* ... TOÀN BỘ CSS CỦA BẠN GIỮ NGUYÊN ... */
+
+
+/* === CSS CHO NÚT LÊN ĐẦU TRANG === */
+#scrollTopBtn {
+  display: none; /* Ẩn nút theo mặc định */
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 100;
+  border: none;
+  outline: none;
+  background-color: var(--secondary-color);
+  color: white;
+  cursor: pointer;
+  width: 50px; /* Kích thước nút */
+  height: 50px;
+  border-radius: 50%; /* Bo tròn thành hình tròn */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+  /* Dùng Flexbox để căn giữa icon SVG hoàn hảo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#scrollTopBtn:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* Định dạng cho icon SVG bên trong nút */
+#scrollTopBtn svg {
+  width: 24px;
+  height: 24px;
 }

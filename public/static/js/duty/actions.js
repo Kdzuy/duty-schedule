@@ -1,19 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Hiện nút khi cuộn xuống dưới 100px
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('scrollTopBtn');
+        if (window.scrollY > 100) {
+            btn.style.display = 'block';
+        } else {
+            btn.style.display = 'none';
+        }
+    });
+
+// Xử lý khi click nút
+document.getElementById('scrollTopBtn').addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
     // === LOGIC MỚI: TẠM THỜI TẮT RESPONSIVE KHI IN ===
     const viewportMeta = document.querySelector('meta[name="viewport"]');
     const originalViewportContent = viewportMeta.getAttribute('content');
 
-    window.addEventListener('beforeprint', () => {
-        console.log("ACTION: Chuẩn bị in, tạm thời tắt giao diện responsive.");
-        // Buộc trình duyệt hiển thị ở dạng máy tính để bàn để bản in đúng dạng bảng
-        viewportMeta.setAttribute('content', 'width=1200');
-    });
+    // window.addEventListener('beforeprint', () => {
+    //     console.log("ACTION: Chuẩn bị in, tạm thời tắt giao diện responsive.");
+    //     // Buộc trình duyệt hiển thị ở dạng máy tính để bàn để bản in đúng dạng bảng
+    //     // viewportMeta.setAttribute('content', 'width=1200');
+    //     const printStyleLink = document.createElement('link');
+    //     printStyleLink.rel = 'stylesheet';
+    //     printStyleLink.href = '/static/css/duty/styleprint.css';
+    //     document.head.appendChild(printStyleLink);
+    // });
 
-    window.addEventListener('afterprint', () => {
-        console.log("ACTION: In xong, khôi phục lại giao diện responsive.");
-        // Trả lại cài đặt viewport ban đầu
-        viewportMeta.setAttribute('content', originalViewportContent);
-    });
+    // window.addEventListener('afterprint', () => {
+    //     console.log("ACTION: In xong, khôi phục lại giao diện responsive.");
+    //     // Trả lại cài đặt viewport ban đầu
+    //     viewportMeta.setAttribute('content', originalViewportContent);
+    // });
     // =======================================================
     // === LƯU VÀ TẢI FILE JSON ===
     fetch('/duty/duty-get-json')
@@ -152,7 +174,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dom.exportBtn.addEventListener('click', () => {
         console.log("ACTION: Người dùng nhấn nút 'In / Xuất file'");
-        window.print();
+        const printStyleLink = document.getElementById('print-style');
+        const documentHeader = document.getElementById('document-header');
+        documentHeader.style.display = ''; // Hiển thị header khi in
+        if (printStyleLink) {
+            // Tạm thời vô hiệu hoá stylesheet
+            console.log(printStyleLink);
+            printStyleLink.disabled = true;
+        }
+        setTimeout(() => {
+            window.print();
+
+            // Sau khi in xong, có thể tắt lại nếu muốn
+            printStyleLink.disabled = false;
+            documentHeader.style.display = 'none';
+        }, 100);
     });
 
     dom.managementToggle.addEventListener('click', () => {
@@ -246,7 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
             showMemberInfoModal(memberId);
         } else if (dutyCell) {
             console.log('ACTION: Mở modal để phân công cho tổ ID:', dutyCell.dataset.teamId);
-            showModal(dutyCell);
+            const btn = document.getElementById('save-to-json-btn');
+            const currentId = btn.getAttribute('data-id');
+            if (currentId === '2') {
+                showModal(dutyCell);
+            }
         }
     });
 

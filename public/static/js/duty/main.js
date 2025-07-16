@@ -1,26 +1,26 @@
 // === DỮ LIỆU BAN ĐẦU ===
 let teams = [
-    { id: 1, name: "Tổ TH" }, { id: 2, name: "Tổ AN" }, { id: 3, name: "Tổ CSPCTP" },
-    { id: 4, name: "Tổ CSTT" }, { id: 5, name: "Tổ CSKV" },
-    { id: 6, name: "Trực Lãnh đạo" }, { id: 7, name: "Trực ban" }
+    // { id: 1, name: "Tổ TH" }, { id: 2, name: "Tổ AN" }, { id: 3, name: "Tổ CSPCTP" },
+    // { id: 4, name: "Tổ CSTT" }, { id: 5, name: "Tổ CSKV" },
+    // { id: 6, name: "Trực Lãnh đạo" }, { id: 7, name: "Trực ban" }
 ];
 const protectedTeams = [6, 7]; 
 let positions = [
-    { id: 1, name: 'Trưởng Công an' }, { id: 2, name: 'Phó Trưởng Công an' },
-    { id: 3, name: 'Tổ trưởng' }, { id: 4, name: 'Tổ phó' },
-    { id: 5, name: 'Cán bộ' }, { id: 6, name: 'Trực ban' }
+    // { id: 1, name: 'Trưởng Công an' }, { id: 2, name: 'Phó Trưởng Công an' },
+    // { id: 3, name: 'Tổ trưởng' }, { id: 4, name: 'Tổ phó' },
+    // { id: 5, name: 'Cán bộ' }, { id: 6, name: 'Trực ban' }
 ];
 let locations = [
-    { id: 1, name: "Phòng trực ban" }, { id: 2, name: "Phòng chỉ huy" },
-    { id: 3, name: "Khu A" }, { id: 4, name: "Khu B" }, { id: 5, name: "Cổng chính" }
+    // { id: 1, name: "Phòng trực ban" }, { id: 2, name: "Phòng chỉ huy" },
+    // { id: 3, name: "Khu A" }, { id: 4, name: "Khu B" }, { id: 5, name: "Cổng chính" }
 ];
 let members = [
-    { id: 1, name: 'Sơn', positionId: 1, teamId: 6, locationId: 2, phone: '0901234567' },
-    { id: 2, name: 'Thủy', positionId: 2, teamId: 6, locationId: 2, phone: '0907654321' },
-    { id: 3, name: 'Tòng', positionId: 5, teamId: 7, locationId: 1, phone: '0911111111' },
-    { id: 4, name: 'Hùng', positionId: 6, teamId: 7, locationId: 1, phone: '0922222222' },
-    { id: 5, name: 'Tuyến', positionId: 3, teamId: 1, locationId: 3, phone: '0933333333' },
-    { id: 6, name: 'Hiếu', positionId: 5, teamId: 2, locationId: 3, phone: '0944444444' }
+    // { id: 1, name: 'Sơn', positionId: 1, teamId: 6, locationId: 2, phone: '0901234567' },
+    // { id: 2, name: 'Thủy', positionId: 2, teamId: 6, locationId: 2, phone: '0907654321' },
+    // { id: 3, name: 'Tòng', positionId: 5, teamId: 7, locationId: 1, phone: '0911111111' },
+    // { id: 4, name: 'Hùng', positionId: 6, teamId: 7, locationId: 1, phone: '0922222222' },
+    // { id: 5, name: 'Tuyến', positionId: 3, teamId: 1, locationId: 3, phone: '0933333333' },
+    // { id: 6, name: 'Hiếu', positionId: 5, teamId: 2, locationId: 3, phone: '0944444444' }
 ];
 let masterSchedule = {};
 let scheduleTemplates = {};
@@ -171,7 +171,7 @@ function generateSchedule() {
         const isoDate = toYYYYMMDD(d);
         
         tr.dataset.dayIndex = d.getDay(); 
-        tr.innerHTML = `<td class="date-cell" data-day="${isoDate}"><strong>${d.toLocaleDateString('vi-VN', { weekday: 'long' })}</strong><span>${d.toLocaleDateString('vi-VN', dateOptions)}</span></td>`;
+        tr.innerHTML = `<td class="date-cell" data-day="${isoDate}"><strong>${d.toLocaleDateString('vi-VN', { weekday: 'long' })}</strong><p>(${d.toLocaleDateString('vi-VN', dateOptions)})</p></td>`;
         
         const allTeamsInOrder = [...teams.filter(t => !protectedTeams.includes(t.id)), ...teams.filter(t => protectedTeams.includes(t.id))];
         allTeamsInOrder.forEach(team => {
@@ -291,7 +291,14 @@ function createPersonnelTag(memberId) {
     const tag = document.createElement('div');
     tag.className = 'personnel-tag';
     tag.dataset.memberId = memberId;
-    tag.innerHTML = `<span class="tag-name">${memberData.name}</span><span class="remove-tag" title="Xóa">&times;</span>`;
+    const btn = document.getElementById('save-to-json-btn');
+    const currentId = btn.getAttribute('data-id');
+
+    if (currentId === '2') {
+        tag.innerHTML = `<span class="tag-name">${memberData.name}</span><span class="remove-tag" title="Xóa">&times;</span>`;
+    } else {
+        tag.innerHTML = `<span class="tag-name">${memberData.name}</span>`;
+    };
     return tag;
 };
 

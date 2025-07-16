@@ -139,7 +139,7 @@ async function postsignin(req, res) {
 
                 //var refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
                 //res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife*1000, httpOnly: true,secure: true});                
-                return res.redirect("/admin/user");
+                return res.redirect("/duty/dashboard");
             } catch (err) {
                 console.log(err)
                 var data = {
@@ -165,19 +165,19 @@ async function postsignin(req, res) {
                         req.session.trackper = 1;
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
-                        return res.redirect("/admin/hashsha256");
+                        return res.redirect("/duty/dashboard");
                     } else if (helper.compare_password("2", user.permission)) {
                         req.session.trackper = 2;
-                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/admin/hashsha256")) : "");
+                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/duty/dashboard")) : "");
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
-                        return res.redirect("/admin/hashsha256");
+                        return res.redirect("/duty/dashboard");
                     } else if (helper.compare_password("3", user.permission)) {
                         req.session.trackper = 3;
-                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/admin/hashsha256")) : "");
+                        Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/duty/dashboard")) : "");
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
-                        return res.redirect("/admin/hashsha256");
+                        return res.redirect("/duty/dashboard");
                     } else {
                         return res.redirect("/admin/signin");
                     };

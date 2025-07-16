@@ -6,9 +6,7 @@
     <title>Lịch trực tuần</title>
     <%- include("../admin/layout/head.ejs") %>
     <link rel="stylesheet" href="/static/css/duty/style.css">
-    <% if (data && data.trackper > 1){%>
-    <link rel="stylesheet" href="/static/css/duty/styleprint.css">
-    <% } %>
+    <link rel="stylesheet" href="/static/css/duty/styleprint.css" id = 'print-style'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&family=Times+New+Roman&display=swap" rel="stylesheet">
@@ -17,15 +15,19 @@
 
     <div class="page-container">
         <%- include("../admin/layout/nav.ejs") %>
-        <header class="document-header">
+        <header class="document-header" id ="document-header" style="display: none;">
             <div class="header-left">
                 <span>CÔNG AN TỈNH ĐỒNG THÁP</span><br>
                 <strong><u>CÔNG AN XÃ MỸ AN HƯNG</u></strong><br>
+                <br>
+                <span>Số:...../LTT-CAX</span>
                 <div class="header-line"></div>
             </div>
             <div class="header-right">
                 <strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong><br>
-                <b><u>Độc lập - Tự do - Hạnh phúc</u></b>
+                <b><u>Độc lập - Tự do - Hạnh phúc</u></b><br>
+                <br>
+                <span><i>Mỹ An Hưng, ngày.....tháng.....năm 2025</i></span>
                 <div class="header-line"></div>
             </div>
         </header>
@@ -33,7 +35,7 @@
         <section class="document-body">
             <div class="document-title">
                 <h2 id="schedule-title">LỊCH TRỰC TUẦN</h2>
-                <p id="schedule-subtitle"></p>
+                <i><p id="schedule-subtitle"></p></i>
             </div>
             
             <div class="schedule-controls">
@@ -44,13 +46,13 @@
                 
                 <div class="control-group">
                     
-                    <button id="save-to-json-btn" class="btn btn-success" <% if (data && data.trackper > 2){%>style="display: none;"<% } %>>💾 Lưu Lịch trực</button>
+                    <button id="save-to-json-btn" class="btn btn-success" <% if (data && data.trackper > 2){%>style="display: none;" data-id="3" <% } else{ %> data-id="2" <% } %>>💾 Lưu Lịch trực</button>
                     
                     <!-- <button id="load-from-json-btn" class="btn btn-primary">📂 Tải từ JSON</button> -->
                     <button id="export-btn" class="btn btn-export"<% if (data && data.trackper > 1){%>style="display: none;"<% } %>>🖨️ In</button>
                     <input type="file" id="load-json-input" accept=".json" style="display: none;">
                 </div>
-                
+
                  <div class="control-group" <% if (data && data.trackper > 1){%>style="display: none;"<% } %>>
                     <label for="template-select">Phương án có sẵn:</label>
                     <select id="template-select"></select>
@@ -59,7 +61,7 @@
                 </div>
                 <div class="control-group" <% if (data && data.trackper > 1){%>style="display: none;"<% } %>>
                     <input type="text" id="new-plan-name" placeholder="Tên phương án mới...">
-                    <button id="save-plan-btn" class="btn btn-success">Lưu P.án</button>
+                    <button id="save-plan-btn" class="btn btn-success">Lưu Phương án</button>
                 </div>
 
                  <div class="control-group">
@@ -136,7 +138,7 @@
             </div>
             <div class="modal-body">
                 <form id="person-form">
-                    <label for="member-select">Chỉ hiển thị thành viên trong tổ này:</label>
+                    <label for="member-select">Thành viên trong tổ này:</label>
                     <select id="member-select" required></select>
                 </form>
             </div>
@@ -160,7 +162,11 @@
             </div>
         </div>
     </div>
-
+    <button id="scrollTopBtn" title="Lên đầu trang">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
     <script src="/static/js/duty/main.js"></script>
     <script src="/static/js/duty/actions.js"></script>
 </body>
