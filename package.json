@@ -8,7 +8,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js https://faceblock-ticloxk3.b4a.run",
+    "start": "node index.js https://duty-schedule.koyeb.app/",
     "start-b4a": "node index.js https://faceblock-ticloxk3.b4a.run",
     "start-zeabur": "node index.js https://faceblock.zeabur.app",
     "start-vercel": "node index.js https://faceblocks.vercel.app",
