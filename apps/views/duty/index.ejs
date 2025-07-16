@@ -52,7 +52,10 @@
                     <button id="export-btn" class="btn btn-export"<% if (data && data.trackper > 1){%>style="display: none;"<% } %>>🖨️ In</button>
                     <input type="file" id="load-json-input" accept=".json" style="display: none;">
                 </div>
-
+                <div class="control-group">
+                    <label for="location-filter-select">Vị trí:</label>
+                    <select id="location-filter-select"></select>
+                </div>
                  <div class="control-group" <% if (data && data.trackper > 1){%>style="display: none;"<% } %>>
                     <label for="template-select">Phương án có sẵn:</label>
                     <select id="template-select"></select>

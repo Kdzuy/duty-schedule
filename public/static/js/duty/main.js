@@ -61,6 +61,7 @@ const dom = {
     saveToJsonBtn: document.getElementById('save-to-json-btn'),
     loadFromJsonBtn: document.getElementById('load-from-json-btn'),
     loadJsonInput: document.getElementById('load-json-input'),
+    locationFilterSelect: document.getElementById('location-filter-select'),
 };
 
 // === CÁC HÀM TÌM KIẾM DỮ LIỆU ===
@@ -131,11 +132,48 @@ function fullRender() {
     
     const templateOptions = Object.entries(scheduleTemplates).map(([key, value]) => ({ id: key, name: value.name }));
     updateDropdown(document.getElementById('template-select'), templateOptions, "-- Chọn phương án --");
+        // THÊM MỚI: Cập nhật dropdown cho bộ lọc vị trí
+    const locationFilterOptions = [{ id: 'all', name: 'Tất cả' }, ...locations];
+    updateDropdown(dom.locationFilterSelect, locationFilterOptions);
+
     renderTeamHeaders();
 };
 
 // === CÁC HÀM XỬ LÝ DỮ LIỆU ===
 const toYYYYMMDD = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+
+// HÀM MỚI: Lọc các thẻ tên trên lịch theo vị trí trực
+function filterScheduleByLocation(selectedLocationId) {
+    const allTags = document.querySelectorAll('.personnel-tag');
+    allTags.forEach(tag => {
+        const cell = tag.closest('.duty-cell');
+        if (!cell) return;
+
+        const teamId = parseInt(cell.dataset.teamId);
+
+        // NẾU THẺ NẰM TRONG CỘT ĐƯỢC BẢO VỆ, LUÔN HIỂN THỊ
+        if (protectedTeams.includes(teamId)) {
+            tag.classList.remove('tag-hidden');
+            return; // Chuyển sang thẻ tiếp theo
+        }
+
+        // Nếu chọn "Tất cả vị trí", hiện tất cả các thẻ (không thuộc cột bảo vệ)
+        if (selectedLocationId === 'all') {
+            tag.classList.remove('tag-hidden');
+            return;
+        }
+
+        // Lọc các thẻ còn lại như bình thường
+        const memberId = tag.dataset.memberId;
+        const member = findById(members, memberId);
+
+        if (member && member.locationId == selectedLocationId) {
+            tag.classList.remove('tag-hidden');
+        } else {
+            tag.classList.add('tag-hidden');
+        }
+    });
+}
 
 function updateDateRange() {
     const selectedDate = new Date(dom.startDateInput.value.replace(/-/g, '/'));
@@ -276,7 +314,7 @@ function showMemberInfoModal(memberId) {
         <div class="info-item"><span class="info-label">Chức vụ:</span><span class="info-value">${findById(positions, member.positionId)?.name || 'N/A'}</span></div>
         <div class="info-item"><span class="info-label">Tổ:</span><span class="info-value">${findById(teams, member.teamId)?.name || 'N/A'}</span></div>
         <div class="info-item"><span class="info-label">Vị trí trực:</span><span class="info-value">${findById(locations, member.locationId)?.name || 'N/A'}</span></div>
-        <div class="info-item"><span class="info-label">SĐT:</span><span class="info-value">${member.phone}</span></div>
+        <div class="info-item"><span class="info-label">SĐT:</span><span class="info-value"><a href="tel:${member.phone}">${member.phone}</a></span></div>
     `;
     dom.infoModal.style.display = 'flex';
 }

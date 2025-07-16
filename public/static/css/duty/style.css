@@ -173,7 +173,7 @@ input:focus, select:focus {
 
 .management-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1.5rem;
     padding: 1.5rem;
     border: 1px solid var(--border-color);
@@ -181,7 +181,7 @@ input:focus, select:focus {
     border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 .management-content.collapsed { display: none; }
-.list-manager-card { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); }
+.list-manager-card { padding: 1.5rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); width: 100%; }
 .list-manager-card h3 { margin-top: 0; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); }
 .add-item-form { display: grid; gap: 0.75rem; margin-bottom: 1.5rem; }
 
@@ -249,6 +249,16 @@ input:focus, select:focus {
 }
 .info-item .info-value {
     font-weight: 500;
+}
+/* THÊM MỚI: Định dạng cho link số điện thoại */
+.info-item .info-value a {
+    color: inherit; /* Giữ nguyên màu chữ của cha */
+    text-decoration: none; /* Bỏ gạch chân mặc định */
+}
+
+.info-item .info-value a:hover {
+    text-decoration: underline; /* Thêm gạch chân khi di chuột vào */
+    color: var(--primary-color); /* Đổi màu để làm nổi bật */
 }
 .modal-body label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
 .modal-body select { width: 100%; }
@@ -382,4 +392,8 @@ input[type="date"] {
 #scrollTopBtn svg {
   width: 24px;
   height: 24px;
+}
+
+.personnel-tag.tag-hidden {
+    display: none !important;
 }

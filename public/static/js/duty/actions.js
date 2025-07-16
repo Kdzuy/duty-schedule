@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // === SỰ KIỆN MỚI CHO BỘ LỌC ===
+    dom.locationFilterSelect.addEventListener('change', (event) => {
+        const selectedLocationId = event.target.value;
+        console.log(`ACTION: Lọc lịch theo vị trí ID: ${selectedLocationId}`);
+        filterScheduleByLocation(selectedLocationId);
+    });
+
     // Hiện nút khi cuộn xuống dưới 100px
     window.addEventListener('scroll', () => {
         const btn = document.getElementById('scrollTopBtn');
