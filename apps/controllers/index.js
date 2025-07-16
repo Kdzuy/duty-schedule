@@ -18,7 +18,7 @@ Notifications.getNotificationDefault("51296", 'Root', process.argv[2] ? 'Server 
 //======================================================================================  
 //chạy kiểm tra để khởi động lại hàm scan web
 //const jobAxiosR = schedule.scheduleJob('0 * * * *', async () => await axiosScan.checkpoint());
-axiosScan.checkpoint();
+                                //axiosScan.checkpoint();
 //hàm đặt lại lịch quét
 const jobRunfaceblocks = schedule.scheduleJob('*/7 * * * *', async () => await axiosScan.RunFaceblocks());
 //axiosScan.RunFaceblocks();
