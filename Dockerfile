@@ -16,7 +16,7 @@ RUN npm install
 COPY . .
 
 # Expose the port
-EXPOSE 8888
+EXPOSE 3000
 
 # Health check (optional but recommended)
 # HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:3000 || exit 1

@@ -23,7 +23,7 @@ app.use((req, res, next) => res.redirect('https://www.google.com/'));
 app.use((err, req, res, next) => { console.log(err); res.redirect('https://www.google.com/'); });
 process.env.TZ = "Asia/Bangkok";
 //const host=config.get("server.host");
-const port = process.env.PORT || 8888;
+const port = process.env.PORT || 3000;
 const server = app.listen(port, () => { console.log("Server is running on port ", port); });
 const io = socketio(server); 
 const socketcontrol = require(__dirname + "/apps/common/socketcontrol").socketIO(io);
