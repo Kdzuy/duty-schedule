@@ -307,14 +307,12 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
         e.preventDefault();
         const selectedMemberId = dom.memberSelect.value;
         if (selectedMemberId && selectedCell) {
-            // Tìm đến div wrapper bên trong ô
-            const wrapper = selectedCell.querySelector('.personnel-tags-wrapper');
-
-            if (wrapper && !wrapper.querySelector(`.personnel-tag[data-member-id="${selectedMemberId}"]`)) {
+            // THAY ĐỔI: Kiểm tra trực tiếp trong selectedCell, không cần wrapper
+            if (!selectedCell.querySelector(`.personnel-tag[data-member-id="${selectedMemberId}"]`)) {
                 console.log(`ACTION: Phân công thành viên ID ${selectedMemberId} vào tổ ID ${selectedCell.dataset.teamId}`);
                 const tag = createPersonnelTag(selectedMemberId);
                 if (tag) {
-                    wrapper.appendChild(tag); // Thêm thẻ vào wrapper
+                    selectedCell.appendChild(tag); // Thêm trực tiếp vào ô
                     updateLeaderHighlighting();
                     autoSaveDayState(selectedCell.closest('tr'));
                 }
