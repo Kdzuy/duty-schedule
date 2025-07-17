@@ -65,37 +65,41 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
 
     // 1. LƯU DỮ LIỆU RA FILE JSON
     dom.saveToJsonBtn.addEventListener('click', () => {
-        console.log("ACTION: Chuẩn bị lưu toàn bộ dữ liệu ra file JSON.");
         
-        // const appData = {
-        //     members,
-        //     teams,
-        //     positions,
-        //     locations,
-        //     masterSchedule,
-        //     scheduleTemplates
-        // };
+        console.log("ACTION: Chuẩn bị lưu dữ liệu đã lọc lên server.");
 
-        // const jsonString = JSON.stringify(appData, null, 2);
-        // const blob = new Blob([jsonString], { type: 'application/json' });
+        // BƯỚC 1: TÍNH NGÀY GIỚI HẠN (5 TUẦN TRƯỚC TÍNH TỪ HÔM NAY)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset giờ để so sánh chỉ dựa trên ngày
+        // 1.1. Lùi lại đúng 5 tuần (35 ngày)
+        const fiveWeeksAgoDate = new Date(today.getTime() - (35 * 24 * 60 * 60 * 1000));
+
+        // 1.2. Từ ngày đó, tìm ra ngày Thứ Hai của tuần chứa nó
+        const dayOfWeek = fiveWeeksAgoDate.getDay(); // 0=Chủ Nhật, 1=Thứ Hai, ...
+        const daysToSubtract = (dayOfWeek === 0) ? 6 : (dayOfWeek - 1);
+        const cutoffDate = new Date(fiveWeeksAgoDate.getTime() - (daysToSubtract * 24 * 60 * 60 * 1000));
         
-        // const url = URL.createObjectURL(blob);
-        // const a = document.createElement('a');
-        // a.href = url;
-        // a.download = 'data.json';
-        // document.body.appendChild(a);
-        // a.click();
+        console.log(`Lọc dữ liệu: Chỉ giữ lại lịch từ Thứ Hai (${cutoffDate.toLocaleDateString('vi-VN')}) trở về sau.`);
+
+        // BƯỚC 2: TẠO BỘ NHỚ LỊCH ĐÃ ĐƯỢC LỌC
+        const filteredMasterSchedule = {};
+        for (const isoDate in masterSchedule) {
+            const scheduleDate = new Date(isoDate.replace(/-/g, '/'));
+            scheduleDate.setHours(0, 0, 0, 0);
+
+            // Nếu ngày trong lịch lớn hơn hoặc bằng ngày giới hạn thì giữ lại
+            if (scheduleDate >= cutoffDate) {
+                filteredMasterSchedule[isoDate] = masterSchedule[isoDate];
+            }
+        }
         
-        // document.body.removeChild(a);
-        // URL.revokeObjectURL(url);
-        
-        // console.log("ACTION: Đã yêu cầu tải file data.json.");
+        // BƯỚC 3: GÓI DỮ LIỆU ĐÃ LỌC ĐỂ GỬI ĐI
         const appData = {
             members,
             teams,
             positions,
             locations,
-            masterSchedule,
+            masterSchedule: filteredMasterSchedule, // Sử dụng đối tượng đã lọc
             scheduleTemplates
         };
 
@@ -108,6 +112,8 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
         .then(data => {
             if (data.success) {
                 alert("Đã lưu Thay đổi thành công.");
+                // Cập nhật lại bộ nhớ trên trình duyệt bằng dữ liệu đã lọc
+                masterSchedule = filteredMasterSchedule
             }
         })
         .catch(err => {
