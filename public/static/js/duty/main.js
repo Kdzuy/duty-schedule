@@ -309,7 +309,7 @@ function hideModal() {
 function showMemberInfoModal(memberId) {
     const member = findById(members, memberId);
     if (!member) return;
-    dom.infoModalTitle.textContent = `Thông tin: ${member.name}`;
+    dom.infoModalTitle.innerHTML = `<span class="info-label">Thông tin: </span><b>${member.name}</b>`;
     dom.infoModalBody.innerHTML = `
         <div class="info-item"><span class="info-label">Chức vụ:</span><span class="info-value">${findById(positions, member.positionId)?.name || 'N/A'}</span></div>
         <div class="info-item"><span class="info-label">Tổ:</span><span class="info-value">${findById(teams, member.teamId)?.name || 'N/A'}</span></div>

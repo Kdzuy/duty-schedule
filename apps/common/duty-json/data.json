@@ -7,6 +7,262 @@
       "positionId": 1752658540553,
       "teamId": 7,
       "locationId": 1752660315048
+    },
+    {
+      "id": 1752722541484,
+      "name": "T.Hùng",
+      "phone": "0912282949",
+      "positionId": 1,
+      "teamId": 6,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722570628,
+      "name": "Long",
+      "phone": "0982096139",
+      "positionId": 2,
+      "teamId": 6,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722599946,
+      "name": "Chiêu",
+      "phone": "0981507799",
+      "positionId": 2,
+      "teamId": 6,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722637662,
+      "name": "Minh",
+      "phone": "0912185218",
+      "positionId": 2,
+      "teamId": 6,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722670098,
+      "name": "Thủy",
+      "phone": "0919990287",
+      "positionId": 2,
+      "teamId": 6,
+      "locationId": 1752660317252
+    },
+    {
+      "id": 1752722689752,
+      "name": "Sơn",
+      "phone": "0932999797",
+      "positionId": 2,
+      "teamId": 6,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722720256,
+      "name": "Tâm",
+      "phone": "09088841072",
+      "positionId": 3,
+      "teamId": 1,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722740724,
+      "name": "Tuyền",
+      "phone": "0939494452",
+      "positionId": 4,
+      "teamId": 1,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722773069,
+      "name": "Tông",
+      "phone": "0827313113",
+      "positionId": 1752658540553,
+      "teamId": 7,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722806354,
+      "name": "H.Hùng",
+      "phone": "0348098484",
+      "positionId": 1752658540553,
+      "teamId": 7,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722832385,
+      "name": "Trang",
+      "phone": "0939822131",
+      "positionId": 1752658540553,
+      "teamId": 1,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722940013,
+      "name": "Thiện",
+      "phone": "0949803439",
+      "positionId": 3,
+      "teamId": 2,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722960738,
+      "name": "Hiếu",
+      "phone": "0939467677",
+      "positionId": 4,
+      "teamId": 2,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722981917,
+      "name": "Trứ",
+      "phone": "0795882339",
+      "positionId": 1752658540553,
+      "teamId": 2,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752722999078,
+      "name": "Nhân",
+      "phone": "0793900905",
+      "positionId": 1752658540553,
+      "teamId": 2,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752723049985,
+      "name": "An",
+      "phone": "0833371647",
+      "positionId": 3,
+      "teamId": 3,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752723073936,
+      "name": "Giang",
+      "phone": "0907766286",
+      "positionId": 4,
+      "teamId": 3,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752723100100,
+      "name": "T.Lộc",
+      "phone": "0896664447",
+      "positionId": 1752658540553,
+      "teamId": 3,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752723137549,
+      "name": "Đ.Tâm",
+      "phone": "0939751518",
+      "positionId": 1752658540553,
+      "teamId": 3,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752723232089,
+      "name": "H.Lộc",
+      "phone": "0813797090",
+      "positionId": 3,
+      "teamId": 4,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752723272514,
+      "name": "Nhã",
+      "phone": "0912125158",
+      "positionId": 4,
+      "teamId": 4,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752723302688,
+      "name": "Huệ",
+      "phone": "0918877808",
+      "positionId": 1752658540553,
+      "teamId": 4,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752724029256,
+      "name": "Luật",
+      "phone": "0939245368",
+      "positionId": 1752658540553,
+      "teamId": 4,
+      "locationId": 1752660317252
+    },
+    {
+      "id": 1752724080340,
+      "name": "H.Toàn (C2)",
+      "phone": "0902910435",
+      "positionId": 3,
+      "teamId": 5,
+      "locationId": 1752660317252
+    },
+    {
+      "id": 1752724179507,
+      "name": "Cọ (C3)",
+      "phone": "0932882766",
+      "positionId": 4,
+      "teamId": 5,
+      "locationId": 1752660319751
+    },
+    {
+      "id": 1752724213181,
+      "name": "Tài (C1)",
+      "phone": "0939885563",
+      "positionId": 1752658540553,
+      "teamId": 5,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752724242457,
+      "name": "Thịnh (C3)",
+      "phone": "0369555899",
+      "positionId": 1752658540553,
+      "teamId": 5,
+      "locationId": 1752660319751
+    },
+    {
+      "id": 1752724265739,
+      "name": "Trực (C2)",
+      "phone": "0939226992",
+      "positionId": 1752658540553,
+      "teamId": 5,
+      "locationId": 1752660317252
+    },
+    {
+      "id": 1752724287894,
+      "name": "Sang (C1)",
+      "phone": "0787836677",
+      "positionId": 1752658540553,
+      "teamId": 5,
+      "locationId": 1752660315048
+    },
+    {
+      "id": 1752724315051,
+      "name": "T.Toàn (C2)",
+      "phone": "0335564017",
+      "positionId": 1752658540553,
+      "teamId": 5,
+      "locationId": 1752660317252
+    },
+    {
+      "id": 1752724345886,
+      "name": "Bảo (C2)",
+      "phone": "0782988933",
+      "positionId": 1752658540553,
+      "teamId": 5,
+      "locationId": 1752660317252
+    },
+    {
+      "id": 1752724366683,
+      "name": "Mẫn (C2)",
+      "phone": "0907496229",
+      "positionId": 1752658540553,
+      "teamId": 5,
+      "locationId": 1752660317252
     }
   ],
   "teams": [
@@ -81,12 +337,942 @@
   ],
   "masterSchedule": {
     "2025-07-16": {
+      "1": [
+        {
+          "memberId": 1752722720256
+        }
+      ],
+      "2": [
+        {
+          "memberId": 1752722960738
+        },
+        {
+          "memberId": 1752722981917
+        }
+      ],
+      "3": [
+        {
+          "memberId": 1752723049985
+        },
+        {
+          "memberId": 1752723100100
+        }
+      ],
+      "4": [
+        {
+          "memberId": 1752723272514
+        },
+        {
+          "memberId": 1752724029256
+        }
+      ],
+      "5": [
+        {
+          "memberId": 1752724179507
+        },
+        {
+          "memberId": 1752724287894
+        },
+        {
+          "memberId": 1752724366683
+        },
+        {
+          "memberId": 1752724315051
+        }
+      ],
+      "6": [
+        {
+          "memberId": 1752722541484
+        },
+        {
+          "memberId": 1752722637662
+        }
+      ],
       "7": [
         {
           "memberId": 1752680378122
         }
       ]
+    },
+    "2025-07-14": {
+      "1": [
+        {
+          "memberId": 1752722740724
+        }
+      ],
+      "2": [
+        {
+          "memberId": 1752722960738
+        },
+        {
+          "memberId": 1752722981917
+        }
+      ],
+      "3": [
+        {
+          "memberId": 1752723049985
+        },
+        {
+          "memberId": 1752723100100
+        }
+      ],
+      "4": [
+        {
+          "memberId": 1752723272514
+        },
+        {
+          "memberId": 1752724029256
+        }
+      ],
+      "5": [
+        {
+          "memberId": 1752724179507
+        },
+        {
+          "memberId": 1752724287894
+        },
+        {
+          "memberId": 1752724366683
+        },
+        {
+          "memberId": 1752724315051
+        }
+      ],
+      "6": [
+        {
+          "memberId": 1752722689752
+        },
+        {
+          "memberId": 1752722599946
+        }
+      ],
+      "7": [
+        {
+          "memberId": 1752722773069
+        }
+      ]
+    },
+    "2025-07-15": {
+      "1": [
+        {
+          "memberId": 1752722832385
+        }
+      ],
+      "2": [
+        {
+          "memberId": 1752722940013
+        },
+        {
+          "memberId": 1752722999078
+        }
+      ],
+      "3": [
+        {
+          "memberId": 1752723073936
+        },
+        {
+          "memberId": 1752723137549
+        }
+      ],
+      "4": [
+        {
+          "memberId": 1752723232089
+        },
+        {
+          "memberId": 1752723302688
+        }
+      ],
+      "5": [
+        {
+          "memberId": 1752724080340
+        },
+        {
+          "memberId": 1752724213181
+        },
+        {
+          "memberId": 1752724242457
+        },
+        {
+          "memberId": 1752724345886
+        },
+        {
+          "memberId": 1752724265739
+        }
+      ],
+      "6": [
+        {
+          "memberId": 1752722670098
+        },
+        {
+          "memberId": 1752722570628
+        }
+      ],
+      "7": [
+        {
+          "memberId": 1752722806354
+        }
+      ]
+    },
+    "2025-07-17": {
+      "1": [
+        {
+          "memberId": 1752722740724
+        }
+      ],
+      "2": [
+        {
+          "memberId": 1752722940013
+        },
+        {
+          "memberId": 1752722999078
+        }
+      ],
+      "3": [
+        {
+          "memberId": 1752723073936
+        },
+        {
+          "memberId": 1752723137549
+        }
+      ],
+      "4": [
+        {
+          "memberId": 1752723232089
+        },
+        {
+          "memberId": 1752723302688
+        }
+      ],
+      "5": [
+        {
+          "memberId": 1752724080340
+        },
+        {
+          "memberId": 1752724213181
+        },
+        {
+          "memberId": 1752724242457
+        },
+        {
+          "memberId": 1752724345886
+        },
+        {
+          "memberId": 1752724265739
+        }
+      ],
+      "6": [
+        {
+          "memberId": 1752722670098
+        },
+        {
+          "memberId": 1752722570628
+        }
+      ],
+      "7": [
+        {
+          "memberId": 1752722773069
+        }
+      ]
+    },
+    "2025-07-18": {
+      "1": [
+        {
+          "memberId": 1752722832385
+        }
+      ],
+      "2": [
+        {
+          "memberId": 1752722940013
+        },
+        {
+          "memberId": 1752722999078
+        }
+      ],
+      "3": [
+        {
+          "memberId": 1752723073936
+        },
+        {
+          "memberId": 1752723137549
+        }
+      ],
+      "4": [
+        {
+          "memberId": 1752723232089
+        },
+        {
+          "memberId": 1752723302688
+        }
+      ],
+      "5": [
+        {
+          "memberId": 1752724080340
+        },
+        {
+          "memberId": 1752724213181
+        },
+        {
+          "memberId": 1752724242457
+        },
+        {
+          "memberId": 1752724345886
+        },
+        {
+          "memberId": 1752724265739
+        }
+      ],
+      "6": [
+        {
+          "memberId": 1752722541484
+        },
+        {
+          "memberId": 1752722637662
+        }
+      ],
+      "7": [
+        {
+          "memberId": 1752722806354
+        }
+      ]
+    },
+    "2025-07-19": {
+      "1": [
+        {
+          "memberId": 1752722720256
+        }
+      ],
+      "2": [
+        {
+          "memberId": 1752722960738
+        },
+        {
+          "memberId": 1752722999078
+        }
+      ],
+      "3": [
+        {
+          "memberId": 1752723049985
+        },
+        {
+          "memberId": 1752723100100
+        }
+      ],
+      "4": [
+        {
+          "memberId": 1752723272514
+        },
+        {
+          "memberId": 1752723302688
+        }
+      ],
+      "5": [
+        {
+          "memberId": 1752724179507
+        },
+        {
+          "memberId": 1752724287894
+        },
+        {
+          "memberId": 1752724366683
+        },
+        {
+          "memberId": 1752724315051
+        }
+      ],
+      "6": [
+        {
+          "memberId": 1752722689752
+        },
+        {
+          "memberId": 1752722599946
+        }
+      ],
+      "7": [
+        {
+          "memberId": 1752680378122
+        }
+      ]
+    },
+    "2025-07-20": {
+      "1": [
+        {
+          "memberId": 1752722740724
+        }
+      ],
+      "2": [
+        {
+          "memberId": 1752722960738
+        },
+        {
+          "memberId": 1752722999078
+        }
+      ],
+      "3": [
+        {
+          "memberId": 1752723049985
+        },
+        {
+          "memberId": 1752723100100
+        }
+      ],
+      "4": [
+        {
+          "memberId": 1752723272514
+        },
+        {
+          "memberId": 1752723302688
+        }
+      ],
+      "5": [
+        {
+          "memberId": 1752724179507
+        },
+        {
+          "memberId": 1752724287894
+        },
+        {
+          "memberId": 1752724366683
+        },
+        {
+          "memberId": 1752724315051
+        }
+      ],
+      "6": [
+        {
+          "memberId": 1752722689752
+        },
+        {
+          "memberId": 1752722599946
+        }
+      ],
+      "7": [
+        {
+          "memberId": 1752722773069
+        }
+      ]
     }
   },
-  "scheduleTemplates": {}
+  "scheduleTemplates": {
+    "plan_1752724696930": {
+      "name": "P.A01",
+      "assignments": {
+        "0": {
+          "1": [
+            {
+              "memberId": 1752722740724,
+              "position": "Tổ phó"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722960738,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723049985,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723100100,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723272514,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724179507,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724287894,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724366683,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724315051,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722689752,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722599946,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722773069,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "1": {
+          "1": [
+            {
+              "memberId": 1752722740724,
+              "position": "Tổ phó"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722960738,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722981917,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723049985,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723100100,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723272514,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724029256,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724179507,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724287894,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724366683,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724315051,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722689752,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722599946,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722773069,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "2": {
+          "1": [
+            {
+              "memberId": 1752722832385,
+              "position": "Cán bộ"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722940013,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723073936,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723137549,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723232089,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724080340,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752724213181,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724242457,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724345886,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724265739,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722670098,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722570628,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722806354,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "3": {
+          "1": [
+            {
+              "memberId": 1752722720256,
+              "position": "Tổ trưởng"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722960738,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722981917,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723049985,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723100100,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723272514,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724029256,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724179507,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724287894,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724366683,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724315051,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722541484,
+              "position": "Trưởng Công an"
+            },
+            {
+              "memberId": 1752722637662,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752680378122,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "4": {
+          "1": [
+            {
+              "memberId": 1752722740724,
+              "position": "Tổ phó"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722940013,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723073936,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723137549,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723232089,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724080340,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752724213181,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724242457,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724345886,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724265739,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722670098,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722570628,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722773069,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "5": {
+          "1": [
+            {
+              "memberId": 1752722832385,
+              "position": "Cán bộ"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722940013,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723073936,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723137549,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723232089,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724080340,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752724213181,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724242457,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724345886,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724265739,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722541484,
+              "position": "Trưởng Công an"
+            },
+            {
+              "memberId": 1752722637662,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722806354,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "6": {
+          "1": [
+            {
+              "memberId": 1752722720256,
+              "position": "Tổ trưởng"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722960738,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723049985,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723100100,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723272514,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724179507,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724287894,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724366683,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724315051,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722689752,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722599946,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752680378122,
+              "position": "Cán bộ"
+            }
+          ]
+        }
+      }
+    }
+  }
 }

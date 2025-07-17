@@ -40,14 +40,14 @@ body {
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
     font-size: 14px;
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
     padding-bottom: 1.5rem;
     /* border-bottom: 1px solid var(--border-color); */
 }
 .document-header div { flex: 1; }
 .document-header strong { font-weight: bold; text-transform: uppercase; }
 
-.document-title { text-align: center; margin-bottom: 2rem; }
+.document-title { text-align: center; margin-bottom: 1rem; }
 .document-title h2 { margin: 0; font-size: 2rem; font-family: 'Times New Roman', Times, serif; }
 .document-title p { margin: 0.5rem 0 0; font-size: 1.1rem; color: var(--text-color-muted); }
 
