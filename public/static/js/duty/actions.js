@@ -307,14 +307,17 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
         e.preventDefault();
         const selectedMemberId = dom.memberSelect.value;
         if (selectedMemberId && selectedCell) {
-            if (!selectedCell.querySelector(`.personnel-tag[data-member-id="${selectedMemberId}"]`)) {
-                 console.log(`ACTION: Phân công thành viên ID ${selectedMemberId} vào tổ ID ${selectedCell.dataset.teamId}`);
-                 const tag = createPersonnelTag(selectedMemberId);
-                 if (tag) {
-                    selectedCell.appendChild(tag);
+            // Tìm đến div wrapper bên trong ô
+            const wrapper = selectedCell.querySelector('.personnel-tags-wrapper');
+
+            if (wrapper && !wrapper.querySelector(`.personnel-tag[data-member-id="${selectedMemberId}"]`)) {
+                console.log(`ACTION: Phân công thành viên ID ${selectedMemberId} vào tổ ID ${selectedCell.dataset.teamId}`);
+                const tag = createPersonnelTag(selectedMemberId);
+                if (tag) {
+                    wrapper.appendChild(tag); // Thêm thẻ vào wrapper
                     updateLeaderHighlighting();
                     autoSaveDayState(selectedCell.closest('tr'));
-                 }
+                }
             } else {
                 alert("Thành viên này đã được phân công trong ô này.");
             }

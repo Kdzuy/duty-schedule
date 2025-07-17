@@ -193,10 +193,9 @@ function handleDateChange() {
 }
 
 // THAY ĐỔI: Thêm data-team-name vào mỗi ô
+// Cập nhật hàm generateSchedule để tạo wrapper cho các thẻ
 function generateSchedule() {
     const startDate = new Date(dom.startDateInput.value.replace(/-/g, '/'));
-    if (isNaN(startDate)) return;
-
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 6);
 
@@ -209,23 +208,24 @@ function generateSchedule() {
         const isoDate = toYYYYMMDD(d);
         
         tr.dataset.dayIndex = d.getDay(); 
-        tr.innerHTML = `<td class="date-cell" data-day="${isoDate}"><strong>${d.toLocaleDateString('vi-VN', { weekday: 'long' })}</strong><p>(${d.toLocaleDateString('vi-VN', dateOptions)})</p></td>`;
+        tr.innerHTML = `<td class="date-cell" data-day="${isoDate}"><strong>${d.toLocaleDateString('vi-VN', { weekday: 'long' })}</strong><span>${d.toLocaleDateString('vi-VN', dateOptions)}</span></td>`;
         
         const allTeamsInOrder = [...teams.filter(t => !protectedTeams.includes(t.id)), ...teams.filter(t => protectedTeams.includes(t.id))];
         allTeamsInOrder.forEach(team => {
              const dutyCell = document.createElement('td');
              dutyCell.className = 'duty-cell';
              dutyCell.dataset.teamId = team.id;
-             dutyCell.dataset.teamName = team.name; // Thêm tên tổ vào data attribute
-             tr.appendChild(dutyCell);
+             dutyCell.dataset.teamName = team.name;
+             tr.appendChild(dutyCell); // Không tạo wrapper nữa
         });
         dom.scheduleBody.appendChild(tr);
 
+        // Tải lại dữ liệu và đưa trực tiếp vào ô
         if (masterSchedule[isoDate]) {
             Object.entries(masterSchedule[isoDate]).forEach(([teamId, assignments]) => {
                 const cell = tr.querySelector(`.duty-cell[data-team-id="${teamId}"]`);
                 if (cell) {
-                    cell.innerHTML = '';
+                    cell.innerHTML = ''; // Xóa nội dung cũ (nếu có)
                     assignments.forEach(assignment => {
                         const tag = createPersonnelTag(assignment.memberId);
                         if(tag) cell.appendChild(tag);
@@ -385,7 +385,7 @@ function applyPlan(planKey) {
         Object.entries(teams).forEach(([teamId, assignments]) => {
             const cell = row.querySelector(`.duty-cell[data-team-id="${teamId}"]`);
             if (cell) {
-                cell.innerHTML = '';
+                cell.innerHTML = ''; // Xóa nội dung cũ
                 assignments.forEach(assignment => {
                     const tag = createPersonnelTag(assignment.memberId);
                     if(tag) cell.appendChild(tag);

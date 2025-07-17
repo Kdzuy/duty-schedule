@@ -1,16 +1,12 @@
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     body, .page-container {
         padding: 0.5rem;
     }
 
-    .schedule-controls {
+    .schedule-controls, .control-group {
         flex-direction: column;
         align-items: stretch;
         gap: 1rem;
-    }
-    .control-group {
-        flex-direction: column;
-        align-items: stretch;
     }
 
     .table-wrapper {
@@ -34,14 +30,12 @@
         overflow: hidden;
     }
 
+    /* ĐỊNH DẠNG LẠI CÁC Ô */
     .schedule-table td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         padding: 0.75rem 1rem;
         border-bottom: 1px solid #f0f0f0;
-        text-align: right;
         min-height: 2.5em;
+        text-align: left; /* Căn lề trái toàn bộ nội dung */
     }
 
     .schedule-table tr td:last-child {
@@ -53,30 +47,27 @@
         color: white;
         font-weight: bold;
         font-size: 1.1rem;
-        justify-content: space-between; /* Căn đều 2 bên */
+        display: flex;
+        justify-content: space-between;
     }
-    .date-cell strong { 
+    .date-cell strong, .date-cell span {
         display: inline;
-    }
-    .date-cell span { 
-        display: inline;
-        font-weight: normal;
     }
 
+    /* ĐỊNH DẠNG CHO NHÃN TÊN TỔ VÀ CÁC THẺ */
     .duty-cell::before {
-        content: attr(data-team-name);
-        font-weight: 500;
-        color: var(--text-color-muted);
-        text-transform: uppercase;
-        font-size: 0.8em;
-        text-align: left;
-        flex-shrink: 0;
-        margin-right: 1rem;
+        content: attr(data-team-name) ": "; /* Thêm dấu hai chấm */
+        font-weight: bold;
+        color: var(--text-color);
+        margin-right: 8px; /* Khoảng cách sau nhãn */
     }
-
-    /* Đảm bảo các thẻ tên được căn phải */
-    .duty-cell  {
-        flex-grow: 1;
-        justify-content: flex-end;
+    
+    /* ĐỊNH DẠNG CHO VÙNG CHỨA CÁC THẺ TÊN */
+    .personnel-tags-wrapper {
+        display: flex;
+        flex-wrap: wrap; /* Cho phép các thẻ xuống dòng */
+        justify-content: flex-end; /* Luôn căn phải các thẻ */
+        gap: 0.5px; /* Khoảng cách giữa các thẻ */
+        flex-grow: 1; 
     }
 }
