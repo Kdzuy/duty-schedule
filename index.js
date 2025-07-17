@@ -18,9 +18,9 @@ app.set("trust proxy", 1); //trust first proxy
 const controllers = require(__dirname + "/apps/controllers");
 app.use(controllers);
 // Middleware xử lý khi không tìm thấy router
-app.use((req, res, next) => res.redirect('https://www.google.com/'));
+app.use((req, res, next) => res.redirect('/duty/dashboard'));
 // Middleware xử lý lỗi
-app.use((err, req, res, next) => { console.log(err); res.redirect('https://www.google.com/'); });
+app.use((err, req, res, next) => { console.log(err); res.redirect('/blog'); });
 process.env.TZ = "Asia/Bangkok";
 //const host=config.get("server.host");
 const port = process.env.PORT || 3000;
