@@ -208,7 +208,7 @@ function generateSchedule() {
         const isoDate = toYYYYMMDD(d);
         
         tr.dataset.dayIndex = d.getDay(); 
-        tr.innerHTML = `<td class="date-cell" data-day="${isoDate}"><strong>${d.toLocaleDateString('vi-VN', { weekday: 'long' })}</strong><span>${d.toLocaleDateString('vi-VN', dateOptions)}</span></td>`;
+        tr.innerHTML = `<td class="date-cell" data-day="${isoDate}"><strong>${d.toLocaleDateString('vi-VN', { weekday: 'long' })}</strong><p>(${d.toLocaleDateString('vi-VN', dateOptions)})</p></td>`;
         
         const allTeamsInOrder = [...teams.filter(t => !protectedTeams.includes(t.id)), ...teams.filter(t => protectedTeams.includes(t.id))];
         allTeamsInOrder.forEach(team => {
