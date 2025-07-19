@@ -170,14 +170,42 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
 
     // === CÁC SỰ KIỆN KHÁC ===
 
+    // THAY ĐỔI: Nút "Lấy dữ liệu" giờ sẽ tải file JSON
     dom.generateScheduleBtn.addEventListener('click', () => {
-        console.log("ACTION: Lấy dữ liệu lịch hiện tại");
-        const currentData = getCurrentScheduleData();
+        console.log("ACTION: Tải xuống toàn bộ dữ liệu ứng dụng.");
+
+        const appData = {
+            members,
+            teams,
+            positions,
+            locations,
+            masterSchedule,
+            scheduleTemplates
+        };
+
+        const jsonString = JSON.stringify(appData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
         
-        console.log("--- DỮ LIỆU LỊCH TRỰC (JSON theo ID và chức vụ) ---");
-        console.log(JSON.stringify(currentData, null, 2)); 
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.json'; // Tên file tải về
+        document.body.appendChild(a);
+        a.click();
         
-        alert('Đã lấy dữ liệu và in ra Console (Nhấn F12 để xem).');
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    dom.startDateInput.addEventListener('change', () => {
+        handleDateChange();
+    });
+    dom.exportBtn.addEventListener('click', () => {
+        window.print();
+    });
+    dom.managementToggle.addEventListener('click', () => {
+        dom.managementContent.classList.toggle('collapsed');
+        dom.managementToggle.classList.toggle('collapsed');
     });
 
     dom.startDateInput.addEventListener('change', () => {

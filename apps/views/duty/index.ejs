@@ -67,8 +67,8 @@
                     <button id="save-plan-btn" class="btn btn-success">Lưu Phương án</button>
                 </div>
 
-                 <div class="control-group">
-                    <button id="generate-schedule-btn" class="btn btn-info" style="display: none;">📋 Lấy dữ liệu</button>
+                 <div class="control-group" <% if (data && data.trackper > 1){%>style="display: none;"<% } %>>
+                    <button id="generate-schedule-btn" class="btn btn-info">📋 Lấy dữ liệu</button>
                     <!-- <button id="export-btn" class="btn btn-export">🖨️ In</button> -->
                 </div>
             </div>
