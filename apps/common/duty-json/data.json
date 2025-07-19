@@ -1691,6 +1691,531 @@
           ]
         }
       }
+    },
+    "plan_1752894207069": {
+      "name": "P.A02",
+      "assignments": {
+        "0": {
+          "1": [
+            {
+              "memberId": 1752722832385,
+              "position": "Cán bộ"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752890731263,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752890844696,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723137549,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723232089,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724080340,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752724213181,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724242457,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724345886,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724265739,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722670098,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722570628,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722806354,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "1": {
+          "1": [
+            {
+              "memberId": 1752722832385,
+              "position": "Cán bộ"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752890731263,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752890844696,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723137549,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723232089,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724080340,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752724213181,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724242457,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724345886,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724265739,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722670098,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722570628,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722806354,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "2": {
+          "1": [
+            {
+              "memberId": 1752722720256,
+              "position": "Tổ trưởng"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722960738,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722981917,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723049985,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723100100,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723272514,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724029256,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724179507,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724287894,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724366683,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724315051,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722541484,
+              "position": "Trưởng Công an"
+            },
+            {
+              "memberId": 1752722637662,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752680378122,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "3": {
+          "1": [
+            {
+              "memberId": 1752722740724,
+              "position": "Tổ phó"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752890731263,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752890844696,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723137549,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723232089,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724080340,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752724213181,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724242457,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724345886,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724265739,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722689752,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722599946,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722773069,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "4": {
+          "1": [
+            {
+              "memberId": 1752722832385,
+              "position": "Cán bộ"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722960738,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722981917,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723049985,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723100100,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723272514,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724029256,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724179507,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724287894,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724366683,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724315051,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722541484,
+              "position": "Trưởng Công an"
+            },
+            {
+              "memberId": 1752722637662,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722806354,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "5": {
+          "1": [
+            {
+              "memberId": 1752722720256,
+              "position": "Tổ trưởng"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752722960738,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722981917,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752723049985,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723100100,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723272514,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724029256,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724179507,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752724287894,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724366683,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724315051,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722689752,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722599946,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752680378122,
+              "position": "Cán bộ"
+            }
+          ]
+        },
+        "6": {
+          "1": [
+            {
+              "memberId": 1752722740724,
+              "position": "Tổ phó"
+            }
+          ],
+          "2": [
+            {
+              "memberId": 1752890731263,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752722999078,
+              "position": "Cán bộ"
+            }
+          ],
+          "3": [
+            {
+              "memberId": 1752890844696,
+              "position": "Tổ phó"
+            },
+            {
+              "memberId": 1752723137549,
+              "position": "Cán bộ"
+            }
+          ],
+          "4": [
+            {
+              "memberId": 1752723232089,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752723302688,
+              "position": "Cán bộ"
+            }
+          ],
+          "5": [
+            {
+              "memberId": 1752724080340,
+              "position": "Tổ trưởng"
+            },
+            {
+              "memberId": 1752724213181,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724242457,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724345886,
+              "position": "Cán bộ"
+            },
+            {
+              "memberId": 1752724265739,
+              "position": "Cán bộ"
+            }
+          ],
+          "6": [
+            {
+              "memberId": 1752722670098,
+              "position": "Phó Trưởng Công an"
+            },
+            {
+              "memberId": 1752722570628,
+              "position": "Phó Trưởng Công an"
+            }
+          ],
+          "7": [
+            {
+              "memberId": 1752722773069,
+              "position": "Cán bộ"
+            }
+          ]
+        }
+      }
     }
   }
 }
