@@ -197,10 +197,10 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
         URL.revokeObjectURL(url);
     });
 
-    dom.managementToggle.addEventListener('click', () => {
-        dom.managementContent.classList.toggle('collapsed');
-        dom.managementToggle.classList.toggle('collapsed');
-    });
+    // dom.managementToggle.addEventListener('click', () => {
+    //     dom.managementContent.classList.toggle('collapsed');
+    //     dom.managementToggle.classList.toggle('collapsed');
+    // });
 
     dom.startDateInput.addEventListener('change', () => {
         // console.log("ACTION: Người dùng thay đổi ngày bắt đầu, tự động tải lại lịch");
