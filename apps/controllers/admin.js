@@ -19,7 +19,7 @@ router.get("/post", checkToken, checkPermissionUsers.checkPermissionUserUpReques
 router.get("/user", checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerAdmin.getuser);
 router.get("/updateuser/:id", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.getupdateuser);
 router.put("/updateuser", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.putupdateuser);
-// router.get("/addressBTC", checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.addressbtc);
+// router.get("/addressBTC", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.addressbtc);
 router.get("/qrcode", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.qrcode);
 router.get("/hashsha256", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.hashsha256);
 router.post("/subscribe", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.subscribe);

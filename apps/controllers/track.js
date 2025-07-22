@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const routerTrack = require("../router/track");
-//const checkToken=require("../models/checkToken");
+const checkToken=require("../models/checkToken");
 const checkPermissionUsers=require("../models/checkPermissionUsers");
 //===============================================
 router.get("/", checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerTrack.index);
