@@ -8,7 +8,7 @@ const user_md = require("../models/user");
 module.exports = async function (req, res, next) {
   try {
     var refreshToken = (req?.cookies?.refreshToken) ? req.cookies.refreshToken : null;
-
+    //console.log("checkToken refreshToken: ", refreshToken);
     if (!req.session.user && refreshToken) {
       try {
         const decoded = await jwt.verify(refreshToken, SECRET_REFRESH);

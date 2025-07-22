@@ -1,6 +1,6 @@
 const express = require("express");
-// const cookieParser = require('cookie-parser');
-// app.use(cookieParser());
+const cookieParser = require('cookie-parser');
+
 const session = require("express-session");
 const socketio = require("socket.io");
 const secret_key = "secretkey_!@#$%^&*";
@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' })); // support encoded bodies
 app.use(session({ secret: secret_key, resave: false, saveUninitialized: true, cookie: { secure: false } }));
+app.use(cookieParser());
 // static folder
 app.use(express.static(__dirname + "/public"));
 app.set("views", __dirname + "/apps/views");

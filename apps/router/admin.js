@@ -99,14 +99,22 @@ function getsignin(req, res) {
             console.log("redirecturl: ", redirecturl);
         }
         if (req.session.user) {
-            res.cookie('refreshToken', null, {
-                maxAge: 1,
-                httpOnly: true,
-                secure: true
-            });
+            res.clearCookie('refreshToken', { httpOnly: true, path: '/' });
+            //console.log("token luc out: ",req.cookies);
             var email = req.session.user.email;
-            req.session = null;
-            return res.render("signin", { data: { error: "Bạn đã đăng xuất tài khoản: " + email, redirecturl: redirecturl } });
+            req.session.destroy(err => {
+                if (err) {
+                    console.log("Lỗi khi hủy session:", err);
+                    // Xử lý lỗi nếu cần, ví dụ render một trang lỗi
+                    return res.status(500).send("Không thể đăng xuất. Vui lòng thử lại.");
+                }
+
+                // 3. Gửi phản hồi SAU KHI session đã được hủy thành công
+                // Đặt res.render vào trong callback này
+                //console.log("Session đã được hủy thành công.");
+                return res.render("signin", { data: { error: "Bạn đã đăng xuất tài khoản: " + email, redirecturl: redirecturl } });
+            });
+            //return res.render("signin", { data: { error: "Bạn đã đăng xuất tài khoản: " + email, redirecturl: redirecturl } });
             // console.log("token luc out: ",req.cookies);
 
         } else {
@@ -138,7 +146,9 @@ async function postsignin(req, res) {
                 req.session.trackper = 1;
 
                 const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
-                res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true, secure: true});                
+                res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true
+                    //, secure: true
+                });                
                 return res.redirect("/duty/dashboard");
             } catch (err) {
                 console.log(err)
@@ -165,7 +175,9 @@ async function postsignin(req, res) {
                     if (helper.compare_password("1", user.permission)) {
                         req.session.trackper = 1;
                         const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
-                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true,secure: true}); 
+                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true
+                            //, secure: true
+                        });
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
                         return res.redirect("/duty/dashboard");
@@ -173,7 +185,9 @@ async function postsignin(req, res) {
                         req.session.trackper = 2;
                         Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/duty/dashboard")) : "");
                         const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
-                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true,secure: true}); 
+                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true
+                            //, secure: true
+                        });
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
                         return res.redirect("/duty/dashboard");
@@ -181,7 +195,9 @@ async function postsignin(req, res) {
                         req.session.trackper = 3;
                         Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/duty/dashboard")) : "");
                         const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
-                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true,secure: true}); 
+                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true
+                            //, secure: true
+                        });
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
                         return res.redirect("/duty/dashboard");

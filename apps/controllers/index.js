@@ -3,7 +3,7 @@ const router = express.Router();
 const routerIndex = require("../router/index");
 const Notifications = require("../models/Notifications");
 const axiosScan = require("../models/axiosscanweb");
-const checkToken=require("../models/checkToken");
+const checkToken = require("../models/checkToken");
 const checkPermissionUsers = require("../models/checkPermissionUsers");
 //thư viện quản lý upload file
 //var straintf=require("../models/tensorflow-node");
