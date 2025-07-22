@@ -23,14 +23,15 @@ module.exports = async function (req, res, next) {
         }
         req.session.user = user;
         req.session.permission = user.permission;
-        console.log("checkToken");
+        
+        console.log("checkToken session user: ", req.session.user ? req.session.user.email : "No user session");
         next();
       } catch (err) {
         console.log(err);
         return res.redirect("/admin/signin");
       }
     } else if (req.session.user && req.session.trackper) {
-      console.log("next");
+      //console.log("next");
       next();
     } else {
       return res.redirect("/admin/signin");

@@ -3,7 +3,7 @@ const router = express.Router();
 const routerIndex = require("../router/index");
 const Notifications = require("../models/Notifications");
 const axiosScan = require("../models/axiosscanweb");
-//const checkToken=require("../models/checkToken");
+const checkToken=require("../models/checkToken");
 const checkPermissionUsers = require("../models/checkPermissionUsers");
 //thư viện quản lý upload file
 //var straintf=require("../models/tensorflow-node");
@@ -30,13 +30,13 @@ const job = schedule.scheduleJob('0 7 * * *', () => Notifications.getNotificatio
 router.get("/", routerIndex.routerIndex);
 router.get("/blog", routerIndex.blog);
 // router.get("/chat",checkPermissionUsers.checkPermissionUserUpRequest,routerIndex.chat);
-router.post("/upload", checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.upload);
+router.post("/upload", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.upload);
 router.post("/uploadimg", routerIndex.uploadtrack);
-router.get('/listimg', checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.listimg);
+router.get('/listimg', checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.listimg);
 router.get('/photo/:id', routerIndex.photo);
-router.delete('/deleteimg', checkPermissionUsers.checkPermissionUserUpRequest, routerIndex.deleteimg);
-router.get("/data/:title", checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.dataTitle);
-router.delete("/data/delete", checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.dataDelete);
+router.delete('/deleteimg', checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerIndex.deleteimg);
+router.get("/data/:title", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.dataTitle);
+router.delete("/data/delete", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerIndex.dataDelete);
 //======================================================================================  
 //router another
 router.use("/admin", require(__dirname + "/admin"));

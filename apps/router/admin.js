@@ -6,10 +6,10 @@ const Notifications = require("../models/Notifications");
 // function encodeUrl(urlString) {
 //     return encodeURIComponent(urlString);
 // }
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 //var config=require("config");
-// const SECRET_REFRESH = "SECRET_REFRESH_BEE_220296@mebe";
-// const refreshTokenLife = 2592000;
+const SECRET_REFRESH = "SECRET_REFRESH_BEE_220296@mebe";
+const refreshTokenLife = 3*30*24*60*60*1000;
 //router admin
 async function routerIndex(req, res) {
     try {
@@ -99,11 +99,11 @@ function getsignin(req, res) {
             console.log("redirecturl: ", redirecturl);
         }
         if (req.session.user) {
-            // res.cookie('refreshToken', null, {
-            //     maxAge: 1,
-            //     httpOnly: true,
-            //     // secure: true
-            // });
+            res.cookie('refreshToken', null, {
+                maxAge: 1,
+                httpOnly: true,
+                secure: true
+            });
             var email = req.session.user.email;
             req.session = null;
             return res.render("signin", { data: { error: "Bạn đã đăng xuất tài khoản: " + email, redirecturl: redirecturl } });
@@ -137,8 +137,8 @@ async function postsignin(req, res) {
                 req.session.user = user;
                 req.session.trackper = 1;
 
-                //var refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
-                //res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife*1000, httpOnly: true,secure: true});                
+                const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
+                res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true, secure: true});                
                 return res.redirect("/duty/dashboard");
             } catch (err) {
                 console.log(err)
@@ -158,23 +158,30 @@ async function postsignin(req, res) {
                 //     // params.redirecturl = decodeURIComponent(params.redirecturl).replace(process.argv[2], '');
                 //     params.redirecturl = params.redirecturl.replace(process.argv[2], '');
                 // };
+                //console.log(user);
                 if (status && user) {
                     req.session.user = user;
                     req.session.permission = user.permission;
                     if (helper.compare_password("1", user.permission)) {
                         req.session.trackper = 1;
+                        const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
+                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true,secure: true}); 
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
                         return res.redirect("/duty/dashboard");
                     } else if (helper.compare_password("2", user.permission)) {
                         req.session.trackper = 2;
                         Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/duty/dashboard")) : "");
+                        const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
+                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true,secure: true}); 
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
                         return res.redirect("/duty/dashboard");
                     } else if (helper.compare_password("3", user.permission)) {
                         req.session.trackper = 3;
                         Notifications.getNotificationDefault("51296", 'Admin', `${user.last_name} (${user.email}) is Logined`, process.argv[2] ? (process.argv[2] + ((params.redirecturl && params.redirecturl.length > 0) ? params.redirecturl : "/duty/dashboard")) : "");
+                        const refreshToken = jwt.sign({id: user.id, email: user.email, permission: user.trackper}, SECRET_REFRESH, { expiresIn: refreshTokenLife});
+                        res.cookie('refreshToken', refreshToken, {maxAge: refreshTokenLife, httpOnly: true,secure: true}); 
                         if (params.redirecturl && params.redirecturl.length > 0) return res.redirect(params.redirecturl);
 
                         return res.redirect("/duty/dashboard");
