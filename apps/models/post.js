@@ -268,46 +268,94 @@ function deleteDataIpbyTitle(title) {
 };
 async function addDataChat(params) {
     try {
-        if (params) {
-            var online = params.online;
-            var titleUser = params.user_name;
-            var querys = "INSERT INTO datachat(id_user,trackper,created_at,msg,re_user) VALUES (?,?,?,?,?)";
-            var quer = [params.id_user, params.trackper, params.created_at, params.msg, params.re_user];
-            if (online == 0) {
-                var option = "Tin nhắn: " + params.msg.substring(0, 50) + (params.msg && params.msg.length > 50 ? "..." : "");
-                var user;
-                const FullDomain = process.argv[2] ? process.argv[2] + "/todos/dashboard" : "";
-                if (params.trackper == 3) {
-                    user = 51296;
-                    // titleUser="User";
-                } else if (params.trackper <= 2 && params.re_user != 51296) {
-                    user = params.re_user;
-                    titleUser = "Admin";
-                };
-                if (params.trackper <= 2 && params.re_user == 0) {
-                    const user_md = require('./user');
-                    const helper = require("../helpers/helper");
-                    var ListUser = await user_md.getAllUsers();
-                    var filteredUsers = ListUser.filter(user => {
-                        return helper.compare_password("2", user.permission);
-                    });
-                    for (let i = 0; i < filteredUsers.length; i++) {
-                        Notifications.getNotificationDefault(filteredUsers[i].id + "", titleUser, option, FullDomain);
-                    }
+        if (!params) return false;
+
+        // --- BƯỚC 1: LƯU TIN NHẮN VÀO CSDL ---
+        const querys = "INSERT INTO datachat(id_user,trackper,created_at,msg,re_user) VALUES (?,?,?,?,?)";
+        const quer = [params.id_user, params.trackper, params.created_at, params.msg, params.re_user];
+        const dbResult = await DBLocal.sqlite3_run(querys, quer);
+
+        // --- BƯỚC 2: XỬ LÝ GỬI THÔNG BÁO NẾU NGƯỜI NHẬN OFFLINE ---
+        if (params.online == 0) {
+            const senderId = params.id_user;
+            const senderName = params.user_name;
+            const senderTrackper = params.trackper;
+            const receiverId = params.re_user;
+
+            const notificationTargetIds = new Set();
+            const cluster_md = require('./cluster');
+            const user_md = require('./user');
+            const helper = require('../helpers/helper');
+            const listClusters = await cluster_md.getAllClusters();
+            const allUsers = await user_md.getAllUsers(); // Lấy tất cả user để kiểm tra quyền
+
+            // --- XÁC ĐỊNH NGƯỜI NHẬN THÔNG BÁO ---
+
+            if (senderTrackper === 1) { // QUY TẮC KHI ADMIN GỬI
+                if (receiverId === 0) {
+                    // Gửi cho tất cả tài khoản khác
+                    allUsers.forEach(user => notificationTargetIds.add(user.id));
                 } else {
-                    Notifications.getNotificationDefault(user + "", titleUser, option, FullDomain);
+                    // Gửi cho người nhận cụ thể
+                    notificationTargetIds.add(receiverId);
                 }
+            } else if (senderTrackper === 2) { // QUY TẮC KHI USER (MANAGER) GỬI
+                if (receiverId === 0) {
+                    // Gửi cho tất cả guest có liên kết với user này
+                    listClusters.forEach(cluster => {
+                        if (parseInt(cluster.id_user, 10) === senderId) {
+                            notificationTargetIds.add(parseInt(cluster.id_guest, 10));
+                        }
+                    });
+                } else {
+                    // Gửi cho người nhận cụ thể
+                    notificationTargetIds.add(receiverId);
+                }
+            } else if (senderTrackper === 3) { // QUY TẮC KHI GUEST GỬI
+                // Gửi cho người nhận trực tiếp
+                if(receiverId > 0) notificationTargetIds.add(receiverId);
+                const receiverUser = allUsers.find(u => u.id === receiverId);
 
-            };
+                // 2. Chỉ thêm người nhận vào danh sách thông báo nếu họ tồn tại và KHÔNG PHẢI là Admin
+                if (receiverUser && !helper.compare_password("1", receiverUser.permission)) {
+                    notificationTargetIds.add(receiverId);
+                }
+                // Và gửi cho manager quản lý guest này
+                const clusterLink = listClusters.find(c => parseInt(c.id_guest, 10) === senderId);
+                if (clusterLink && clusterLink.id_user) {
+                    notificationTargetIds.add(parseInt(clusterLink.id_user, 10));
+                }
+            }
 
-            return DBLocal.sqlite3_run(querys, quer);
-        };
-        return false;
+            // QUY TẮC BỔ SUNG: Nếu người nhận là Guest, Manager của họ cũng phải được thông báo
+            const receiverUser = allUsers.find(u => u.id === receiverId);
+            if (receiverUser && helper.compare_password("3", receiverUser.permission)) {
+                const clusterLink = listClusters.find(c => parseInt(c.id_guest, 10) === receiverId);
+                if (clusterLink && clusterLink.id_user) {
+                    notificationTargetIds.add(parseInt(clusterLink.id_user, 10));
+                }
+            }
+
+            // --- GỬI THÔNG BÁO ---
+            const optionMessage = `Tin nhắn: ${params.msg.substring(0, 50)}${params.msg.length > 50 ? "..." : ""}`;
+            const fullDomain = process.argv[2] ? `${process.argv[2]}/todos/dashboard` : "";
+
+            for (const targetId of notificationTargetIds) {
+                // Không gửi thông báo cho chính người vừa gửi tin
+                if (targetId !== senderId) {
+                    await Notifications.getNotificationDefault(targetId.toString(), senderName, optionMessage, fullDomain);
+                }
+            }
+        }
+        
+        return dbResult;
+
     } catch (err) {
         console.log(err);
         return false;
-    };
+    }
 };
+
 function getAllDataChat() {
     try {
         var querys = "SELECT * FROM datachat";

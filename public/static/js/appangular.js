@@ -226,7 +226,7 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
         }
     };
     function conectNotify() {
-        if ($scope.formData.trackper <= 2) {
+        if ($scope.formData.trackper <= 1) {
             var idNotif = 51296;
         } else {
             var idNotif = $scope.idIndex_user;

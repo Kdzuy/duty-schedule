@@ -24,7 +24,7 @@ function User() {
                     success: function (res) {
                         if (res && res.status_code == 200) {
                             console.log('update password success!')
-                            location.href = base_url + '/admin/user';
+                            location.href = base_url + '/duty/dashboard';
                             return;
                         } else {
                             alert('update password fail!')

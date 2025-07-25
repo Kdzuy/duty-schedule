@@ -150,12 +150,24 @@ async function getnodetodo(req, res) {
 
 async function postnodetodo(req, res) {
     try {
-        var params = req.body;
-        if (!params || !params.text_job ||
-            (params && params.text_job && (params.text_job.length > 1000 || params.text_job.length == 0)))
-            return res.json({ status_code: 400 });
+        const params = req.body;
+        const currentUser = req.session.user;
+        const currentTrackper = req.session.trackper;
+        let notificationTargetId;
+        let notificationTitle;
+        let notificationMessage;
 
-        var todo = {
+        // --- BƯỚC 1: KIỂM TRA DỮ LIỆU ĐẦU VÀO ---
+        if (!params || !params.text_job || params.text_job.length > 1000 || params.text_job.length === 0) {
+            return res.status(400).json({ status_code: 400, message: "Nội dung công việc không hợp lệ." });
+        }
+
+        // --- BƯỚC 2: CHUẨN BỊ DỮ LIỆU TODO ---
+        const today = new Date();
+        // Sửa lỗi getMonth() (từ 0-11, cần +1) và tạo ID tốt hơn
+        const nowday = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}-${today.getHours()}-${today.getMinutes()}-${today.getSeconds()}`;
+        const todo = {
+            id: `${params.id_user}-${nowday}-${Math.random().toString(36).substr(2, 5)}`, // Thêm chuỗi ngẫu nhiên để tránh trùng
             id_user: params.id_user,
             user_name: params.user_name,
             text_job: params.text_job,
@@ -165,142 +177,192 @@ async function postnodetodo(req, res) {
             end_at: params.end_at,
             end_atdemo: params.end_at,
             end_atreal: null,
-            isDone: params.isDone,
-            isDonedemo: params.isDone
+            isDone: params.isDone || 0,
+            isDonedemo: params.isDone || 0
         };
-        var today = new Date();
-        var nowday = today.getSeconds() + "-" + today.getMinutes() + "-" + today.getHours() + "-" + today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear();
-        todo.id = todo.id_user + "-" + nowday;
 
-        if (req.session.trackper <= 2) {
-            var optionData = "Vừa bổ sung công việc cho bạn!";
-            var titleUser = "Admin";
+        // --- BƯỚC 3: XỬ LÝ GỬI THÔNG BÁO THEO CLUSTER ---
+        if (currentTrackper <= 2) { // Admin hoặc Manager giao việc
+            notificationMessage = "Vừa giao cho bạn một công việc mới!";
+            notificationTitle = currentUser.last_name; // Lấy tên người giao việc
+            notificationTargetId = params.id_user;     // Gửi thông báo cho người được giao việc
+
+        } else if (currentTrackper === 3) { // Guest tự tạo việc
+            notificationMessage = "Vừa tạo một công việc mới.";
+            notificationTitle = currentUser.last_name; // Lấy tên của guest
+            const guestId = currentUser.id;
+
+            // Tìm manager quản lý guest này để gửi thông báo
+            const listClusters = await cluster_md.getAllClusters();
+            const clusterLink = listClusters.find(c => parseInt(c.id_guest, 10) === guestId);
+
+            if (clusterLink && clusterLink.id_user) {
+                notificationTargetId = clusterLink.id_user; // Gửi thông báo cho manager
+            }
+        }
+
+        // Gửi thông báo nếu đã xác định được người nhận
+        if (notificationTargetId) {
             await Notifications.getNotificationDefault(
-                params.id_user + "",
-                titleUser,
-                optionData,
-                process.argv[2] ? process.argv[2] + "/todos/dashboard" : ""
+                notificationTargetId.toString(),
+                notificationTitle,
+                notificationMessage,
+                process.argv[2] ? `${process.argv[2]}/todos/dashboard` : ""
             );
         }
 
-        var result = await todos_md.addTodo(todo);
-        var data = {
-            id: todo.id,
-            id_user: todo.id_user,
-            user_name: todo.user_name,
-            text_job: todo.text_job,
-            job_num: todo.job_num,
-            created_at: todo.created_at,
-            end_at: todo.end_at,
-            end_atdemo: todo.end_atdemo,
-            end_atreal: todo.end_atreal,
-            isDone: todo.isDone,
-            isDonedemo: todo.isDonedemo
-        };
+        // --- BƯỚC 4: LƯU VÀO CSDL VÀ TRẢ VỀ KẾT QUẢ ---
+        await todos_md.addTodo(todo);
 
-        console.log("Node Todos đã lên DB!!!");
-        return res.json(data);
+        console.log("Node Todos đã được thêm vào DB!");
+        return res.status(201).json(todo); // Trả về 201 Created và toàn bộ object todo mới
+
     } catch (err) {
         console.log(err);
-        return res.json({ status_code: 400 }); // Handle error response
+        return res.status(500).json({ status_code: 500, message: "Lỗi phía máy chủ" });
     }
 };
 
 async function putnodetodo(req, res) {
     try {
-        var params = req.body;
-        var UserId;
-        var titleUser;
-        if (req.body.id == "" || req.body.id == undefined || !params || !params.text_jobdemo ||
-            (params.text_jobdemo && (params.text_jobdemo.length > 1000 || params.text_jobdemo.length == 0))) {
+        const params = req.body;
+        const currentUser = req.session.user;
+        const currentTrackper = req.session.trackper;
+        let notificationTargetId;
+        let notificationTitle;
+
+        // --- BƯỚC 1: KIỂM TRA DỮ LIỆU ĐẦU VÀO ---
+        if (!params || !params.id || !params.text_jobdemo || params.text_jobdemo.length > 1000 || params.text_jobdemo.length === 0) {
             return res.status(400).send("Không có ID bài viết hoặc sai cấu trúc dữ liệu");
-        } else {
-            if (req.session.trackper <= 2) {
-                var optionData = "Vừa cập nhật Công việc của bạn!";
-                UserId = params.id_user;
-                titleUser = "Admin";
-            } else if (req.session.trackper == 3) {
-                var optionData = "Vừa gửi yêu cầu cập nhật Công việc!";
-                UserId = 51296;
-                titleUser = req.session.user.last_name;
-            }
-
-            await Notifications.getNotificationDefault(
-                UserId + "",
-                titleUser,
-                optionData,
-                process.argv[2] ? process.argv[2] + "/todos/dashboard" : "");
-
-            var result = await todos_md.updateTodo(params);
-
-            if (!result) {
-                return res.json({ status_code: 400 });
-            } else {
-                return res.json({ status_code: 200 });
-            }
         }
+
+        // --- BƯỚC 2: XÁC ĐỊNH NGƯỜI NHẬN THÔNG BÁO ---
+        let notificationMessage;
+        if (currentTrackper <= 2) { // Admin hoặc Manager cập nhật
+            notificationMessage = "Vừa cập nhật Công việc của bạn!";
+            // Thông báo được gửi đến người sở hữu công việc (là guest)
+            notificationTargetId = params.id_user; 
+            // Tiêu đề thông báo là tên của người thực hiện thay đổi
+            notificationTitle = currentUser.last_name;
+
+        } else if (currentTrackper === 3) { // Guest cập nhật
+            notificationMessage = "Vừa gửi yêu cầu cập nhật Công việc!";
+            const guestId = currentUser.id;
+
+            // Tìm manager quản lý guest này
+            const listClusters = await cluster_md.getAllClusters();
+            const clusterLink = listClusters.find(c => parseInt(c.id_guest, 10) === guestId);
+
+            if (clusterLink && clusterLink.id_user) {
+                // Nếu tìm thấy, người nhận thông báo chính là manager đó
+                notificationTargetId = clusterLink.id_user;
+            } else {
+                // Nếu không có manager nào quản lý, gửi cho kênh chung (ví dụ: admin)
+                notificationTargetId = 51296; 
+            }
+            // Tiêu đề thông báo là tên của guest
+            notificationTitle = currentUser.last_name;
+        }
+
+        // --- BƯỚC 3: GỬI THÔNG BÁO ---
+        // Chỉ gửi nếu đã xác định được người nhận
+        if (notificationTargetId) {
+            await Notifications.getNotificationDefault(
+                notificationTargetId.toString(),
+                notificationTitle,
+                notificationMessage,
+                process.argv[2] ? `${process.argv[2]}/todos/dashboard` : ""
+            );
+        }
+
+        // --- BƯỚC 4: CẬP NHẬT CSDL ---
+        const result = await todos_md.updateTodo(params);
+
+        if (!result) {
+            return res.status(400).json({ status_code: 400, message: "Cập nhật thất bại" });
+        } else {
+            return res.json({ status_code: 200, message: "Cập nhật thành công" });
+        }
+
     } catch (err) {
         console.log(err);
-        return res.json({ status_code: 400 }); // Handle error response
+        return res.status(500).json({ status_code: 500, message: "Lỗi phía máy chủ" });
     }
 };
 
 async function putnodetodofn(req, res) {
     try {
-        var id = req.body.id;
-        if (id == "" || id == undefined) {
+        const params = req.body;
+        const currentUser = req.session.user;
+        const currentTrackper = req.session.trackper;
+        let notificationTargetId;
+        let notificationTitle;
+        let notificationMessage;
+
+        // --- BƯỚC 1: KIỂM TRA DỮ LIỆU ĐẦU VÀO ---
+        if (!params || !params.id) {
             return res.status(400).send("Không có ID bài viết");
-        } else {
-            var params = req.body;
+        }
 
-            if (params.isDone == true) {
-                params.isDone = 1;
+        // Chuyển đổi giá trị boolean từ client sang 0 hoặc 1
+        params.isDone = params.isDone ? 1 : 0;
+
+        // --- BƯỚC 2: XÁC ĐỊNH NỘI DUNG VÀ NGƯỜI NHẬN THÔNG BÁO ---
+        if (currentTrackper <= 2) { // Admin hoặc Manager thực hiện
+            notificationTitle = currentUser.last_name; // Lấy tên của người thực hiện
+            notificationTargetId = params.id_user;     // Gửi cho người sở hữu công việc (guest)
+            
+            if (params.isDone === 1) {
+                notificationMessage = "Vừa xác nhận 01 công việc của bạn hoàn thành!";
             } else {
-                params.isDone = 0;
-            };
-
-            var UserId;
-            var titleUser;
-
-            if (req.session.trackper <= 2) {
-                titleUser = "Admin";
-
-                if (params.isDone == 1) {
-                    var optionData = "Vừa xác nhận 01 công việc của bạn hoàn thành!";
-                } else {
-                    var optionData = "Vừa đề nghị bạn xem lại tiến độ 01 công việc!";
-                }
-
-                UserId = params.id_user;
-            } else if (req.session.trackper == 3) {
-                titleUser = req.session.user.last_name;
-
-                if (params.isDone == 1) {
-                    var optionData = "Vừa yêu cầu xác nhận hoàn thành 01 công việc!";
-                } else {
-                    var optionData = "Vừa đề nghị tiếp tục thực hiện 01 công việc!";
-                }
-
-                UserId = 51296;
+                notificationMessage = "Vừa đề nghị bạn xem lại tiến độ 01 công việc!";
             }
 
-            await Notifications.getNotificationDefault(
-                UserId + "",
-                titleUser,
-                optionData,
-                process.argv[2] ? process.argv[2] + "/todos/dashboard" : "");
+        } else if (currentTrackper === 3) { // Guest thực hiện
+            notificationTitle = currentUser.last_name; // Lấy tên của guest
+            const guestId = currentUser.id;
 
-            var result = await todos_md.sucessUpdateTodo(params);
+            // Tìm manager quản lý guest này
+            const listClusters = await cluster_md.getAllClusters();
+            const clusterLink = listClusters.find(c => parseInt(c.id_guest, 10) === guestId);
 
-            if (!result) {
-                return res.json({ status_code: 400 });
+            if (clusterLink && clusterLink.id_user) {
+                // Nếu tìm thấy, người nhận thông báo chính là manager đó
+                notificationTargetId = clusterLink.id_user;
             } else {
-                return res.json({ status_code: 200 });
+                // Nếu không có manager, gửi cho kênh chung (ví dụ: admin)
+                notificationTargetId = 51296; 
+            }
+
+            if (params.isDone === 1) {
+                notificationMessage = "Vừa yêu cầu xác nhận hoàn thành 01 công việc!";
+            } else {
+                notificationMessage = "Vừa đề nghị tiếp tục thực hiện 01 công việc!";
             }
         }
+        //console.log("Notification Target ID:", notificationTargetId);
+        // --- BƯỚC 3: GỬI THÔNG BÁO ---
+        if (notificationTargetId) {
+            await Notifications.getNotificationDefault(
+                notificationTargetId.toString(),
+                notificationTitle,
+                notificationMessage,
+                process.argv[2] ? `${process.argv[2]}/todos/dashboard` : ""
+            );
+        }
+
+        // --- BƯỚC 4: CẬP NHẬT CSDL ---
+        const result = await todos_md.sucessUpdateTodo(params);
+
+        if (!result) {
+            return res.status(400).json({ status_code: 400, message: "Cập nhật thất bại" });
+        } else {
+            return res.json({ status_code: 200, message: "Cập nhật trạng thái thành công" });
+        }
+
     } catch (err) {
         console.log(err);
-        return res.json({ status_code: 400 }); // Handle error response
+        return res.status(500).json({ status_code: 500, message: "Lỗi phía máy chủ" });
     }
 };
 

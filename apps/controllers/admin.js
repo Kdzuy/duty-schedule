@@ -15,8 +15,8 @@ router.get("/post/edit/:id", checkToken, checkPermissionUsers.checkPermissionUse
 router.put("/post/edit", checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerAdmin.putpostedit);
 router.delete("/post/delete", checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerAdmin.postDelete);
 router.delete("/delete", checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerAdmin.deleteUserData);
-router.get("/post", checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerAdmin.getpost);
-router.get("/user", checkToken, checkPermissionUsers.checkPermissionUserUpRequest, routerAdmin.getuser);
+router.get("/post", checkToken, checkPermissionUsers.checkPermissionAdminUpRequest, routerAdmin.getpost);
+router.get("/user", checkToken, checkPermissionUsers.checkPermissionAdminUpRequest, routerAdmin.getuser);
 router.get("/updateuser/:id", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.getupdateuser);
 router.put("/updateuser", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.putupdateuser);
 // router.get("/addressBTC", checkToken, checkPermissionUsers.checkPermissionGuestUpRequest, routerAdmin.addressbtc);
