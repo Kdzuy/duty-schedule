@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Quản lý Cụm người dùng</title>
+    <%- include("../admin/layout/head.ejs") %>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/css/cluster/style.css">
+</head>
+<body>
+    <%- include("../admin/layout/nav.ejs") %>
+    <main>
+        
+
+        <section class="card">
+            <h1>Trang Quản Trị Cụm người dùng</h1>
+            <form id="create-cluster-form">
+                <div class="form-group">
+                    <label for="manager-select">Chọn Quản lý:</label>
+                    <select id="manager-select" required>
+                        <option value="">-- Chọn Quản lý --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="guest-select">Chọn Thành viên để Gán:</label>
+                    <select id="guest-select" required>
+                        <option value="">-- Chọn Thành viên --</option>
+                    </select>
+                </div>
+                <button type="submit">Tạo Liên Kết</button>
+            </form>
+            <p id="success-message" class="success"></p>
+            <p id="error-message" class="error"></p>
+        </section>
+
+        <section class="card">
+            <h2>Danh sách các Cụm Hiện tại</h2>
+            <table id="clusters-table">
+                <thead>
+                    <tr>
+                        <th>Quản lý</th>
+                        <th>Thành viên Được Quản lý</th>
+                        <th>Ngày tạo</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="clusters-table-body">
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="/static/js/cluster/script.js"></script>
+</body>
+</html>

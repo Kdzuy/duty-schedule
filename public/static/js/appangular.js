@@ -150,6 +150,10 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
             return a.created_at - b.created_at;
         });
         $scope.messform = data.data.datachat;
+        $scope.messform.forEach(function(item) {
+            // Gán 'admin' làm user_name mặc định nếu nó chưa có
+            item.user_name = item.user_name || 'Admin';
+        });
         $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight }, 1000);
         // Sử dụng hàm kiểm tra
         isPushNotificationSupported().then((isSubscribed) => {
@@ -668,20 +672,21 @@ app.controller("todoController", ['$scope', 'svTodos', '$filter', '$sce', functi
             trackper: $scope.formData.trackper,
             created_at: $filter('date')(new Date(), 'yyyy-MM-ddThh:mm:ss+07:00'),
             msg: $scope.messdata.msg||"",
+            re_user: messdatas.re_user,
             // re_name: messdatas.re_name
         };
+        
+        // if ($scope.formData.trackper <= 2) {
+        //     if ($scope.formData.re_user_trackper != undefined && ($scope.formData.re_user_trackper == 2 || $scope.formData.re_user_trackper == 3)) {
+        //         messdata.re_user = messdatas.re_user;
+        //     } else {
+        //         messdata.re_user = 0;
+        //     };
 
-        if ($scope.formData.trackper <= 2) {
-            if ($scope.formData.re_user_trackper != undefined && $scope.formData.re_user_trackper == 3) {
-                messdata.re_user = messdatas.re_user;
-            } else {
-                messdata.re_user = 0;
-            };
-
-            // filterchats.push(messdata);
-        } else {
-            messdata.re_user = 51296;
-        };
+        //     // filterchats.push(messdata);
+        // } else {
+        //     messdata.re_user = 51296;
+        // };
 
         //console.log(messdata)
         $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight }, 1000);

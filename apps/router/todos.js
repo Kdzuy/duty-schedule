@@ -3,47 +3,68 @@ const post_md = require("../models/post");
 const todos_md = require("../models/nodetodos");
 const helper = require("../helpers/helper");
 const Notifications = require("../models/Notifications");
+const cluster = require("./cluster");
+const cluster_md = require("../models/cluster");
 
 async function giaoviec(req, res) {
     try {
-        // if (req.session.trackper < 3) {
-        if (req.session.trackper <= 2) {
-            var users = await user_md.getIdNameUsers();
-            var dataUser = [];
-            if (users && users.length > 0) {
-                for (var i = 0; i < users.length; i++) {
-                    if (helper.compare_password("3", users[i].permission) || helper.compare_password("2", users[i].permission)) dataUser.push(users[i]);
-                }
+        const currentUser = req.session.user;
+        const currentTrackper = req.session.trackper;
+        let dataUser = []; // Khởi tạo danh sách người dùng rỗng
+
+        // Chỉ Admin (1) và Manager (2) mới có thể thấy danh sách để giao việc
+        if (currentTrackper <= 2) {
+            const allUsers = await user_md.getIdNameUsers();
+            
+            // Gán trackper để dễ lọc
+            allUsers.forEach(user => {
+                if (helper.compare_password("1", user.permission)) user.trackper = 1;
+                else if (helper.compare_password("2", user.permission)) user.trackper = 2;
+                else if (helper.compare_password("3", user.permission)) user.trackper = 3;
+            });
+
+            if (currentTrackper === 1) {
+                // Admin có thể giao việc cho tất cả User (2) và Guest (3)
+                dataUser = allUsers.filter(user => user.trackper === 2 || user.trackper === 3);
+
+            } else if (currentTrackper === 2) { // Manager's Logic
+                // Manager có thể giao việc cho các Guest mà họ quản lý VÀ cho chính họ
+                const listClusters = await cluster_md.getAllClusters();
+                
+                // Tạo Set chứa ID của các guest được quản lý
+                const managedGuestIds = new Set(
+                    listClusters
+                        .filter(cluster => parseInt(cluster.id_user, 10) === currentUser.id)
+                        .map(cluster => parseInt(cluster.id_guest, 10))
+                );
+
+                // ⭐ SỬA LỖI TẠI ĐÂY:
+                // Tạo một Set mới chứa các ID có thể được giao việc
+                const assignableUserIds = new Set(managedGuestIds);
+                // Thêm ID của chính manager vào danh sách này
+                assignableUserIds.add(currentUser.id); 
+
+                // Lọc danh sách user cuối cùng dựa trên Set đã có đủ ID
+                dataUser = allUsers.filter(user => assignableUserIds.has(user.id));
             }
-            if (dataUser && dataUser.length > 0) {
-                dataUser.sort(function (a, b) {
-                    return a.last_name - b.last_name;
-                });
+
+            // Sửa lỗi sắp xếp: Dùng localeCompare để sắp xếp chuỗi theo alphabet
+            if (dataUser.length > 0) {
+                dataUser.sort((a, b) => a.last_name.localeCompare(b.last_name));
             }
-
-
-            var data = {
-                user: req.session.user,
-                trackper: req.session.trackper,
-                requser: req.session.user.last_name,
-                error: false,
-                data_users: dataUser
-            };
-
-            return res.render("nodetodos/index", { data: data });
-        } else {
-            var data = {
-                user: req.session.user,
-                trackper: req.session.trackper,
-                requser: req.session.user.last_name,
-                error: false
-            };
-
-            return res.render("nodetodos/index", { data: data });
         }
-        // } else {
-        //     return res.redirect("/admin/signin");
-        // }
+
+        // Chuẩn bị dữ liệu để render ra view
+        const data = {
+            user: currentUser,
+            trackper: currentTrackper,
+            requser: currentUser.last_name,
+            error: false,
+            data_users: dataUser // Sẽ là mảng rỗng nếu là Guest
+        };
+
+        return res.render("nodetodos/index", { data: data });
+
     } catch (err) {
         console.log(err);
         return res.redirect("/admin");
@@ -52,51 +73,78 @@ async function giaoviec(req, res) {
 
 async function getnodetodo(req, res) {
     try {
-        // if (req.session.trackper < 3) {
-        let dataTodos, dataChats, datausers;
-        if (req.session.trackper == 3) {
-            dataTodos = await todos_md.getAllTodosbyUser(req.session.user.id);
-            dataChats = await post_md.getAllDataChatbyIdUser(req.session.user.id);
-        } else if (req.session.trackper <= 2) {
-            dataTodos = await todos_md.getAllTodos();
-            dataChats = await post_md.getAllDataChat();
-        }
-        //console.log(dataChats)
-        datausers = await user_md.getNameUsers();
+        const currentUser = req.session.user;
+        const currentTrackper = req.session.trackper;
 
-        var user = {
-            id_user: req.session.user.id,
-            user_name: req.session.user.last_name,
-            trackper: req.session.trackper
-        };
+        // --- BƯỚC 1: LẤY TOÀN BỘ DỮ LIỆU GỐC ---
+        let dataTodos = await todos_md.getAllTodos();
+        let dataChats = await post_md.getAllDataChat();
+        let datausers = await user_md.getNameUsers();
+        let listClusters = await cluster_md.getAllClusters();
 
-        delete dataChats.user_name;
-
-        var todos = {
-            data: dataTodos,
-            user: user,
-            datachat: dataChats
-        };
+        // Gán 'trackper' cho mỗi user để tiện cho việc xử lý ở client
         if (datausers && datausers.length > 0) {
-            for (let i = 0; i < datausers.length; i++) {
-                if (helper.compare_password("1", datausers[i].permission)) {
-                    datausers[i].trackper = 1;
-                } else if (helper.compare_password("2", datausers[i].permission)) {
-                    datausers[i].trackper = 2;
-                } else if (helper.compare_password("3", datausers[i].permission)) {
-                    datausers[i].trackper = 3;
-                }
-            }
+            datausers.forEach(user => {
+                if (helper.compare_password("1", user.permission)) user.trackper = 1;
+                else if (helper.compare_password("2", user.permission)) user.trackper = 2;
+                else if (helper.compare_password("3", user.permission)) user.trackper = 3;
+            });
         }
-        todos.listusers = datausers;
+        
+        // --- BƯỚC 2: LỌC DỮ LIỆU DỰA TRÊN QUYỀN HẠN CỦA NGƯỜI DÙNG ---
 
-        return res.json(todos);
-        // } else {
-        //     return res.redirect("/admin/signin");
-        // }
+        if (currentTrackper === 2) { // Logic lọc cho Manager
+            
+            const managedGuestIds = new Set(
+                listClusters
+                    .filter(cluster => parseInt(cluster.id_user, 10) === currentUser.id && cluster.id_guest !== 0)
+                    .map(cluster => parseInt(cluster.id_guest, 10))
+            );
+            const relevantUserIds = new Set(managedGuestIds).add(currentUser.id);
+
+            dataTodos = dataTodos.filter(todo => relevantUserIds.has(todo.id_user)); 
+            
+            // SỬA LẠI DÒNG NÀY: Dùng || (hoặc) thay vì && (và)
+            dataChats = dataChats.filter(message =>
+                relevantUserIds.has(message.id_user) || relevantUserIds.has(message.re_user) || (message.re_user == 0 && message.trackper === 1)
+            );
+            
+            // datausers = datausers.filter(user => relevantUserIds.has(user.id));
+
+        } else if (currentTrackper === 3) { // Logic lọc cho Guest
+            
+            const managerInCharge = listClusters.find(c => parseInt(c.id_guest, 10) === currentUser.id);
+            const managerId = managerInCharge ? parseInt(managerInCharge.id_user, 10) : null;
+            const allowedIds = new Set([1, currentUser.id]);
+            //console.log("allowedIds:", allowedIds);
+            if (managerId) allowedIds.add(managerId);
+
+            dataTodos = dataTodos.filter(todo => todo.id_user === currentUser.id);
+            dataChats = dataChats.filter(message => 
+                allowedIds.has(message.id_user) || allowedIds.has(message.re_user) || (message.re_user == 0 && message.trackper === 1)
+            );
+    
+            // datausers = datausers.filter(user => allowedIds.has(user.id));
+        }
+        // Admin (trackper 1) không bị lọc và sẽ thấy tất cả.
+
+        // --- BƯỚC 3: TỔNG HỢP VÀ TRẢ VỀ RESPONSE ---
+        const responseData = {
+            data: dataTodos,
+            user: {
+                id_user: currentUser.id,
+                user_name: currentUser.last_name,
+                trackper: currentTrackper
+            },
+            datachat: dataChats,
+            listusers: datausers
+        };
+        //console.log("Response Data:", responseData);
+        return res.json(responseData);
+
     } catch (err) {
         console.log(err);
-        return res.json({ status_code: 400 }); // Handle error response
+        return res.status(500).json({ status_code: 500, message: "Lỗi phía máy chủ" });
     }
 };
 

@@ -47,5 +47,6 @@ router.use("/blog", require(__dirname + "/blog"));
 router.use("/todos", require(__dirname + "/todos"));
 router.use("/", require(__dirname + "/keyurl"));
 router.use("/duty", require(__dirname + "/duty-schedule"));
+router.use("/cluster", require(__dirname + "/cluster-ad"));
 //====================================================================================== 
 module.exports = router;

@@ -1,0 +1,120 @@
+/* General Styling */
+:root {
+    --primary-color: #007bff;
+    --danger-color: #dc3545;
+    --background-color: #f4f6f9;
+    --card-bg-color: #ffffff;
+    --text-color: #333;
+    --border-color: #dee2e6;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    color: var(--primary-color);
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* Card Layout */
+.card {
+    background-color: var(--card-bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+/* Form Styling */
+#create-cluster-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    background-color: var(--primary-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Table Styling */
+#clusters-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#clusters-table th, #clusters-table td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+}
+
+#clusters-table th {
+    background-color: #f2f2f2;
+}
+
+#clusters-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.delete-btn {
+    background-color: var(--danger-color);
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.error {
+    color: var(--danger-color);
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}

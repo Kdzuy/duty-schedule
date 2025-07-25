@@ -35,8 +35,17 @@ function sqlite3_run(querys, param) {
 
     };
 };
+// function sqlite3_get(query, params) {
+//     return new Promise((resolve, reject) => {
+//         db.get(query, params, (err, row) => {
+//             if (err) reject(err);
+//             else resolve(row);
+//         });
+//     });
+// }
 //==============================================
 module.exports = {
     sqlite3_all: sqlite3_all,
-    sqlite3_run: sqlite3_run
+    sqlite3_run: sqlite3_run,
+    // sqlite3_get: sqlite3_get
 };

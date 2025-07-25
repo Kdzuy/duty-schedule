@@ -22,6 +22,7 @@ var sqlite3_db=require("./localdatabase").sqlite3;
         'CREATE TABLE IF NOT EXISTS postsfaster (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,title text NOT NULL,link text NOT NULL,id_user INTEGER NOT NULL,name_user text NOT NULL,created_at text NOT NULL)',
         'CREATE TABLE IF NOT EXISTS timeloadautofb (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,creat_hour INTEGER NOT NULL,creat_minute INTEGER NOT NULL)',
         'CREATE TABLE IF NOT EXISTS users (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,permission text NOT NULL,email text NOT NULL,password text NOT NULL,last_name text NOT NULL,created_at text NOT NULL,updated_at text NOT NULL,restoken text DEFAULT NULL,tokennotify text DEFAULT NULL)',
+        'CREATE TABLE IF NOT EXISTS clusters (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,id_user text NOT NULL,id_guest text NOT NULL,created_at text NOT NULL)',
         'ALTER TABLE accountfb ADD PRIMARY KEY (id)',
         'ALTER TABLE accountfblogin ADD PRIMARY KEY (iduser)',
         'ALTER TABLE datachat ADD PRIMARY KEY (id)',
@@ -35,6 +36,7 @@ var sqlite3_db=require("./localdatabase").sqlite3;
         'ALTER TABLE posts ADD PRIMARY KEY (id)',
         'ALTER TABLE postsip ADD PRIMARY KEY (id)',
         'ALTER TABLE postsfaster ADD PRIMARY KEY (id)',
+        'ALTER TABLE clusters ADD PRIMARY KEY (id)',
         'PRAGMA journal_mode = WAL',
         'PRAGMA synchronous = NORMAL'
       ];
